@@ -6,6 +6,10 @@ public enum Profession {
     Cardiologist,
     Dermatologist,
     Psy,
-    OTHER
+    PROFESSOR,
+    ENGINEER,
+    DOCTOR,
+    OTHER,
+
 
 }
