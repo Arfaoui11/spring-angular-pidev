@@ -1,18 +1,34 @@
 package com.javachinna.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.javachinna.dto.QuestionsDTO;
+import com.javachinna.model.Option;
+import com.javachinna.model.Question;
+import com.javachinna.repo.OptionRepository;
+import com.javachinna.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import com.javachinna.config.CurrentUser;
 import com.javachinna.dto.LocalUser;
 import com.javachinna.util.GeneralUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
+
+	@Autowired
+	private QuestionService questionService;
+	@Autowired
+	private OptionRepository optionRepository ;
+
+
 
 	@GetMapping("/user/me")
 	@PreAuthorize("hasRole('USER')")
@@ -37,9 +53,133 @@ public class UserController {
 		return ResponseEntity.ok("Admin content goes here");
 	}
 
+
+
 	@GetMapping("/mod")
 	@PreAuthorize("hasRole('MODERATOR')")
 	public ResponseEntity<?> getModeratorContent() {
 		return ResponseEntity.ok("Moderator content goes here");
 	}
+
+
+	@PostMapping("/moderateur/question/add")
+	//@PreAuthorize("hasRole('MODERATOR')")
+	@ResponseBody
+	public String addQuestion(@RequestBody QuestionsDTO questionsDto, Model model) {
+
+		Question question = new Question();
+		List<Option> options = new ArrayList<>();
+		Option optionOne = new Option(questionsDto.getOptionOne());
+		Option optionTwo = new Option(questionsDto.getOptionTwo());
+		Option optionThree = new Option(questionsDto.getOptionThree());
+		Option optionFour = new Option(questionsDto.getOptionFour());
+		options.add(optionOne);
+		options.add(optionTwo);
+		options.add(optionThree);
+		options.add(optionFour);
+		question.setTitle(questionsDto.getQuestionTitle());
+
+
+		switch (questionsDto.getCorrectAnswer()) {
+			case "1":
+				question.setOptionCorrect(questionsDto.getOptionOne());
+				break;
+			case "2":
+				question.setOptionCorrect(questionsDto.getOptionTwo());
+				break;
+			case "3":
+				question.setOptionCorrect(questionsDto.getOptionThree());
+				break;
+			case "4":
+				question.setOptionCorrect(questionsDto.getOptionFour());
+				break;
+		}
+
+		for(Option option: options) {
+			option.setQuestion(question);
+		}
+		question.setOptions(options);
+		questionService.saveQuestion(question);
+		return "redirect:/teacher/questions/list";
+	}
+
+	@GetMapping("/moderator/question/{id}")
+	//@PreAuthorize("hasRole('MODERATOR')")
+	@ResponseBody
+	public String showModifyQuestionForm(@PathVariable Long id, Model model) {
+		Question existingQuestion = questionService.findQuestionByquestionId(id);
+		QuestionsDTO questionsDto = new QuestionsDTO();
+		questionsDto.setQuestionTitle(existingQuestion.getTitle());
+		List<Option> options = existingQuestion.getOptions();
+		questionsDto.setOptionOne(options.get(0).getOptionText());
+		questionsDto.setOptionTwo(options.get(1).getOptionText());
+		questionsDto.setOptionThree(options.get(2).getOptionText());
+		questionsDto.setOptionFour(options.get(3).getOptionText());
+		questionsDto.setCorrectAnswer(existingQuestion.getOptionCorrect());
+
+		questionsDto.setQuestionId(existingQuestion.getQuestionId());
+		model.addAttribute("questionsDto", questionsDto);
+		return "teacher-questions-edit";
+	}
+
+	@PostMapping("/moderator/question/{id}")
+	//@PreAuthorize("hasRole('MODERATOR')")
+	@ResponseBody
+	public String updateQuestionDetails(@PathVariable Long id, @RequestBody QuestionsDTO questionsDto, Model model) {
+
+		Question existingQuestion = questionService.findQuestionByquestionId(id);
+		List<Option> existingOptions = existingQuestion.getOptions();
+		existingQuestion.setTitle(questionsDto.getQuestionTitle());
+
+		existingOptions.get(0).setOptionText(questionsDto.getOptionOne());
+		existingOptions.get(1).setOptionText(questionsDto.getOptionTwo());
+		existingOptions.get(2).setOptionText(questionsDto.getOptionThree());
+		existingOptions.get(3).setOptionText(questionsDto.getOptionFour());
+		switch (questionsDto.getCorrectAnswer()) {
+			case "1":
+				existingQuestion.setOptionCorrect(questionsDto.getOptionOne());
+				break;
+			case "2":
+				existingQuestion.setOptionCorrect(questionsDto.getOptionTwo());
+				break;
+			case "3":
+				existingQuestion.setOptionCorrect(questionsDto.getOptionThree());
+				break;
+			case "4":
+				existingQuestion.setOptionCorrect(questionsDto.getOptionFour());
+				break;
+		}
+
+		questionService.saveQuestion(existingQuestion);
+		return "redirect:/teacher/questions/list";
+
+	}
+
+	@GetMapping("/moderator/questions/list")
+	//@PreAuthorize("hasRole('MODERATOR')")
+	@ResponseBody
+	@JsonIgnore
+	public List<Question> showAllQuestionsPage() {
+		List<Question> Questions = questionService.getAllQuestions();
+
+
+
+
+		return Questions;
+	}
+
+
+	@GetMapping("/moderator/question/delete/{id}")
+	//@PreAuthorize("hasRole('MODERATOR')")
+	@ResponseBody
+	public String deleteQuestion(@PathVariable Long id, Model model) {
+		Question question = questionService.findQuestionByquestionId(id);
+		List<Option> options = question.getOptions();
+		for(Option option: options) {
+			optionRepository.delete(option);
+		}
+		questionService.deleteQuestionByquestionId(id);
+		return "redirect:/teacher/questions/list";
+	}
+
 }

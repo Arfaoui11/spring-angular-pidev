@@ -16,7 +16,7 @@ import lombok.Setter;
 
 /**
  * The persistent class for the role database table.
- * 
+ *
  */
 @Entity
 @Getter
