@@ -1,6 +1,7 @@
 package com.javachinna.repo;
 
-import com.example.demo.Entity.Offres;
+
+import com.javachinna.model.Offres;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +16,7 @@ public interface RepoOffers extends CrudRepository<Offres,Integer> {
     List<Offres> OffresParDateCreation(@Param("dateBeginOffer") Date date1, @Param("dateEndDate") Date date2);
 
 
-    @Query(value = "select COUNT (u.idUser) from Candidacy  c join c.usersW u join  c.offers o where o.idOffer=:id")
+    @Query(value = "select COUNT (u.id) from Candidacy  c join c.usersW u join  c.offers o where o.idOffer=:id")
     Integer getNumberOfUserInThisCandidacy(@Param("id") Integer idOffer);
 
 

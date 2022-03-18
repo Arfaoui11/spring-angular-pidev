@@ -1,9 +1,9 @@
 package com.javachinna.service;
 
-import com.example.demo.Entity.Candidacy;
-import com.example.demo.Entity.Offres;
-import com.example.demo.Entity.Profession;
-import com.example.demo.Entity.User;
+import com.javachinna.model.Candidacy;
+import com.javachinna.model.Offres;
+import com.javachinna.model.Profession;
+import com.javachinna.model.User;
 
 import java.util.Date;
 import java.util.List;
@@ -11,12 +11,12 @@ import java.util.List;
 public interface IServices {
 
 
-    void updateOffer (Offres offer,Integer idUser );
+    void updateOffer (Offres offer, Long idUser );
     void  updateOffer(Offres offer);
     void deleteOffer(Integer idOffer);
     List<Offres> GetOffer();
 
-    void add(Candidacy candidacy,Integer idO,Integer idU);
+    void add(Candidacy candidacy, Integer idO, Long idU);
     void  updateCandidacy (Candidacy candidacy);
     void  deleteCandidacy(Integer idCandidacy);
     List<Candidacy> GetCandidacy();
@@ -27,5 +27,5 @@ public interface IServices {
     Integer  getNumberOfUserInThisCandidacy( Integer idCandidacy);
     Offres getOffresHighRecommended();
     List<Offres> listAll (String keyword);
-    List<Candidacy> findAll(String keyword);
+
 }

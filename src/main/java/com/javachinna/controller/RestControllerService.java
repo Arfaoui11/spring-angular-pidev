@@ -1,5 +1,10 @@
 package com.javachinna.controller;
 
+import com.javachinna.model.Candidacy;
+import com.javachinna.model.Offres;
+import com.javachinna.model.Profession;
+import com.javachinna.model.User;
+import com.javachinna.service.IServices;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -8,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-public class RestControllerService {
     @RestController
     public class RestControllerService {
 
@@ -22,7 +26,7 @@ public class RestControllerService {
         @RequestMapping(value = {"/ajouterEtAffecterOffresACandidacy/{id}"}, method = RequestMethod.POST)
         @ResponseBody
         @ApiOperation(value = "ajouter Et Affecter Offres A Candidacy  ")
-        public void updateOffer(@RequestBody Offres offer, @PathVariable(name = "id") Integer idU ) {
+        public void updateOffer(@RequestBody Offres offer, @PathVariable(name = "id") Long idU ) {
             iServices.updateOffer(offer,idU);
 
         }
@@ -53,7 +57,7 @@ public class RestControllerService {
         @RequestMapping(value = {"/addCandidacy/{idOff}/{idUser}"}, method = RequestMethod.POST)
         @ResponseBody
         @ApiOperation(value = "ajouter Et Affecter Candidacy  ")
-        public void addCandidacy(@RequestBody Candidacy candidacy,@PathVariable(name = "idOff") Integer idO,@PathVariable(name = "idUser") Integer idU)
+        public void addCandidacy(@RequestBody Candidacy candidacy,@PathVariable(name = "idOff") Integer idO,@PathVariable(name = "idUser") Long idU)
         {
             iServices.add(candidacy, idO, idU);
         }
@@ -116,14 +120,8 @@ public class RestControllerService {
             List<Offres> listOffer = iServices.listAll(keyword);
             return  listOffer;
         }
-        @GetMapping("/SearchCandidacy/{keyword}")
-        @ResponseBody
-        @ApiOperation(value = "search offer ")
-        public List<Candidacy> SearchCandidacy( @PathVariable("keyword") String keyword) {
-            List<Candidacy> listCandidacy = iServices.findAll(keyword);
-            return  listCandidacy;
-        }
 
-    }
+
+
 
 }

@@ -1,12 +1,12 @@
 package com.javachinna.service;
 
-import com.example.demo.Entity.Candidacy;
-import com.example.demo.Entity.Offres;
-import com.example.demo.Entity.Profession;
-import com.example.demo.Entity.User;
-import com.example.demo.Repository.RepoCandidacy;
-import com.example.demo.Repository.RepoOffers;
-import com.example.demo.Repository.RepoUser;
+import com.javachinna.model.Candidacy;
+import com.javachinna.model.Offres;
+import com.javachinna.model.Profession;
+import com.javachinna.model.User;
+import com.javachinna.repo.RepoCandidacy;
+import com.javachinna.repo.RepoOffers;
+import com.javachinna.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +22,10 @@ public class ServicesOffre implements IServices{
     @Autowired
     private RepoOffers repoOff;
     @Autowired
-    private RepoUser repoUser;
+    private UserRepository repoUser;
 
     @Override
-    public void updateOffer(Offres offer,Integer idUser) {
+    public void updateOffer(Offres offer, Long idUser) {
         User user = repoUser.findById(idUser).orElse(null);
         offer.setUsers(user);
         repoOff.save(offer);
@@ -50,7 +50,7 @@ public class ServicesOffre implements IServices{
     return  offres ;
    }
     @Override
-    public void add(Candidacy candidacy, Integer idO, Integer idU) {
+    public void add(Candidacy candidacy,Integer idO, Long idU) {
 
         User user = repoUser.findById(idU).orElse(null);
         Offres offres = repoOff.findById(idO).orElse(null);
@@ -92,7 +92,8 @@ public class ServicesOffre implements IServices{
     }
     @Override
     public  List<Candidacy> offerByProfession(Profession profession){
-        return repoCandidacy.offerByProfession(profession);
+       // return repoCandidacy.offerByProfession(profession);
+        return  null;
     }
 
     @Override
@@ -129,13 +130,7 @@ public class ServicesOffre implements IServices{
         return (List<Offres>) repoOff.findAll();
     }
 
-    @Override
-    public List<Candidacy> findAll(String keyword) {
-        if (keyword != null){
-            return  repoCandidacy.findAll(keyword);
-        }
-        return (List<Candidacy>) repoCandidacy.findAll();
-    }
+
 
 
 }

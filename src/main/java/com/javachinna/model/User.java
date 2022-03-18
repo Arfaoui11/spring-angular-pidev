@@ -92,4 +92,23 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Set<Clinical> clinical;
 
+	@OneToMany(mappedBy ="users" ,fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.REMOVE
+			})
+	@JsonIgnore
+	private Set<Offres> offer;
+
+
+	@OneToMany(mappedBy ="usersW",fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.REMOVE
+			} )
+	@JsonIgnore
+	private  Set<Candidacy> candidacy;
+
 }
