@@ -25,21 +25,23 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "USER_ID")
+	//@Column(name = "USER_ID")
 	private Long id;
 
-	@Column(name = "PROVIDER_USER_ID")
+	//@Column(name = "PROVIDER_USER_ID")
 	private String providerUserId;
 
 	private String email;
+	private String firstName;
+	private String lastName;
 
-	@Column(name = "enabled", columnDefinition = "BIT", length = 1)
+	//@Column(name = "enabled", columnDefinition = "BIT", length = 1)
 	private boolean enabled;
 
-	@Column(name = "DISPLAY_NAME")
+	//@Column(name = "DISPLAY_NAME")
 	private String displayName;
 
-	@Column(name = "created_date", nullable = false, updatable = false)
+	//@Column(name = "created_date", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date createdDate;
 
@@ -51,6 +53,10 @@ public class User implements Serializable {
 	private String provider;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
+	private int priceconsultation;
+
+	private int Score;
+
 
 	// bi-directional many-to-many association to Role
 	@JsonIgnore
@@ -68,4 +74,22 @@ public class User implements Serializable {
 	private Session session;
 
 	//private Integer nb_subsc;
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Appointment> appointments;
+
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<Complaint> complaints;
+	@OneToMany(mappedBy ="users",cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<ComplaintResponse> complaintResponses;
+	@OneToMany(cascade =  CascadeType.ALL, mappedBy = "doctor")
+	@JsonIgnore
+	private Set<Appointment> appointmentsDocteur;
+
+	@ManyToMany (mappedBy = "doctors",cascade =CascadeType.ALL)
+	@JsonIgnore
+	private Set<Clinical> clinical;
+
 }
