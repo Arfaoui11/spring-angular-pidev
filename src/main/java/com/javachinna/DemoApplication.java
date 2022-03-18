@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableTransactionManagement
 public class DemoApplication extends SpringBootServletInitializer {
-	/////////    Version 9:01   /////
+	/////    Version 9:01   //
 
 	public static void main(String[] args) {
 		SpringApplicationBuilder app = new SpringApplicationBuilder(DemoApplication.class);
