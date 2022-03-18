@@ -1,10 +1,6 @@
 package com.javachinna.service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,10 +23,7 @@ import com.javachinna.security.oauth2.user.OAuth2UserInfo;
 import com.javachinna.security.oauth2.user.OAuth2UserInfoFactory;
 import com.javachinna.util.GeneralUtils;
 
-/**
- * @author Chinna
- * @since 26/3/18
- */
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -42,6 +35,39 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Override
+	public User addUser(User user) {
+
+		return userRepository.save(user);
+	}
+
+	@Override
+	public void updateUser(User u) {
+
+		userRepository.save(u);
+	}
+
+	@Override
+	public User retrieveUser(Long id) {
+		User u = userRepository.findById(id).orElse(null);
+		return u;
+
+	}
+
+	@Override
+	public List<User> retrieveAllUsers() {
+		List<User> users = new ArrayList<User>();
+		userRepository.findAll().forEach(user -> {
+			users.add(user);
+		});
+		return users;
+	}
+
+	@Override
+	public void deleteUser(Long id) {
+		userRepository.deleteById(id);
+
+	}
 
 	@Override
 	@Transactional(value = "transactionManager")

@@ -1,5 +1,6 @@
 package com.javachinna.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -11,11 +12,17 @@ import com.javachinna.dto.SignUpRequest;
 import com.javachinna.exception.UserAlreadyExistAuthenticationException;
 import com.javachinna.model.User;
 
-/**
- * @author Chinna
- * @since 26/3/18
- */
+
 public interface UserService {
+	User addUser (User user);
+
+	void updateUser (User u);
+
+	User retrieveUser (Long id);
+
+	List<User> retrieveAllUsers();
+
+	void deleteUser ( Long id);
 
 	public User registerNewUser(SignUpRequest signUpRequest) throws UserAlreadyExistAuthenticationException;
 

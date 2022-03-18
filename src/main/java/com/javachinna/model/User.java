@@ -2,6 +2,7 @@ package com.javachinna.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -12,19 +13,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * The persistent class for the user database table.
- * 
- */
+
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 public class User implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 65981149772133526L;
 
 	@Id
@@ -61,4 +57,15 @@ public class User implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles;
+
+
+	@JsonIgnore
+	@ManyToMany
+	private List<Subscription> subscs;
+
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy ="User")
+	private Session session;
+
+	//private Integer nb_subsc;
 }
