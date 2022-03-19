@@ -14,6 +14,8 @@ import com.javachinna.model.User;
 
 
 public interface UserService {
+
+
 	User addUser (User user);
 
 	void updateUser (User u);

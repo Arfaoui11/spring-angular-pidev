@@ -73,6 +73,11 @@ public class SubscriptionController {
     public int GetNbrSubscriptionUser(@PathVariable(name = "idU") Long idUser){
         return subscriptionService.getNbreSubsByUser(idUser);
     }
+    @GetMapping(value  ="/getNumberOfUserInThisSubscription/{id}")
+    @ResponseBody
+    public Integer  getNumberOfUserInThisSubscription(@PathVariable("id") Integer idSub){
+        return subscriptionService.getNumberOfUserInThisSubscription(idSub);
+    }
 
 
 }

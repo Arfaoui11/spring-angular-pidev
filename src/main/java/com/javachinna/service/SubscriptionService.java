@@ -64,4 +64,13 @@ public class SubscriptionService implements ISubscriptionService {
     public int getNbreSubsByUser(Long idUser) {
         return subscRepo.GetNbrSubscriptionByUser(idUser);
     }
+
+
+
+    @Override
+    public Integer getNumberOfUserInThisSubscription(Integer idSubscription) {
+        return  subscRepo.getNberOfUserInThisSubscription(idSubscription);
+
+    }
+
 }

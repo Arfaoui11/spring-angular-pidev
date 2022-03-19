@@ -86,7 +86,7 @@ public class User implements Serializable {
 
 
 	@JsonIgnore
-	@ManyToMany
+	@ManyToMany(mappedBy = "users",cascade =CascadeType.ALL)
 	private Set<Subscription> subscs;
 
 

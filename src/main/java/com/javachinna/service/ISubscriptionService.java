@@ -23,6 +23,8 @@ public interface ISubscriptionService {
     void assignSubscriptionToUser(Integer id_subs, Long id_user);
 	int getNbreSubsByUser(Long idUser);
 
+
+	Integer getNumberOfUserInThisSubscription(Integer idSubscription);
 }
 
 
