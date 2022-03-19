@@ -21,10 +21,14 @@ public class QuizCourses  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer idQuiz;
+
     private String title;
+
     private Integer score;
+
     @Temporal (TemporalType.DATE)
     private Date createAt;
+
     private String content ;
 
     @ManyToOne
