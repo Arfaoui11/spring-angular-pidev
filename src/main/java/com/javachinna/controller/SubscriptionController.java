@@ -4,6 +4,7 @@ package com.javachinna.controller;
 import com.javachinna.model.Subscription;
 import com.javachinna.service.ISubscriptionService;
 import com.javachinna.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,17 +56,24 @@ public class SubscriptionController {
     public void deleteSubscription(@PathVariable("id_subscription") Integer id_subscription){
     	subscriptionService.deleteSubscription(id_subscription);
     }
-    
-    
-  //http://localhost:8089/api/subscription/assignSubscriptionToUser/{id_subs}/{id_user}
+
+
+    //http://localhost:8089/api/subscription/assignSubscriptionToUser/{id_subs}/{id_user}
     @GetMapping("/assignSubscriptionToUser/{id_subs}/{id_user}")
     @ResponseBody
     public void assignSubscriptionToUser(@PathVariable("id_subs") Integer id_subs, @PathVariable("id_user") Integer id_user )  {
-    	subscriptionService.assignSubscriptionToUser(id_subs, Long.valueOf(id_user));
+        subscriptionService.assignSubscriptionToUser(id_subs, Long.valueOf(id_user));
 
 
-    	
+
     }
+    @ApiOperation(value = "get Nbr Subscription By User")
+    @GetMapping("/getNbrSubscriptionUser/{idU}")
+    @ResponseBody
+    public int GetNbrSubscriptionUser(@PathVariable(name = "idU") Long idUser){
+        return subscriptionService.getNbreSubsByUser(idUser);
+    }
+
 
 }
 

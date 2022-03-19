@@ -21,6 +21,8 @@ public interface ISubscriptionService {
 	 
 	 //affectation
     void assignSubscriptionToUser(Integer id_subs, Long id_user);
+	int getNbreSubsByUser(Long idUser);
+
 }
 
 

@@ -28,8 +28,8 @@ public class Subscription implements Serializable {
 	private Date startDate;
 	private Date endDate;
 
-	
+
 	@JsonIgnore
 	@ManyToMany
-	private Set<User> users;;
+	private Set<User> users;
 }

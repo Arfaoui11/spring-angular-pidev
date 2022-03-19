@@ -53,19 +53,15 @@ public class SubscriptionService implements ISubscriptionService {
 
     @Override
     public void assignSubscriptionToUser(Integer id_subs, Long id_user) {
-        User u = userRepo.findById(id_user.longValue()).orElse(null);
+        User u = userRepo.findById(id_user).orElse(null);
         Subscription sub = subscRepo.findById(id_subs).orElse(null);
         u.getSubscs().add(sub);
         userRepo.save(u);
-        //u.setNb_subsc(0);
-        //
-        // ²Integer nbre = u.getNb_subsc()+1;
-       // u.setNb_subsc(nbre);
 
+    }
 
-
-
-
-
+    @Override
+    public int getNbreSubsByUser(Long idUser) {
+        return subscRepo.GetNbrSubscriptionByUser(idUser);
     }
 }

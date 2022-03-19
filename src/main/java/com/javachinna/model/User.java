@@ -87,14 +87,14 @@ public class User implements Serializable {
 
 	@JsonIgnore
 	@ManyToMany
-	private List<Subscription> subscs;
+	private Set<Subscription> subscs;
 
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy ="User")
 	private Session session;
 
 	//private Integer nb_subsc;
-	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@OneToMany
 	@JsonIgnore
 	private Set<Appointment> appointments;
 

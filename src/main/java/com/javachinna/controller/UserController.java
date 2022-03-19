@@ -2,10 +2,14 @@ package com.javachinna.controller;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.javachinna.dto.QuestionsDTO;
+
 import com.javachinna.model.Option;
 import com.javachinna.model.Question;
+import com.javachinna.model.User;
 import com.javachinna.repo.OptionRepository;
 import com.javachinna.service.QuestionService;
+import com.javachinna.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,15 +22,27 @@ import com.javachinna.util.GeneralUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private QuestionService questionService;
 	@Autowired
 	private OptionRepository optionRepository ;
+
+
+
+	@GetMapping("/GetUser/{id}")
+	@ResponseBody
+	@ApiOperation(value = "Get User ")
+	public Optional<User> GetUser(@PathVariable ("id") Long idUser) {
+		return userService.findUserById(idUser);
+	}
 
 
 
