@@ -6,9 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +36,6 @@ public class User implements Serializable {
 	//@Column(name = "PROVIDER_USER_ID")
 	private String providerUserId;
 
-	private String email;
 	private String firstName;
 	private String lastName;
 
@@ -51,11 +55,27 @@ public class User implements Serializable {
 	private String password;
 
 	private String provider;
+
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
+
 	private int priceconsultation;
 
 	private int Score;
+
+	//@Positive
+	private double salary;
+
+	//@Positive
+	private Integer tarifHoraire;
+
+//	@NotNull
+//	@Email(message = "Email should be valid")
+	private String email;
+
+	//@Min(value = 18, message = "Age should not be less than 18")
+	//@Max(value = 150, message = "Age should not be greater than 150")
+	private int age;
 
 
 	// bi-directional many-to-many association to Role
@@ -110,5 +130,23 @@ public class User implements Serializable {
 			} )
 	@JsonIgnore
 	private  Set<Candidacy> candidacy;
+
+
+
+	@OneToMany(mappedBy = "formateur")
+	@JsonIgnore
+	private Set<Formation> formationF;
+
+
+	@ManyToMany(mappedBy = "apprenant", fetch = FetchType.EAGER
+			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<Formation> formationA;
+
+
+	@OneToMany(mappedBy = "sUser"
+			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<Result> results;
 
 }

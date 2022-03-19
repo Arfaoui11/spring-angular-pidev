@@ -21,6 +21,6 @@ public class SendEmailService implements ISendEmailService {
         message.setSubject(subject);
 
         mailSender.send(message);
-        System.out.println("Mail Send...");
+        System.out.println("Mail Sent successfully......");
     }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Table(name = "Quizes")
 public class Quiz {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long quizId;

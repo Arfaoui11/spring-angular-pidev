@@ -29,4 +29,33 @@ public class PDFGeneratorService {
         document.add(paragraph2);
         document.close();
     }
+
+
+    public void exportFor(HttpServletResponse response,String p1 ,String p2,String qrcode) throws IOException, com.itextpdf.text.DocumentException {
+        com.itextpdf.text.Document document = new com.itextpdf.text.Document(com.itextpdf.text.PageSize.A4);
+        com.itextpdf.text.pdf.PdfWriter.getInstance(document, response.getOutputStream());
+
+        document.open();
+        com.itextpdf.text.Font fontTitle = com.itextpdf.text.FontFactory.getFont(com.itextpdf.text.FontFactory.HELVETICA_BOLD);
+        fontTitle.setSize(18);
+
+        com.itextpdf.text.Paragraph paragraph = new com.itextpdf.text.Paragraph(p1, fontTitle);
+        paragraph.setAlignment(com.itextpdf.text.Paragraph.ALIGN_CENTER);
+
+        com.itextpdf.text.Font fontParagraph = com.itextpdf.text.FontFactory.getFont(com.itextpdf.text.FontFactory.HELVETICA);
+        fontParagraph.setSize(12);
+
+        //   Image img = Image.getInstance("./src/main/resources/static/img/QRCode.png");
+        // img.scalePercent(50, 50);
+        //img.setAlignment(Element.ALIGN_RIGHT);
+
+
+        com.itextpdf.text.Paragraph paragraph2 = new com.itextpdf.text.Paragraph(p2, fontParagraph);
+        paragraph2.setAlignment(com.itextpdf.text.Paragraph.ALIGN_LEFT);
+
+        document.add(paragraph);
+        //  document.add(img);
+        document.add(paragraph2);
+        document.close();
+    }
 }
