@@ -1,8 +1,8 @@
 package com.javachinna.dto;
 
 /**
- * @author Chinna
- * @since 26/3/18
+ * @author User
+ * @since 26/3/22
  */
 public enum SocialProvider {
 

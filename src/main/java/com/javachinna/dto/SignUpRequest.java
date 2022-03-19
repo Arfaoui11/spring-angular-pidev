@@ -9,8 +9,8 @@ import com.javachinna.validator.PasswordMatches;
 import lombok.Data;
 
 /**
- * @author Chinna
- * @since 26/3/18
+ * @author User
+ * @since 26/3/22
  */
 @Data
 @PasswordMatches
@@ -36,13 +36,33 @@ public class SignUpRequest {
 
 	private Profession profession;
 
-	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession) {
+
+	private String firstName;
+	private String lastName;
+	private int priceconsultation;
+
+	private int Score;
+
+	private double salary;
+
+	private Integer tarifHoraire;
+	private int age;
+
+	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,int priceconsultation,int score,double salary,Integer tarifHoraire,int age)
+	{
 		this.providerUserId = providerUserId;
 		this.displayName = displayName;
 		this.email = email;
 		this.password = password;
 		this.socialProvider = socialProvider;
 		this.profession = profession;
+		this.lastName=lastName;
+		this.firstName=firstName;
+		this.age=age;
+		this.salary=salary;
+		this.tarifHoraire=tarifHoraire;
+		this.Score=score;
+		this.priceconsultation = priceconsultation;
 	}
 
 	public static Builder getBuilder() {
@@ -56,6 +76,16 @@ public class SignUpRequest {
 		private String password;
 		private SocialProvider socialProvider;
 		private Profession profession;
+		private String firstName;
+		private String lastName;
+		private int priceconsultation;
+
+		private int Score;
+
+		private double salary;
+
+		private Integer tarifHoraire;
+		private int age;
 
 
 		public Builder addProviderUserID(final String userID) {
@@ -70,6 +100,34 @@ public class SignUpRequest {
 
 		public Builder addEmail(final String email) {
 			this.email = email;
+			return this;
+		}
+		public Builder addLastName(final String lastName) {
+			this.lastName = lastName;
+			return this;
+		}
+		public Builder addFirstName(final String firstName) {
+			this.firstName = firstName;
+			return this;
+		}
+		public Builder addAge(final int age) {
+			this.age = age;
+			return this;
+		}
+		public Builder addScore(final int Score) {
+			this.Score = Score;
+			return this;
+		}
+		public Builder addSalary(final double salary) {
+			this.salary = salary;
+			return this;
+		}
+		public Builder addTarifHoraire(final Integer tarifHoraire) {
+			this.tarifHoraire = tarifHoraire;
+			return this;
+		}
+		public Builder addPriceConsultation(final Integer priceconsultation) {
+			this.priceconsultation = priceconsultation;
 			return this;
 		}
 
@@ -88,7 +146,7 @@ public class SignUpRequest {
 		}
 
 		public SignUpRequest build() {
-			return new SignUpRequest(providerUserID, displayName, email, password, socialProvider,profession);
+			return new SignUpRequest(providerUserID, displayName, email, password, socialProvider,profession,firstName,lastName,priceconsultation,Score,salary,tarifHoraire,age);
 		}
 	}
 }

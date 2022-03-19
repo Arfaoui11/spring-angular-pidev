@@ -14,7 +14,7 @@ import com.javachinna.util.GeneralUtils;
 
 /**
  * 
- * @author Chinna
+ * @author User
  *
  */
 public class LocalUser extends User implements OAuth2User, OidcUser {

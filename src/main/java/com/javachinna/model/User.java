@@ -30,22 +30,22 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//@Column(name = "USER_ID")
+	@Column(name = "USER_ID")
 	private Long id;
 
-	//@Column(name = "PROVIDER_USER_ID")
+	@Column(name = "PROVIDER_USER_ID")
 	private String providerUserId;
 
 	private String firstName;
 	private String lastName;
 
-	//@Column(name = "enabled", columnDefinition = "BIT", length = 1)
+	@Column(name = "enabled", columnDefinition = "BIT", length = 1)
 	private boolean enabled;
 
-	//@Column(name = "DISPLAY_NAME")
+	@Column(name = "DISPLAY_NAME")
 	private String displayName;
 
-	//@Column(name = "created_date", nullable = false, updatable = false)
+	@Column(name = "created_date", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	protected Date createdDate;
 
@@ -91,6 +91,7 @@ public class User implements Serializable {
 
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy ="User")
+	@JsonIgnore
 	private Session session;
 
 	//private Integer nb_subsc;

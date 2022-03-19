@@ -4,7 +4,8 @@ import org.springframework.security.core.AuthenticationException;
 
 /**
  * 
- * @author Chinna
+ *   @author User
+ *   @since 26/3/22
  *
  */
 public class UserAlreadyExistAuthenticationException extends AuthenticationException {
