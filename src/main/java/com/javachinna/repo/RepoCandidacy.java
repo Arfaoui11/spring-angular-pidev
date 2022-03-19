@@ -5,6 +5,7 @@ import com.javachinna.model.Candidacy;
 import com.javachinna.model.Profession;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
