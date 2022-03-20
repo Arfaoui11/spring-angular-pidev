@@ -44,12 +44,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Integer getNbrApprenantByFormation(@Param("titre") String titre );
 
 
-	@Query(value="select f from User f where f.profession=0")
+	@Query(value="select f from User f where f.profession='FORMER'")
 	List<User> getFormateur();
 
 
 
-	@Query(value="select f from User f where f.profession=1")
+	@Query(value="select f from User f where f.profession='LEARNER'")
 	List<User> getApprenant();
 
 

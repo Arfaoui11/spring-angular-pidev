@@ -366,38 +366,64 @@ public class ServiceFormation implements IServiceFormation {
         ///User with gifts Free for MAx Score
 
 
-       for(Formation form : iFormationRepo.listFormationParApprenant(idApprenant)) {
-          if(iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).size()!=0)
-           {
-               user = iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).get(0);
-                //}
+        if(iResultRepo.getScore(idApprenant)==null)
+        {
+            if (iFormationRepo.getNbrApprenantByFormationId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
+
+                if (iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 2 ) {
+
+                    log.info("nbr "+iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df));
+                    formation.getApprenant().add(apprenant);
+                    iFormationRepo.save(formation);
 
 
-                if (iFormationRepo.getNbrApprenantByFormationId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
-
-                    if (iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 2 || apprenant.getId().equals(user.getId())) {
-                        if (iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 3) {
-
-                            log.info("nbr "+iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df));
-                            formation.getApprenant().add(apprenant);
-                            iFormationRepo.save(formation);
-                        } else {
-                            log.info("this apprenant we have 3 (MAX formation in this domain ");
-                            this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getLastName() + " " + apprenant.getFirstName() + " .");
-                        }
-
-                    } else {
-                        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getLastName() + " " + apprenant.getFirstName() + " .");
-                        log.info("this apprenant we have 2 (MAX formation in this domain ");
-                    }
                 } else {
-                    this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "Learner list complete  ", " We have in this courses " + formation.getNbrMaxParticipant() + " number of learner Maximum" + apprenant.getLastName() + " - " + apprenant.getFirstName() + "  .");
-                    log.info(" Learner list complete Max learner " + formation.getNbrMaxParticipant());
+                    this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getLastName() + " " + apprenant.getFirstName() + " .");
+                    log.info("this apprenant we have 2 (MAX formation in this domain ");
                 }
+            } else {
+                this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "Learner list complete  ", " We have in this courses " + formation.getNbrMaxParticipant() + " number of learner Maximum" + apprenant.getLastName() + " - " + apprenant.getFirstName() + "  .");
+                log.info(" Learner list complete Max learner " + formation.getNbrMaxParticipant());
             }
 
+        }else
+        {
+            for(Formation form : iFormationRepo.findAll()) {
+                if(iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).size()!=0)
+                {
+                    user = iUserRepo.getApprenantWithScoreForGifts(form.getIdFormation()).get(0);
+                    //}
 
-    }
+
+                    if (iFormationRepo.getNbrApprenantByFormationId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
+
+                        if (iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 2 || apprenant.getId().equals(user.getId())) {
+                            if (iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df) < 3) {
+
+                                log.info("nbr "+iFormationRepo.getNbrFormationByApprenant(idApprenant, formation.getDomain(), dd, df));
+                                formation.getApprenant().add(apprenant);
+                                iFormationRepo.save(formation);
+                            } else {
+                                log.info("this apprenant we have 3 (MAX formation in this domain ");
+                                this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getLastName() + " " + apprenant.getFirstName() + " .");
+                            }
+
+                        } else {
+                            this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "we don't have acces to add two coursus in same domain ", "we have 2 (MAX formation in this domain) NAME : " + apprenant.getLastName() + " " + apprenant.getFirstName() + " .");
+                            log.info("this apprenant we have 2 (MAX formation in this domain ");
+                        }
+                    } else {
+                        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "Learner list complete  ", " We have in this courses " + formation.getNbrMaxParticipant() + " number of learner Maximum" + apprenant.getLastName() + " - " + apprenant.getFirstName() + "  .");
+                        log.info(" Learner list complete Max learner " + formation.getNbrMaxParticipant());
+                    }
+                }
+
+
+            }
+        }
+
+
+
 
     }
 /*

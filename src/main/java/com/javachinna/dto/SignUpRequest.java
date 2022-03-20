@@ -39,16 +39,17 @@ public class SignUpRequest {
 
 	private String firstName;
 	private String lastName;
-	private int priceconsultation;
+	private Integer priceconsultation;
 
-	private int Score;
+	private Integer Score;
 
-	private double salary;
+	private Integer salary;
 
 	private Integer tarifHoraire;
-	private int age;
 
-	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,int priceconsultation,int score,double salary,Integer tarifHoraire,int age)
+	private Integer age;
+
+	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age)
 	{
 		this.providerUserId = providerUserId;
 		this.displayName = displayName;
@@ -57,12 +58,12 @@ public class SignUpRequest {
 		this.socialProvider = socialProvider;
 		this.profession = profession;
 		this.lastName=lastName;
+		this.priceconsultation = priceconsultation;
 		this.firstName=firstName;
-		this.age=age;
+		this.Score=score;
 		this.salary=salary;
 		this.tarifHoraire=tarifHoraire;
-		this.Score=score;
-		this.priceconsultation = priceconsultation;
+		this.age=age;
 	}
 
 	public static Builder getBuilder() {
@@ -78,14 +79,14 @@ public class SignUpRequest {
 		private Profession profession;
 		private String firstName;
 		private String lastName;
-		private int priceconsultation;
+		private Integer priceconsultation;
 
-		private int Score;
+		private Integer Score;
 
-		private double salary;
+		private Integer salary;
 
 		private Integer tarifHoraire;
-		private int age;
+		private Integer age;
 
 
 		public Builder addProviderUserID(final String userID) {
@@ -110,15 +111,15 @@ public class SignUpRequest {
 			this.firstName = firstName;
 			return this;
 		}
-		public Builder addAge(final int age) {
+		public Builder addAge(final Integer age) {
 			this.age = age;
 			return this;
 		}
-		public Builder addScore(final int Score) {
+		public Builder addScore(final Integer Score) {
 			this.Score = Score;
 			return this;
 		}
-		public Builder addSalary(final double salary) {
+		public Builder addSalary(final Integer salary) {
 			this.salary = salary;
 			return this;
 		}

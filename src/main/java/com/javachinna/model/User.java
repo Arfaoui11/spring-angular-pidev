@@ -59,12 +59,12 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
 
-	private int priceconsultation;
+	private Integer priceconsultation;
 
-	private int Score;
+	private Integer Score;
 
 	//@Positive
-	private double salary;
+	private Integer salary;
 
 	//@Positive
 	private Integer tarifHoraire;
@@ -75,7 +75,7 @@ public class User implements Serializable {
 
 	//@Min(value = 18, message = "Age should not be less than 18")
 	//@Max(value = 150, message = "Age should not be greater than 150")
-	private int age;
+	private Integer age;
 
 
 	// bi-directional many-to-many association to Role
