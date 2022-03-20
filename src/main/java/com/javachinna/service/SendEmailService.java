@@ -29,7 +29,7 @@ public class SendEmailService implements ISendEmailService {
         mailSender.send(message);
         System.out.println("Mail Sent successfully......");
     }
-
+/*
     @Override
     public void sendSimpleEmailWithFils(String toEmail, String body, String subject, String attchment) throws MessagingException {
 
@@ -46,7 +46,7 @@ public class SendEmailService implements ISendEmailService {
         mailSender.send(message);
         System.out.println("Mail Sent successfully With Attchement ......");
     }
-
+*/
 
 
 
