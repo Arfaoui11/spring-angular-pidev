@@ -154,7 +154,6 @@ public class WomenServiceImpl implements IWomenService {
 
     @Override
     @Scheduled(cron = "0 0/1 * * * *")
-
     public void DeleteAppointmentAfterfinalDate() {
         LocalDate currentdDate1 =  LocalDate.now();
 

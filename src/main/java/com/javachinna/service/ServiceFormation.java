@@ -363,7 +363,7 @@ public class ServiceFormation implements IServiceFormation {
         Date dd =Date.from(currentdDate1.minusMonths(3).atStartOfDay(defaultZoneId).toInstant());
         Date df =Date.from(currentdDate1.plusMonths(3).atStartOfDay(defaultZoneId).toInstant());
 
-        ///User with gifts Free for MAx Score
+        ///User with gifts Free for Max Score
 
 
         if(iResultRepo.getScore(idApprenant)==null)

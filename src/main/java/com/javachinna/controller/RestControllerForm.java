@@ -234,7 +234,7 @@ public class RestControllerForm {
     @ApiOperation(value = "ajouter Et Affecter Formation A Formateur with Max  ")
     public void affecterApprenantFormationWithMax(@PathVariable(name = "idA") Long idApprenant,@PathVariable(name = "idF") Integer idFormation)
     {
-        iServiceFormation.affecterApprenantFormationWithMax(idApprenant, idFormation);
+        iServiceFormation. affecterApprenantFormationWithMax(idApprenant, idFormation);
     }
 
 
