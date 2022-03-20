@@ -7,9 +7,12 @@ import com.javachinna.repo.*;
 import com.google.zxing.WriterException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -426,15 +429,14 @@ public class ServiceFormation implements IServiceFormation {
 
 
     }
-/*
+
     @EventListener(ApplicationReadyEvent.class)
-    public void sendMail()
-    {
-        emailSenderService.sendEmail("mahdijr2015@gmail.com","we don't add two coursus in same domain " ,"this apprenant we have 2 (MAX formation in this domain");
+    public void sendMail() throws MessagingException {
+        emailSenderService.sendSimpleEmailWithFils("mahdijr2015@gmail.com","we don't add two coursus in same domain " ,"this apprenant we have 2 (MAX formation in this domain","/Users/macos/Downloads/Examen-SOA-Révision.pdf");
     }
 
 
- */
+
     ///////////////  Affectation 3adiya  ////////////////////
     @Override
     public void affecterApprenantFormation(Long idApprenant, Integer idFormation) {
