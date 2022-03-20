@@ -429,12 +429,12 @@ public class ServiceFormation implements IServiceFormation {
 
 
     }
-
+/*
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() throws MessagingException {
         emailSenderService.sendSimpleEmailWithFils("mahdijr2015@gmail.com","we don't add two coursus in same domain " ,"this apprenant we have 2 (MAX formation in this domain","/Users/macos/Downloads/Examen-SOA-Révision.pdf");
     }
-
+*/
 
 
     ///////////////  Affectation 3adiya  ////////////////////
