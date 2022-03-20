@@ -77,6 +77,24 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> getApprenantWithScoreForGifts(@Param("id") Integer id);
 
 	//////////////////////////////             03/19/2022             ///////////////////////////////
+	//omar
+	@Query(" select s from User s WHERE s.id not in (select r from RatingPartner r)")
+	List<User> findStudentWithoutRatings() ;
+	//List<User> highestStudentDemands();
+
+
+	@Query("select u from User u join u.candidacies c where c.partnerInstitution.idPartner=:idUniversity and c.status= 'ACCEPTED'  ")
+	List<User>acceptedStudentsByUniversity(@Param("idUniversity") Integer idUniversity);
+
+
+	@Query(" select s from User s WHERE s.id in (select r from RatingPartner r join r.partnerInstitution w where w.idPartner=:idUniversity) ")
+	List<User>findStudentWithRatingByUniversity(@Param("idUniversity") Integer idUniversity);
+
+
+
+	@Query("select count(d.idCandidacy) from CandidacyUniversity d where d.user.id=:idStudent and d.partnerInstitution.idPartner=:IdUniversity")
+	int studentDemands(@Param("idStudent") Long IdStudent ,@Param("IdUniversity") Integer IdUniversity);
+
 
 
 }

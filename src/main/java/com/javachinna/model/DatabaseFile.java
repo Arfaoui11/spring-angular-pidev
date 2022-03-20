@@ -1,10 +1,12 @@
 package com.javachinna.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,6 +28,15 @@ public class DatabaseFile {
 
     @ManyToOne
     private Formation formation;
+    @ManyToOne
+    @JsonIgnore
+    private User user;
+
+    @OneToMany(mappedBy = "fileUpload",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch=FetchType.EAGER)
+    @JsonIgnore
+    private Set<CandidacyUniversity> candidacies;
+
 
     public DatabaseFile() {
 

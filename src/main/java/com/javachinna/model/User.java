@@ -76,6 +76,8 @@ public class User implements Serializable {
 	//@Min(value = 18, message = "Age should not be less than 18")
 	//@Max(value = 150, message = "Age should not be greater than 150")
 	private Integer age;
+	private String Nationality;
+	private String phoneNumber;
 
 
 	// bi-directional many-to-many association to Role
@@ -150,5 +152,24 @@ public class User implements Serializable {
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<Result> results;
+	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+			fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<PartnerInstitution> partnerInstitutions ;
+
+	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+			fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<RatingPartner>ratingPartners;
+
+	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+			fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<CandidacyUniversity>candidacies;
+
+	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+			fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<DatabaseFile>fileUploads;
 
 }

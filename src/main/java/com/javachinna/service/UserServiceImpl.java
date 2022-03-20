@@ -160,4 +160,59 @@ public class UserServiceImpl implements UserService {
 	public Optional<User> findUserById(Long id) {
 		return userRepository.findById(id);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//OMAR
+	@Override
+	public int  numStudentWithoutRatings() {
+		List<User>listStudent= (List<User>) userRepository.findStudentWithoutRatings();
+		int num=0;
+		for(User u :listStudent){
+			{
+				num=num+1;
+			}
+		}
+		return num;
+	}
+
+	@Override
+	public int numStudentsWithRatingsByUniversity(Integer idUniversity) {
+		List<User> listS=userRepository.findStudentWithRatingByUniversity( idUniversity);
+		int num=0;
+		for (User u : listS){
+			num+=1;
+		}
+
+		return  num;
+
+	}
+
+
+	@Override
+	public List<User> acceptedStudentsByUniversity(Integer idUniversity) {
+		return userRepository.acceptedStudentsByUniversity(idUniversity);
+	}
+
+	@Override
+	public int studentDemands(Long IdStudent,Integer IdUniversity) {
+		return userRepository.studentDemands(IdStudent,IdUniversity);
+	}
 }
