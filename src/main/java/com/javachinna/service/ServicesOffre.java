@@ -122,13 +122,24 @@ public class ServicesOffre implements IServices{
         return offres;
     }
 
+    ///////////    new    12:30  Mahdi ///////////////
     @Override
-    public List<Offres> listAll(String keyword) {
+    public List<Offres> listAllOffres(String keyword) {
         if (keyword != null) {
             return  repoOff.findAll(keyword);
         }
         return (List<Offres>) repoOff.findAll();
     }
+
+    @Override
+    public List<Candidacy> listAllCandidacy(String keyword) {
+        if (keyword != null) {
+            return  repoCandidacy.findAll(keyword);
+        }
+        return (List<Candidacy>) repoCandidacy.findAll();
+    }
+
+
 
 
 

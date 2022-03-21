@@ -26,6 +26,7 @@ public interface IServices {
     List<Candidacy> offerByProfession( Profession profession);
     Integer  getNumberOfUserInThisCandidacy( Integer idCandidacy);
     Offres getOffresHighRecommended();
-    List<Offres> listAll (String keyword);
+    List<Offres> listAllOffres (String keyword);
+    List<Candidacy> listAllCandidacy(String keyword);
 
 }
