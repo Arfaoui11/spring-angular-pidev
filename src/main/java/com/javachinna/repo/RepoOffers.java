@@ -21,6 +21,6 @@ public interface RepoOffers extends CrudRepository<Offres,Integer> {
 
 
     @Query("SELECT o FROM Offres o WHERE CONCAT(o.dateEndOffer, o.dateBeginOffer, o.dateInterview , o.priceOffer ,o.profession) LIKE %?1%")
-    public List<Offres> findAll(String keyword);
+     List<Offres> findAll(String keyword);
 
 }

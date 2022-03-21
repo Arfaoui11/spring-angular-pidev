@@ -30,6 +30,7 @@ public class exportPdf {
             para.setAlignment(Element.ALIGN_CENTER);
             document.add(para);
             document.add(Chunk.NEWLINE);
+
             PdfPTable table=new PdfPTable(9);
             //make the columns
             Stream.of("Id","Title","domain","Frais","Niveau","startDay","EndDay","nbrHeurs","NbrMax").forEach(headerTitle -> {
@@ -47,13 +48,13 @@ public class exportPdf {
 
             for (Formation f : formations){
 
-                //Id university
+
                 PdfPCell idCell = new PdfPCell(new Phrase((f.getIdFormation().toString())));
                 idCell.setPaddingLeft(1);
                 idCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 idCell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 table.addCell(idCell);
-                //Name university
+
                 PdfPCell nameCell = new PdfPCell(new Phrase(f.getTitle()));
                 nameCell.setPaddingLeft(1);
                 nameCell.setVerticalAlignment(Element.ALIGN_MIDDLE);

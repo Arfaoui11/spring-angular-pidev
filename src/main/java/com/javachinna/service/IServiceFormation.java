@@ -75,6 +75,9 @@ public interface IServiceFormation {
     void likeFormation(Integer idF);
     void dislikeFormation(Integer idF);
 
+    void likeFormationWithRate(Integer idF,Integer rate);
+    void dislikeFormationWIthRate(Integer idF ,Integer rate);
+
 
 
     void SearchHistorique(String keyword);

@@ -8,6 +8,6 @@ public interface ISendEmailService {
                                  String subject);
 
 
-// void sendSimpleEmailWithFils( String toEmail, String body, String subject, String attchment) throws MessagingException;
+ void sendSimpleEmailWithFils( String toEmail, String body, String subject, String attchment) throws MessagingException;
 
 }

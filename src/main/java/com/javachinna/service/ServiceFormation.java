@@ -520,7 +520,21 @@ public class ServiceFormation implements IServiceFormation {
 
     }
 
+    @Override
+    public void likeFormationWithRate(Integer idF, Integer rate) {
+        Formation formation = iFormationRepo.findById(idF).orElse(null);
 
+        formation.setLikes(rate);
+        iFormationRepo.save(formation);
+    }
+
+    @Override
+    public void dislikeFormationWIthRate(Integer idF, Integer rate) {
+        Formation formation = iFormationRepo.findById(idF).orElse(null);
+
+        formation.setDislikes(rate);
+        iFormationRepo.save(formation);
+    }
 
 
     //////////////// Search historique ////////////////
