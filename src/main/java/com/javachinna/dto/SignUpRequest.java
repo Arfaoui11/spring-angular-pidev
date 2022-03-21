@@ -49,7 +49,11 @@ public class SignUpRequest {
 
 	private Integer age;
 
-	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age)
+	private String Nationality;
+
+	private String phoneNumber;
+
+	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age,String nationality,String phone)
 	{
 		this.providerUserId = providerUserId;
 		this.displayName = displayName;
@@ -57,13 +61,15 @@ public class SignUpRequest {
 		this.password = password;
 		this.socialProvider = socialProvider;
 		this.profession = profession;
-		this.lastName=lastName;
+		this.lastName = lastName;
 		this.priceconsultation = priceconsultation;
-		this.firstName=firstName;
-		this.Score=score;
-		this.salary=salary;
-		this.tarifHoraire=tarifHoraire;
-		this.age=age;
+		this.firstName = firstName;
+		this.Score = score;
+		this.salary = salary;
+		this.tarifHoraire = tarifHoraire;
+		this.age = age;
+		this.Nationality = nationality;
+		this.phoneNumber = phone;
 	}
 
 	public static Builder getBuilder() {
@@ -87,6 +93,9 @@ public class SignUpRequest {
 
 		private Integer tarifHoraire;
 		private Integer age;
+		private String Nationality;
+
+		private String phoneNumber;
 
 
 		public Builder addProviderUserID(final String userID) {
@@ -137,6 +146,16 @@ public class SignUpRequest {
 			return this;
 		}
 
+		public Builder addNationality(final String nationality) {
+			this.Nationality = nationality;
+			return this;
+		}
+
+		public Builder addphoneNumber(final String phone) {
+			this.phoneNumber = phone;
+			return this;
+		}
+
 		public Builder addSocialProvider(final SocialProvider socialProvider) {
 			this.socialProvider = socialProvider;
 			return this;
@@ -147,7 +166,7 @@ public class SignUpRequest {
 		}
 
 		public SignUpRequest build() {
-			return new SignUpRequest(providerUserID, displayName, email, password, socialProvider,profession,firstName,lastName,priceconsultation,Score,salary,tarifHoraire,age);
+			return new SignUpRequest(providerUserID, displayName, email, password, socialProvider,profession,firstName,lastName,priceconsultation,Score,salary,tarifHoraire,age,Nationality,phoneNumber);
 		}
 	}
 }

@@ -84,6 +84,12 @@ public interface IServiceFormation {
 
 
 
+    void addComments(PostComments postComments ,Integer idF,Long idUser);
+    void deleteComments(Integer idC);
+
+
+
+
 
 
 

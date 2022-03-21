@@ -13,8 +13,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table( name = "postComments")
-public class postComments {
+@Table( name = "PostComments")
+public class PostComments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,9 @@ public class postComments {
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
-    @ManyToMany
+    @ManyToOne
     @JsonIgnore
-    private Set<User> user;
+    private User userC;
 
     @ManyToOne
     @JsonIgnore

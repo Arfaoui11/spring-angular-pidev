@@ -195,6 +195,7 @@ public class RestControllerForm {
 
 
     @PostMapping("/uploadFile/{idF}")
+    @ResponseBody
     public Response uploadFile(@RequestParam("file") MultipartFile file, @PathVariable(name = "idF") Integer idFormation) {
         DatabaseFile fileName = fileStorageService.storeFile(file,idFormation);
 
@@ -414,6 +415,22 @@ public class RestControllerForm {
     public void dislikeFormationWIthRate(@PathVariable(name = "idF") Integer idF,@PathVariable(name = "nbr") Integer rate)
     {
         iServiceFormation.dislikeFormationWIthRate(idF, rate);
+    }
+
+    @PostMapping("/addComments/{idF}/{idU}")
+    @ApiOperation(value = " ajouter Comments ")
+    @ResponseBody
+    public void addComments(@RequestBody PostComments postComments,@PathVariable(name = "idF") Integer idF,@PathVariable(name = "idU") Long idUser)
+    {
+     iServiceFormation.addComments(postComments,idF,idUser);
+    }
+
+    @ApiOperation(value = "Delete Comments")
+    @GetMapping("/deleteComments/{id}")
+    @ResponseBody
+    public void deleteComments(@PathVariable(name = "id") Integer idC)
+    {
+        iServiceFormation.deleteComments(idC);
     }
 
 

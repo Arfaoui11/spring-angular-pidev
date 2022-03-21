@@ -76,7 +76,9 @@ public class User implements Serializable {
 	//@Min(value = 18, message = "Age should not be less than 18")
 	//@Max(value = 150, message = "Age should not be greater than 150")
 	private Integer age;
+
 	private String Nationality;
+
 	private String phoneNumber;
 
 
@@ -153,32 +155,27 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Set<Result> results;
 
-	@ManyToMany(mappedBy = "user"
-			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "userC",cascade = CascadeType.ALL)
 	@JsonIgnore
-	private Set<postComments> postComments;
+	private Set<PostComments> postComments;
 
 
 
 
-	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
-			fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<PartnerInstitution> partnerInstitutions ;
 
-	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
-			fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	@JsonIgnore
-	private Set<RatingPartner>ratingPartners;
+	private Set<RatingPartner> ratingPartners;
 
-	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
-			fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	@JsonIgnore
-	private Set<CandidacyUniversity>candidacies;
+	private Set<CandidacyUniversity> candidacies;
 
-	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
-			fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	@JsonIgnore
-	private Set<DatabaseFile>fileUploads;
+	private Set<DatabaseFile> fileUploads;
 
 }

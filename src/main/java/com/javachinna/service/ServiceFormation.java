@@ -11,6 +11,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
@@ -36,6 +37,10 @@ public class ServiceFormation implements IServiceFormation {
     private IResultRepo iResultRepo;
     @Autowired
     private ISearchRepo iSearchRepo;
+    @Autowired
+    private ICommentsRepo iCommentsRepo;
+
+
 
 
     @Autowired
@@ -555,8 +560,20 @@ public class ServiceFormation implements IServiceFormation {
 
 
     }
+    @Override
+    public void addComments(PostComments postComments,Integer idF,Long idUser) {
 
+        Formation formation = iFormationRepo.findById(idF).orElse(null);
+        User user = iUserRepo.findById(idUser).orElse(null);
+        postComments.setUserC(user);
+        postComments.setFormation(formation);
+        iCommentsRepo.save(postComments);
+    }
 
+    @Override
+    public void deleteComments(Integer idC) {
+        iCommentsRepo.deleteById(idC);
+    }
 
 
 }
