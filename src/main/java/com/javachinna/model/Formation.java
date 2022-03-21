@@ -35,8 +35,7 @@ public class Formation {
     private Integer nbrMaxParticipant;
     private Integer frais;
 
-    private Integer likes;
-    private Integer dislikes;
+    private Double Rating;
 
     @ManyToOne
     @JsonIgnore

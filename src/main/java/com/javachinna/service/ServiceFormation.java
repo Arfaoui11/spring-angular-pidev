@@ -337,8 +337,7 @@ public class ServiceFormation implements IServiceFormation {
 
             if (this.iFormationRepo.nbrCoursesParFormateur(idFormateur,dd,df) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
             {
-                formation.setLikes(0);
-                formation.setDislikes(0);
+                formation.setRating(0.0);
                 formation.setFormateur(formateur);
                 iFormationRepo.save(formation);
             }else
@@ -506,40 +505,40 @@ public class ServiceFormation implements IServiceFormation {
         return  revenue;
     }
 
-    @Override
+    ///////////       Comments ///////////////
+  /*  @Override
     public void likeFormation(Integer idF) {
         Formation formation = iFormationRepo.findById(idF).orElse(null);
 
-        formation.setLikes(formation.getLikes()+1);
+      //  formation.setLikes(formation.getLikes()+1);
         iFormationRepo.save(formation);
 
 
     }
+
+
 
     @Override
     public void dislikeFormation(Integer idF) {
         Formation formation = iFormationRepo.findById(idF).orElse(null);
 
-        formation.setDislikes(formation.getDislikes()+1);
+        //formation.setDislikes(formation.getDislikes()+1);
         iFormationRepo.save(formation);
 
     }
+*/
+
+    //////////////////// Courses //////////////////////
 
     @Override
-    public void likeFormationWithRate(Integer idF, Integer rate) {
+    public void FormationWithRate(Integer idF, Double rate) {
         Formation formation = iFormationRepo.findById(idF).orElse(null);
 
-        formation.setLikes(rate);
+        formation.setRating(((formation.getRating()+rate)/2.0));
         iFormationRepo.save(formation);
     }
 
-    @Override
-    public void dislikeFormationWIthRate(Integer idF, Integer rate) {
-        Formation formation = iFormationRepo.findById(idF).orElse(null);
 
-        formation.setDislikes(rate);
-        iFormationRepo.save(formation);
-    }
 
 
     //////////////// Search historique ////////////////

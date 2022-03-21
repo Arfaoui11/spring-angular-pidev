@@ -24,6 +24,8 @@ public class PostComments {
     private String message ;
     @Temporal(TemporalType.DATE)
     private Date createAt;
+    private Integer likes;
+    private Integer dislikes;
 
     @ManyToOne
     @JsonIgnore

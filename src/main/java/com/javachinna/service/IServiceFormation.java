@@ -72,11 +72,11 @@ public interface IServiceFormation {
 
 
 
-    void likeFormation(Integer idF);
-    void dislikeFormation(Integer idF);
+   // void likeFormation(Integer idF);
+   // void dislikeFormation(Integer idF);
 
-    void likeFormationWithRate(Integer idF,Integer rate);
-    void dislikeFormationWIthRate(Integer idF ,Integer rate);
+
+    void FormationWithRate(Integer idF ,Double rate);
 
 
 
