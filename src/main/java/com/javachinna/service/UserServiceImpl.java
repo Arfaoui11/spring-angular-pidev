@@ -89,6 +89,8 @@ public class UserServiceImpl implements UserService {
 		user.setPriceconsultation(signUpRequest.getPriceconsultation());
 		user.setProfession(signUpRequest.getProfession());
 		user.setScore(signUpRequest.getScore());
+		user.setNationality(signUpRequest.getNationality());
+		user.setPhoneNumber(signUpRequest.getPhoneNumber());
 		user = userRepository.save(user);
 		userRepository.flush();
 		return user;
