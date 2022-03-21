@@ -113,6 +113,8 @@ import java.util.List;
             return  iServices.getOffresHighRecommended();
 
         }
+
+        //////////////
         @GetMapping("/SearchOffer/{keyword}")
         @ResponseBody
         @ApiOperation(value = "search offer ")
@@ -128,7 +130,11 @@ import java.util.List;
             return  listCandidacy;
         }
 
-
-
+        @GetMapping(value ="/getCandidacyByProfession/{pro}")
+        @ResponseBody
+        public List<Candidacy> CandidacyByProfession(@PathVariable("pro")  Profession profession)
+        {
+            return iServices.CandidacyByProfession(profession);
+        }
 
 }

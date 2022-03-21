@@ -139,9 +139,10 @@ public class ServicesOffre implements IServices{
         return (List<Candidacy>) repoCandidacy.findAll();
     }
 
-
-
-
+    @Override
+    public List<Candidacy> CandidacyByProfession(Profession profession) {
+        return repoCandidacy.offerByProfession(profession);
+    }
 
 
 }

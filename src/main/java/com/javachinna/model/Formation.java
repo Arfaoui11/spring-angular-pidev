@@ -57,6 +57,12 @@ public class Formation {
 
 
 
+    @OneToMany(mappedBy = "formation",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @JsonIgnore
+    private Set<postComments> postComments;
+
+
+
 
 
 

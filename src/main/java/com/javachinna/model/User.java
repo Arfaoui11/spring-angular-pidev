@@ -152,6 +152,15 @@ public class User implements Serializable {
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<Result> results;
+
+	@ManyToMany(mappedBy = "user"
+			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<postComments> postComments;
+
+
+
+
 	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
 			fetch=FetchType.EAGER)
 	@JsonIgnore

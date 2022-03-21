@@ -4,6 +4,7 @@ import com.javachinna.model.Candidacy;
 import com.javachinna.model.Offres;
 import com.javachinna.model.Profession;
 import com.javachinna.model.User;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -28,5 +29,6 @@ public interface IServices {
     Offres getOffresHighRecommended();
     List<Offres> listAllOffres (String keyword);
     List<Candidacy> listAllCandidacy(String keyword);
+    List<Candidacy> CandidacyByProfession(Profession profession);
 
 }
