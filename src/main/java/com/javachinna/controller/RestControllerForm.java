@@ -402,16 +402,16 @@ public class RestControllerForm {
     }
 
 
-    @PostMapping("/likeFormationWithRate/{idF}")
+    @PostMapping("/likeFormationWithRate/{idF}/{nbr}")
     @ApiOperation(value = " add Rate ")
-    public void likeFormationWithRate(Integer idF, Integer rate)
+    public void likeFormationWithRate(@PathVariable(name = "idF") Integer idF,@PathVariable(name = "nbr") Integer rate)
     {
         iServiceFormation.dislikeFormationWIthRate(idF, rate);
     }
 
-    @PostMapping("/dislikeFormationWIthRate/{idF}")
+    @PostMapping("/dislikeFormationWIthRate/{idF}/{nbr}")
     @ApiOperation(value = " add Rate ")
-    public void dislikeFormationWIthRate(Integer idF, Integer rate)
+    public void dislikeFormationWIthRate(@PathVariable(name = "idF") Integer idF,@PathVariable(name = "nbr") Integer rate)
     {
         iServiceFormation.dislikeFormationWIthRate(idF, rate);
     }

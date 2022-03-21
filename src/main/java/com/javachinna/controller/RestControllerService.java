@@ -117,8 +117,15 @@ import java.util.List;
         @ResponseBody
         @ApiOperation(value = "search offer ")
         public List<Offres> SearchOffer( @PathVariable("keyword") String keyword) {
-            List<Offres> listOffer = iServices.listAll(keyword);
+            List<Offres> listOffer = iServices.listAllOffres(keyword);
             return  listOffer;
+        }
+        @GetMapping("/SearchCandidacy/{keyword}")
+        @ResponseBody
+        @ApiOperation(value = "search offer ")
+        public List<Candidacy> SearchCandidacy( @PathVariable("keyword") String keyword) {
+            List<Candidacy> listCandidacy = iServices.listAllCandidacy(keyword);
+            return  listCandidacy;
         }
 
 
