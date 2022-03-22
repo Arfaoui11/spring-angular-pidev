@@ -4,6 +4,7 @@ package com.javachinna.service;
 
 import com.javachinna.model.*;
 
+import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public interface IServiceFormation {
 
     User FormateurwithMaxHo();
 
-     User getFormateurRemunerationMaxSalaire();
+     User getFormateurRemunerationMaxSalaire() throws MessagingException;
 
      TreeMap<Integer, User> getFormateurRemunerationMaxSalaireTrie();
 

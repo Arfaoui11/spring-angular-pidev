@@ -160,6 +160,9 @@ public class User implements Serializable {
 	private Set<PostComments> postComments;
 
 
+	@OneToMany(mappedBy="user")
+	@JsonIgnore
+	List<Certificat> certificats;
 
 
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)

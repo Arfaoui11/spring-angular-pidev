@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Date;
 import java.util.Set;
 
@@ -35,6 +37,8 @@ public class Formation {
     private Integer nbrMaxParticipant;
     private Integer frais;
 
+    @Max(5)
+    @Min(0)
     private Double Rating;
 
     @ManyToOne

@@ -8,11 +8,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface IFormationRepo extends CrudRepository<Formation,Integer> {
+
+
 
     @Query(value= "select SUM(f.nbrHeures*f.formateur.tarifHoraire) from Formation f where f.formateur.id=:id and f.start>=:dateD and f.end<=:dateF")
     Integer getFormateurRemunerationByDate(@Param("id") Long idFormateur, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
@@ -21,7 +24,7 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
     List<Object> getFormateurRemunerationByDateTrie(@Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
 
 
-    @Query(value= "select SUM(f.nbrHeures*f.formateur.tarifHoraire) from Formation f where f.formateur.id=:id and f.formateur.profession=0")
+    @Query(value= "select SUM(f.nbrHeures*f.formateur.tarifHoraire) from Formation f where f.formateur.id=:id and f.formateur.profession='FORMER'")
     Integer getFormateurRemuneration(@Param("id") Long idFormateur);
 
     @Query(value="select count(a.id) from Formation f join f.apprenant a where f.title=:titre")

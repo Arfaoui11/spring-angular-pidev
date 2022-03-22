@@ -24,8 +24,7 @@ public class PostComments {
     private String message ;
     @Temporal(TemporalType.DATE)
     private Date createAt;
-    private Integer likes;
-    private Integer dislikes;
+
 
     @ManyToOne
     @JsonIgnore
@@ -34,6 +33,14 @@ public class PostComments {
     @ManyToOne
     @JsonIgnore
     private Formation formation;
+
+
+    @OneToMany (mappedBy = "postComments",cascade = {CascadeType.REMOVE})
+    private Set<Likes> likes;
+
+    @OneToMany (mappedBy = "postComments",cascade = {CascadeType.REMOVE})
+    private Set<Dislikes> Dislikes;
+
 
 
 }

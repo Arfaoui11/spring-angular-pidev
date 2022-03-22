@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+
 	User findByEmail(String email);
 
 	boolean existsByEmail(String email);
@@ -94,7 +95,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query("select count(d.idCandidacy) from CandidacyUniversity d where d.user.id=:idStudent and d.partnerInstitution.idPartner=:IdUniversity")
 	int studentDemands(@Param("idStudent") Long IdStudent ,@Param("IdUniversity") Integer IdUniversity);
-
 
 
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
@@ -51,6 +52,8 @@ public class RestControllerForm {
 
     private final PDFGeneratorService pdfGeneratorService;
 
+    BadWordConfig badWordConfig  = new BadWordConfig();
+
     @Autowired
     private exportPdf export;
 
@@ -63,6 +66,8 @@ public class RestControllerForm {
     @GetMapping("/pdf/generate")
     @ApiOperation(value = " Generate PDF ")
     public void generatePDF(HttpServletResponse response,String p1 ,String p2 ,String qrcode) throws IOException, DocumentException {
+
+     // export.pdfReader();
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -262,8 +267,7 @@ public class RestControllerForm {
     @ApiOperation(value = " get Formateur Remuneration Max Salaire ")
     @GetMapping("/getFormateurRemunerationMaxSalaire")
     @ResponseBody
-    public User getFormateurRemunerationMaxSalaire()
-    {
+    public User getFormateurRemunerationMaxSalaire() throws MessagingException {
       return this.iServiceFormation.getFormateurRemunerationMaxSalaire();
     }
 
@@ -424,7 +428,13 @@ public class RestControllerForm {
     @ResponseBody
     public void addComments(@RequestBody PostComments postComments,@PathVariable(name = "idF") Integer idF,@PathVariable(name = "idU") Long idUser)
     {
-     iServiceFormation.addComments(postComments,idF,idUser);
+        PostComments p = new PostComments();
+        p.setMessage(badWordConfig.filterText(postComments.getMessage()));
+        p.setLikes(postComments.getLikes());
+        p.setDislikes(postComments.getDislikes());
+        p.setCreateAt(postComments.getCreateAt());
+        iServiceFormation.addComments(p,idF,idUser);
+
     }
 
     @ApiOperation(value = "Delete Comments")

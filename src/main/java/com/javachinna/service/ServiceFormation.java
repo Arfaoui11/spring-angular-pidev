@@ -40,6 +40,9 @@ public class ServiceFormation implements IServiceFormation {
     @Autowired
     private ICommentsRepo iCommentsRepo;
 
+    @Autowired
+    private exportPdf export;
+
 
 
 
@@ -87,6 +90,7 @@ public class ServiceFormation implements IServiceFormation {
 
     @Override
     public List<Formation> afficherFormation() {
+
         List<Formation> f =   (List<Formation>)iFormationRepo.findAll();
             return  f;
     }
@@ -113,7 +117,7 @@ public class ServiceFormation implements IServiceFormation {
     @Override
     @Scheduled(cron = "0 0/20 * * * *")
   //  @Scheduled(cron = "0 0 9 28 * ?")
-    public User getFormateurRemunerationMaxSalaire() {
+    public User getFormateurRemunerationMaxSalaire() throws MessagingException {
 
 
         int max = 0;
@@ -187,7 +191,8 @@ public class ServiceFormation implements IServiceFormation {
 
             u.setSalary(max + 200 );
             iUserRepo.save(u);
-            this.emailSenderService.sendSimpleEmail(u.getEmail(), "we have max houre of travel ", "we have max houre of travel we elevate salary with 200 $  : " + u.getSalary()+ "$  Name " + u.getLastName() + "--" + u.getFirstName() + " . ");
+            this.emailSenderService.sendSimpleEmailWithFils(u.getEmail(), "we have max houre of travel ", "we have max houre of travel we elevate salary with 200 $  : " + u.getSalary()+ "$  Name " + u.getLastName() + "--" + u.getFirstName() + " . ","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/mybadges/goldbadge.png");
+
             return u;
         }
 
@@ -238,7 +243,7 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-   // @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/1 * * * *")
     public void CertifactionStudents() {
 
         boolean status = false;
@@ -254,6 +259,7 @@ public class ServiceFormation implements IServiceFormation {
                 {
                     if(iResultRepo.getScore(u.getId()) >= 200 && iResultRepo.getScore(u.getId()) <=250 && iResultRepo.getNbrQuiz(u.getId()) == 5 )
                     {
+                        log.info( " Status"+iResultRepo.getNbrQuiz(u.getId()));
                         fin=false;
 
                         for (Result r : iResultRepo.getResultByIdUAndAndIdF(u.getId(),f.getIdFormation()))
@@ -270,8 +276,11 @@ public class ServiceFormation implements IServiceFormation {
                             if (status && !fin)
                             {
                                 log.info( " Status  true ");
+
+                              export.pdfReader(f,u);
+
                                 QRCodeGenerator.generateQRCodeImage(f.getDomain().toString(),150,150,QR_CODE_IMAGE_PATH);
-                                this.emailSenderService.sendSimpleEmail(u.getEmail()," Congratulations Mr's : "+u.getLastName()+" "+u.getFirstName()+" you have finished your Courses  " ," Certification At : "+ new Date()+"  in Courses of Domain "+f.getDomain()+" "+" And Niveau : " +f.getLevel() +" .");
+                                this.emailSenderService.sendSimpleEmailWithFils(u.getEmail()," Congratulations Mr's : "+u.getLastName()+" "+u.getFirstName()+" you have finished your Courses  " ," Certification At : "+ new Date()+"  in Courses of Domain "+f.getDomain()+" "+" And Niveau : " +f.getLevel() +" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Certif/C"+u.getId()+".pdf");
                                 fin=true; /// return /////
                             }
 
@@ -294,7 +303,7 @@ public class ServiceFormation implements IServiceFormation {
 
 
 
-        } catch (WriterException | IOException e) {
+        } catch (WriterException | IOException | MessagingException e) {
 
             e.printStackTrace();
         }
@@ -534,7 +543,13 @@ public class ServiceFormation implements IServiceFormation {
     public void FormationWithRate(Integer idF, Double rate) {
         Formation formation = iFormationRepo.findById(idF).orElse(null);
 
-        formation.setRating(((formation.getRating()+rate)/2.0));
+        if(formation.getRating()==0)
+        {
+            formation.setRating(rate);
+        }else {
+            formation.setRating(((formation.getRating()+rate)/2.0));
+        }
+       
         iFormationRepo.save(formation);
     }
 
