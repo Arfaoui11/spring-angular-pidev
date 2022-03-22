@@ -20,6 +20,7 @@ public class Dislikes {
     private String id;
 
     private Integer nbrDislikes;
+
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
