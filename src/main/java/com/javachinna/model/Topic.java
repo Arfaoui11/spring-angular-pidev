@@ -37,6 +37,10 @@ public class Topic implements Serializable {
     @JsonIgnore
     private Set<Comment> comments;
 
+    @OneToMany(mappedBy = "topic")
+    @JsonIgnore
+    private Set<Star> stars;
+
 
 
 }

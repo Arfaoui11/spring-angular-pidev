@@ -5,6 +5,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ICommentsRepo extends CrudRepository<PostComments,Integer> {
 
-
-
 }
