@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 @Table( name = "Candidacy")
+///s
 public class Candidacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
