@@ -181,4 +181,17 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Set<DatabaseFile> fileUploads;
 
+	/////Nesrine///
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private Set<Comment> comments;
+
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private Set<Topic> topics;
+
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private Set<Publicity> publicities;
+
 }
