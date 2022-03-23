@@ -73,6 +73,22 @@ public class CommentRestComntroller {
     {
         iCommentService.dislikeComment(idComment);
     }
+///////////////REACT////////////////////
+    /*
+    @PostMapping("/{idReact}")
+    public ReactComment save(@RequestBody ReactComment reactComment , @PathVariable("idReact") Long idReact){
+        return  iCommentService.save(idReact,reactComment) ;
+    }
+    @GetMapping("/{idReact}")
+    public List<ReactComment> findAllByIdComment(@PathVariable("idReact") Long idReact){
+        return  iCommentService.findAllByIdComment(idReact);
+    }
+    @GetMapping("/emoji/{idReact}")
+    public List<ReactComment> findAllByCommentIdAndEmoji(@PathVariable("idReact") Long idReact, @RequestBody TypeRating typeRating){
+        return  iCommentService.findAllByIdCommentAndEmoji(idReact,typeRating);
+    }
 
+     */
+/////////////////////////////////////////////
 
 }

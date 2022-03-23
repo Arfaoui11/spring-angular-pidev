@@ -20,9 +20,15 @@ public interface ICommentService {
      void likeComment(Integer idComment);
     void dislikeComment(Integer idComment);
 
+    //////////////////////REACT////////////////////
+/*
+    List<ReactComment> findAllByIdComment(Long idReact);
+
+    List<ReactComment> findAllByIdCommentAndEmoji(Long idReact, TypeRating typeRating);
+
+    Long  countAllByIdComment(Long idReact) ;
 
 
-
-
-
+ */
+/////////////////////////////
 }
