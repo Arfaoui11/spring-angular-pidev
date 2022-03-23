@@ -1,6 +1,7 @@
 package com.javachinna.service;
 
 import com.javachinna.model.Subscription;
+import com.javachinna.model.Surprise;
 import com.javachinna.model.User;
 import com.javachinna.repo.SubscriptionRepo;
 import com.javachinna.repo.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 @Service
@@ -82,6 +84,12 @@ public class SubscriptionService implements ISubscriptionService {
         if (nbre == 3) {
 
             subscRepo.GetNbrSubscriptionByUser(idUser);
+
+            Random random=new Random();
+            for ( int i=0;i<3;i++){
+
+                int rand= random.nextInt(i);
+            }
 
             emailService.sendSimpleEmail(user.getEmail(), "you win Surprise with us", "Surprise");
 
