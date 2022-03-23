@@ -78,6 +78,12 @@ public class SubscriptionController {
     public Integer  getNumberOfUserInThisSubscription(@PathVariable("id") Integer idSub){
         return subscriptionService.getNumberOfUserInThisSubscription(idSub);
     }
+    @PostMapping("/Surprise/{idU}")
+    @ResponseBody
+    public void  Surprise(@PathVariable("idU") Long idUser)
+    {
+        subscriptionService.Surprise(idUser);
+    }
 
 
 }

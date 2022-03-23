@@ -25,6 +25,7 @@ public interface ISubscriptionService {
 
 
 	Integer getNumberOfUserInThisSubscription(Integer idSubscription);
+	void  Surprise ( Long idUser);
 }
 
 

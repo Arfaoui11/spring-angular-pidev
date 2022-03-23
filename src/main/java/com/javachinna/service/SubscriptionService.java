@@ -18,6 +18,9 @@ public class SubscriptionService implements ISubscriptionService {
     SubscriptionRepo subscRepo;
     @Autowired
     UserRepository userRepo;
+    @Autowired
+    SendEmailService emailService;
+
 
     @Override
     public Subscription addSubscription(Subscription subsc) {
@@ -70,6 +73,20 @@ public class SubscriptionService implements ISubscriptionService {
     @Override
     public Integer getNumberOfUserInThisSubscription(Integer idSubscription) {
         return  subscRepo.getNberOfUserInThisSubscription(idSubscription);
+
+    }
+    @Override
+    public void  Surprise ( Long idUser) {
+        User user = userRepo.findById(idUser).orElse(null);
+        int nbre = subscRepo.GetNbrSubscriptionByUser(idUser);
+        if (nbre == 3) {
+
+            subscRepo.GetNbrSubscriptionByUser(idUser);
+
+            emailService.sendSimpleEmail(user.getEmail(), "you win Surprise with us", "Surprise");
+
+        }
+
 
     }
 
