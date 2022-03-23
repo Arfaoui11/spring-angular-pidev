@@ -39,6 +39,10 @@ public class ServiceFormation implements IServiceFormation {
     private ISearchRepo iSearchRepo;
     @Autowired
     private ICommentsRepo iCommentsRepo;
+    @Autowired
+    private ILikesRepo iLikesRepo;
+    @Autowired
+    private IDislikesRepo iDislikesRepo;
 
     @Autowired
     private exportPdf export;
@@ -115,8 +119,8 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-    @Scheduled(cron = "0 0/20 * * * *")
-  //  @Scheduled(cron = "0 0 9 28 * ?")
+  //  @Scheduled(cron = "0 0/20 * * * *")
+    @Scheduled(cron = "0 0 9 28 * ?")
     public User getFormateurRemunerationMaxSalaire() throws MessagingException {
 
 
@@ -515,27 +519,57 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     ///////////       Comments ///////////////
-  /*  @Override
-    public void likeFormation(Integer idF) {
-        Formation formation = iFormationRepo.findById(idF).orElse(null);
+    @Override
+    public void likeComments(Integer idC ){
+        PostComments post = iCommentsRepo.findById(idC).orElse(null);
+      //  User user = iUserRepo.findById(idU).orElse(null);
+        Likes likes = new Likes();
 
-      //  formation.setLikes(formation.getLikes()+1);
-        iFormationRepo.save(formation);
 
+        if(post.getLikes().size() == 0)
+        {
+            likes.setPostComments(post);
+          //  likes.setUser(user);
+            likes.setNbrLikes(1);
+            likes.setCreateAt(new Date());
+            iLikesRepo.save(likes);
+        }
+        else{
+            Likes l = iLikesRepo.findById(post.getLikes().stream().findFirst().get().getId()).orElse(null);
+                l.setNbrLikes(l.getNbrLikes()+1);
+                l.setCreateAt(new Date());
+                iLikesRepo.save(l);
+        }
 
     }
 
 
 
     @Override
-    public void dislikeFormation(Integer idF) {
-        Formation formation = iFormationRepo.findById(idF).orElse(null);
+    public void dislikeComments(Integer idC ) {
+        PostComments post = iCommentsRepo.findById(idC).orElse(null);
+      //  User user = iUserRepo.findById(idU).orElse(null);
+        Dislikes dislikes = new Dislikes();
 
-        //formation.setDislikes(formation.getDislikes()+1);
-        iFormationRepo.save(formation);
+        if(post.getDislikes().size() == 0)
+        {
+
+            dislikes.setPostComments(post);
+          //  dislikes.setUser(user);
+            dislikes.setNbrDislikes(1);
+            dislikes.setCreateAt(new Date());
+            iDislikesRepo.save(dislikes);
+        }
+        else{
+            Dislikes d = iDislikesRepo.findById(post.getDislikes().stream().findFirst().get().getId()).orElse(null);
+            d.setNbrDislikes(d.getNbrDislikes()+1);
+            d.setCreateAt(new Date());
+            iDislikesRepo.save(d);
+
+        }
 
     }
-*/
+
 
     //////////////////// Courses //////////////////////
 

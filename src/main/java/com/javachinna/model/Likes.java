@@ -1,5 +1,6 @@
 package com.javachinna.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,9 +16,8 @@ import java.util.Date;
 public class Likes {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private Integer nbrLikes;
     @Temporal(TemporalType.DATE)
@@ -25,7 +25,15 @@ public class Likes {
 
 
     @ManyToOne
+    @JsonIgnore
     private PostComments postComments;
+
+   /* @ManyToOne
+    @JsonIgnore
+    private User user;
+
+
+    */
 
 
 

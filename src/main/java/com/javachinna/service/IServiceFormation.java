@@ -73,8 +73,8 @@ public interface IServiceFormation {
 
 
 
-   // void likeFormation(Integer idF);
-   // void dislikeFormation(Integer idF);
+    void likeComments(Integer idC);
+    void dislikeComments(Integer idC);
 
 
     void FormationWithRate(Integer idF ,Double rate);
