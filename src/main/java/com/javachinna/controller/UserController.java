@@ -1,6 +1,6 @@
 package com.javachinna.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.javachinna.dto.QuestionsDTO;
 
 import com.javachinna.model.Option;
@@ -10,6 +10,7 @@ import com.javachinna.repo.OptionRepository;
 import com.javachinna.service.QuestionService;
 import com.javachinna.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
