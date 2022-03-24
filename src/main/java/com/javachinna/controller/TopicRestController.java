@@ -63,5 +63,11 @@ public class TopicRestController
         return iTopicService.getNbrCommentTopic(idTopic);
     }
 
+    @PutMapping("/TopicWIthRate/{idTopic}/{nbr}")
+    @ApiOperation(value = " add Rating ")
+    public void TopicWIthRate(@PathVariable(name = "idTopic") Long idTopic,@PathVariable(name = "nbr") Double rate)
+    {
+        iTopicService.TopicWithRate(idTopic, rate);
+    }
 
 }
