@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -216,5 +217,58 @@ public class WomenServiceImpl implements IWomenService {
         return myUserRepository.classementDoctor();
     }
 
+    @Override
+    public List<Double> PourcentageReclamationByType() {
+        List<Double> pourcentages=new ArrayList<Double>();
+        double PUBLICATION = 0;
+        double TRAINING=0;
+        double OFFER=0;
+        double CANDIDACY=0;
+        List<Complaint> complaints=  (List<Complaint>) myReclamationRepository.findAll();
+        System.out.println(complaints.toString());
+        for (Complaint complaint: complaints) {
 
+
+            if (complaint.getType().equals(TypeComplaint.PUBLICATION)) {
+                PUBLICATION++;
+            }
+
+
+            else if (complaint.getType().equals(TypeComplaint.TRAINING)) {
+                TRAINING++;}
+
+
+            else if (complaint.getType().equals(TypeComplaint.OFFER)) {
+                OFFER++;}
+
+         else if (complaint.getType().equals(TypeComplaint.CANDIDACY)) {
+            CANDIDACY++;}
+    }
+        if (complaints.size() !=0) {
+
+            System.out.println("number_reclamations:"+complaints.size());
+
+            PUBLICATION=  ((PUBLICATION/(complaints.size()))*100);
+
+
+            TRAINING= ((TRAINING/complaints.size()))*100;
+
+
+            OFFER= ((OFFER/complaints.size()))*100;
+            CANDIDACY= ((CANDIDACY/complaints.size()))*100;
+        }
+        pourcentages.add(PUBLICATION);
+
+        pourcentages.add(TRAINING);
+
+        pourcentages.add(OFFER);
+        pourcentages.add(CANDIDACY);
+
+        System.out.println(pourcentages);
+
+        return pourcentages;
+    }
 }
+
+
+

@@ -28,7 +28,7 @@ public class WomenRestController {
     IWomenService womenService;
     @Autowired
     ISendEmailService iSendEmailService;
-    BadWordConfig badWordConfig  = new BadWordConfig();
+            BadWordConfig badWordConfig  = new BadWordConfig();
     @Autowired
     exportExcel exportExcelservice;
     @Autowired
@@ -268,6 +268,12 @@ public void generatePDF(HttpServletResponse response) throws IOException, Docume
 
     //this.pdfGeneratorService.exportFor(response);
 }
+    @GetMapping("countReclamationByType")
+    @ResponseBody
+    public List<Double> PourcentageReclamationByType(){
+    return womenService.PourcentageReclamationByType();
+
+    }
 
 
 

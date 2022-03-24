@@ -36,5 +36,6 @@ public interface IWomenService {
 
     int GetIncomeDoctor(long idDoc, Date startDate, Date endDate);
     List<User> ScoreDoctor();
+    public List<Double> PourcentageReclamationByType();
 
 }
