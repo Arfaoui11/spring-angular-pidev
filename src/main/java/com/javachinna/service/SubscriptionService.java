@@ -1,5 +1,6 @@
 package com.javachinna.service;
 
+import com.javachinna.model.Formation;
 import com.javachinna.model.Subscription;
 import com.javachinna.model.Surprise;
 import com.javachinna.model.User;
@@ -8,7 +9,10 @@ import com.javachinna.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +35,7 @@ public class SubscriptionService implements ISubscriptionService {
 
     @Override
     public void updateSubscription(Subscription subsc) {
-         subscRepo.save(subsc);
+        subscRepo.save(subsc);
     }
 
     @Override
@@ -71,24 +75,24 @@ public class SubscriptionService implements ISubscriptionService {
     }
 
 
-
     @Override
     public Integer getNumberOfUserInThisSubscription(Integer idSubscription) {
-        return  subscRepo.getNberOfUserInThisSubscription(idSubscription);
+        return subscRepo.getNberOfUserInThisSubscription(idSubscription);
 
     }
+
     @Override
-    public void  Surprise ( Long idUser) {
+    public void Surprise(Long idUser) {
         User user = userRepo.findById(idUser).orElse(null);
         int nbre = subscRepo.GetNbrSubscriptionByUser(idUser);
-        if (nbre == 3) {
+        if (nbre % 3 == 0) {
 
             subscRepo.GetNbrSubscriptionByUser(idUser);
 
-            Random random=new Random();
-            for ( int i=0;i<3;i++){
+            Random random = new Random();
+            for (int i = 0; i < 3; i++) {
 
-                int rand= random.nextInt(i);
+                int rand = random.nextInt(i);
             }
 
             emailService.sendSimpleEmail(user.getEmail(), "you win Surprise with us", "Surprise");
@@ -98,4 +102,28 @@ public class SubscriptionService implements ISubscriptionService {
 
     }
 
+//    @Override
+//    public List<Object> getUserRemunerationByDateTrie() {
+//        LocalDate currentdDate1 =  LocalDate.now();
+//
+//        ZoneId defaultZoneId = ZoneId.systemDefault();
+//
+//        Date Start_D =Date.from(currentdDate1.minusDays(30).atStartOfDay(defaultZoneId).toInstant());
+//        Date Final_D =Date.from(currentdDate1.plusDays(30).atStartOfDay(defaultZoneId).toInstant());
+//
+//        return this.subscRepo(Start_D,Final_D);
+//    }
+
+//}
+//
+    @Override
+    public List<Subscription> SearchMultiple(String key) {
+
+        if (key.equals("")) {
+            return (List<Subscription>) subscRepo.findAll();
+        } else {
+            return subscRepo.reaserch(key);
+        }
+
+    }
 }
