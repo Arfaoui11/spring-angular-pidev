@@ -6,6 +6,7 @@ import com.javachinna.service.ISubscriptionService;
 import com.javachinna.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class SubscriptionController {
     ISubscriptionService subscriptionService;
 	@Autowired
     UserService userService;
-    
-    
+
+
     //http://localhost:8089/api/subscription/addSubscription
     @PostMapping("/addSubscription")
     @ResponseBody

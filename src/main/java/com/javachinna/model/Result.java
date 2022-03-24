@@ -45,6 +45,10 @@ public class Result {
 
     @ManyToOne
     @JsonIgnore
+    private Quiz quizz;
+
+    @ManyToOne
+    @JsonIgnore
     private User sUser;
 
 }
