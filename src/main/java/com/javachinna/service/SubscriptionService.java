@@ -122,8 +122,8 @@ public class SubscriptionService implements ISubscriptionService {
         if (key.equals("")) {
             return (List<Subscription>) subscRepo.findAll();
         } else {
-            return subscRepo.reaserch(key);
+         //   return subscRepo.reaserch(key);
         }
-
+        return null;
     }
 }

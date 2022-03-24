@@ -147,7 +147,7 @@ public class ServiceFormation implements IServiceFormation {
 
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
-        Date dd = Date.from(currentdDate1.minusDays(15).atStartOfDay(defaultZoneId).toInstant());
+        Date dd = Date.from(currentdDate1.plusMonths(1).atStartOfDay(defaultZoneId).toInstant());
         Date df = Date.from(currentdDate1.plusDays(15).atStartOfDay(defaultZoneId).toInstant());
 
 
@@ -621,6 +621,13 @@ public class ServiceFormation implements IServiceFormation {
     @Override
     public void deleteComments(Integer idC) {
         iCommentsRepo.deleteById(idC);
+    }
+
+
+
+    @Override
+    public void LeanerStatus() {
+
     }
 
 

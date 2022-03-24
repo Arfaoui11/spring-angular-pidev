@@ -18,7 +18,7 @@ public interface SubscriptionRepo extends CrudRepository<Subscription, Integer> 
     @Query(value = "select COUNT (u.id) from User  u join u.subscs sub where sub.idSubscription=:id")
     Integer getNberOfUserInThisSubscription(@Param("id") Integer idSubscription);
 
-    List<Subscription> reaserch(String keyword);
+   // List<Subscription> reaserch(String keyword);
 
 
 
