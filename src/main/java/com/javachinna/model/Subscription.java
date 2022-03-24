@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -25,8 +27,16 @@ public class Subscription implements Serializable {
 	private String Title;
 	private String Description;
 	private Float price;
-	private Date startDate;
-	private Date endDate;
+
+	@Max(5)
+	@Min(0)
+	private Double Rating;
+	@Temporal (TemporalType.TIMESTAMP)
+	private Date start;
+	@Temporal (TemporalType.TIMESTAMP)
+	private Date end;
+	private Integer nbrParticipant;
+
 
 
 	@JsonIgnore

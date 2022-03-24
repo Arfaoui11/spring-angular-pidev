@@ -3,9 +3,7 @@ package com.javachinna.controller;
 
 import com.javachinna.dto.QuestionsDTO;
 
-import com.javachinna.model.Option;
-import com.javachinna.model.Question;
-import com.javachinna.model.User;
+import com.javachinna.model.*;
 import com.javachinna.repo.OptionRepository;
 import com.javachinna.service.QuestionService;
 import com.javachinna.service.UserService;
@@ -26,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -35,6 +33,47 @@ public class UserController {
 	private QuestionService questionService;
 	@Autowired
 	private OptionRepository optionRepository ;
+
+	@ApiOperation(value = "retrieve All Users ")
+	@GetMapping("/retrieve-All-Users")
+	@ResponseBody
+	public List<User> RetrieveAllUsers()
+	{
+		return  userService.retrieveAllUsers();
+	}
+
+
+
+
+	@ApiOperation(value = "update User By Id ")
+	@PutMapping("/updateUserById/{idU}")
+	@ResponseBody
+	public void UpdateUser(@RequestBody User u, @PathVariable(name="idU") Long idUser)
+	{
+		userService.updateUser(u,idUser);
+	}
+
+
+	@ApiOperation(value = "delete User By Id ")
+	@DeleteMapping("/deleteUserById/{idCom}")
+	@ResponseBody
+	public void DeleteUser(@PathVariable("idU") Long idU)
+	{
+		userService.deleteUser(idU);
+
+	}
+
+
+	@ApiOperation(value = "Retrieve User by ID ")
+	@GetMapping("/retrieve-User-by-ID/{idU}")
+	@ResponseBody
+	public User RetrieveUser(@PathVariable("idU") Long idU)
+	{
+		return userService.retrieveUser(idU);
+	}
+
+
+
 
 
 

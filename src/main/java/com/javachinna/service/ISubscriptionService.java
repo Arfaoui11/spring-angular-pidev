@@ -2,6 +2,7 @@ package com.javachinna.service;
 
 
 
+import com.javachinna.model.Formation;
 import com.javachinna.model.Subscription;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public interface ISubscriptionService {
 
 	Integer getNumberOfUserInThisSubscription(Integer idSubscription);
 	void  Surprise ( Long idUser);
+
+	//List<Object> getUserRemunerationByDateTrie();
+
+	List<Subscription>  SearchMultiple(String key);
 }
 
 
