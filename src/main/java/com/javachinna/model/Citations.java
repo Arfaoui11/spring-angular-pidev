@@ -3,7 +3,6 @@ package com.javachinna.model;
 public enum Citations {
 
        Never_apologize_being_a_powerful_woman,
-
     Each_time_a_woman_stands_up_for_herself_she_stands_up_for_all_women___Maya_Angelou,
     A_woman_is_the_full_circle__Within_her_is_the_power_to_create__nurture_and_transform____Diane_Mariechild,
     A_strong_woman_stands_up_for_herself__A_stronger_woman_stands_up_for_everybody_else,
