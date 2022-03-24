@@ -208,4 +208,8 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Set<Publicity> publicities;
 
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<ReactComment> reactComments;
+
 }

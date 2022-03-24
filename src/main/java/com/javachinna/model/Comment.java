@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,6 +33,11 @@ public class Comment implements Serializable {
     @ManyToOne
     @JsonIgnore
     private Topic topic;
+
+    @JsonIgnore
+    @OneToMany(mappedBy ="comment" ,cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch=FetchType.EAGER)
+    private Set<ReactComment> reactComments;
 
 
 

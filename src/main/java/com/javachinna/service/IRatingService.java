@@ -12,6 +12,4 @@ public interface IRatingService {
 
    // public String addReputationRates(Integer idRate, Integer idUniversity);
 
-
-
 }

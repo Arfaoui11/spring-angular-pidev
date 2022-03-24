@@ -20,14 +20,19 @@ public class ReactComment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idReact ;
-    @Enumerated(value = EnumType.STRING)
-    TypeRating typeRating ;
-
-    int iduser ;
-
-    @ManyToOne()
     @JsonIgnore
-    Comment comment ;
+    private Integer idReact;
+
+    @Enumerated(EnumType.STRING)
+    private TypeRating typeRating;
+
+
+    @JsonIgnore
+    @ManyToOne
+    private Comment comment;
+
+    @JsonIgnore
+    @ManyToOne
+    private User user;
 
 }

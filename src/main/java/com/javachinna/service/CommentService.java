@@ -100,25 +100,5 @@ public class CommentService implements ICommentService{
         iCommentRepo.save(comment);
 
     }
-    ///////////////////////REACT//////////////////
-   /*
-    public ReactComment save(Long idReact, ReactComment reactComment){
-
-        reactComment.setComment(iReactCommentRepo.findById(idReact));
-        return  iReactCommentRepo.save(reactComment);
-    }
-    public List<ReactComment> findAllByIdComment(Long idComment){
-        return  iCommentRepo.findAllByIdComment(idComment);
-    }
-
-    public List<ReactComment> findAllByIdCommentAndEmoji(Long idComment, TypeRating e){
-
-        return  iReactCommentRepo.findAllByIdCommentAndEmoji(idComment, e);
-    }
-
-    */
-
-///////////////////////////////
-
 
 }

@@ -1,7 +1,11 @@
 package com.javachinna.controller;
 
 import com.javachinna.model.Comment;
+import com.javachinna.model.RatingPartner;
+import com.javachinna.model.ReactComment;
+import com.javachinna.model.TypeRating;
 import com.javachinna.service.ICommentService;
+import com.javachinna.service.IReactCommentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,8 @@ public class CommentRestComntroller {
 
     @Autowired
     ICommentService iCommentService;
+    @Autowired
+    IReactCommentService iReactCommentService;
 
     @PostMapping("/addComment/{idTopic}/{idUser}")
     public void AddAffectCommentList(@RequestBody Comment comment, @PathVariable("idTopic") Long idTopic, @PathVariable("idUser") Long idUser)
@@ -73,22 +79,34 @@ public class CommentRestComntroller {
     {
         iCommentService.dislikeComment(idComment);
     }
-///////////////REACT////////////////////
-    /*
-    @PostMapping("/{idReact}")
-    public ReactComment save(@RequestBody ReactComment reactComment , @PathVariable("idReact") Long idReact){
-        return  iCommentService.save(idReact,reactComment) ;
+
+
+//////////////////////////////////_________REACT_________///////////////////////////////////////
+
+
+@PostMapping("/addReact")
+@ResponseBody
+@ApiOperation(value = "addReact ")
+public void addReact(@RequestBody ReactComment reactComment){
+    iReactCommentService.addReact(reactComment);
+}
+
+    @GetMapping("/getReactByCommentAndUser/{idComment}/{idUser}")
+    @ResponseBody
+    @ApiOperation(value = "get Reaction By Comment and User ")
+    public List<ReactComment> getReactByCommentAndUser(@PathVariable("idComment") Integer idComment,
+                                                            @PathVariable("idUser") Long idUser){
+        return iReactCommentService.getReactByCommentAndUser(idComment,idUser);
     }
-    @GetMapping("/{idReact}")
-    public List<ReactComment> findAllByIdComment(@PathVariable("idReact") Long idReact){
-        return  iCommentService.findAllByIdComment(idReact);
-    }
-    @GetMapping("/emoji/{idReact}")
-    public List<ReactComment> findAllByCommentIdAndEmoji(@PathVariable("idReact") Long idReact, @RequestBody TypeRating typeRating){
-        return  iCommentService.findAllByIdCommentAndEmoji(idReact,typeRating);
+    @PostMapping("/addReactAndAffectToUserAndComment/{idUser}/{idComment}")
+    @ResponseBody
+    @ApiOperation(value = "addDemandAndAssignToUserAndComment ")
+    public void addReactAndAffectToUserAndComment(TypeRating typeRating, @PathVariable("idUser") Long idUser
+            , @PathVariable("idComment") Integer idComment){
+        iReactCommentService.addReactAndAffectToUserAndComment(typeRating,idUser,idComment);
     }
 
-     */
+
 /////////////////////////////////////////////
 
 }
