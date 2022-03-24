@@ -19,7 +19,7 @@ public class BadWordConfig {
     static int largestWordLength = 0;
     public static void loadConfigs() {
         try {			//change this path according to your pc project file's path - so you don't get errors
-            File f = new File("/Users/macos/IdeaProjects/springPidev/src/main/resources/Dict.txt");
+            File f = new File("C:\\Users\\Farouk Hajjej\\IdeaProjects\\spring-angular-pidev-4se5\\src\\main\\resources\\Dict.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
             String line = "";
             int counter = 0;

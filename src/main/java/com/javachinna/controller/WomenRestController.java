@@ -2,16 +2,21 @@ package com.javachinna.controller;
 
 
 
+import com.itextpdf.text.DocumentException;
 import com.javachinna.model.*;
-import com.javachinna.service.ISendEmailService;
-import com.javachinna.service.IWomenService;
-import com.javachinna.service.PDFGeneratorService;
+import com.javachinna.service.*;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,14 +31,21 @@ public class WomenRestController {
     IWomenService womenService;
     @Autowired
     ISendEmailService iSendEmailService;
+    BadWordConfig badWordConfig  = new BadWordConfig();
+    @Autowired
+    exportExcel exportExcelservice;
+    @Autowired
+    exportPdf exportPdfservice;
+
+
 
     private final PDFGeneratorService pdfGeneratorService;
 
     public WomenRestController(PDFGeneratorService pdfGeneratorService) {
         this.pdfGeneratorService = pdfGeneratorService;
     }
-    @GetMapping("/pdf/generate")
-    public void generatePDF(HttpServletResponse response) throws IOException {
+  /*  @GetMapping("/pdf/generate")
+    public void generatePDF(HttpServletResponse response)  {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -42,8 +54,10 @@ public class WomenRestController {
         String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        this.pdfGeneratorService.export(response);
+        this.exportPdfservice.ComplaintPDFReport();
     }
+
+   */
 
     @ApiOperation(value = "retrieve All Complaints ")
     @GetMapping("/retrieve-All-Complaints")
@@ -58,9 +72,15 @@ public class WomenRestController {
     @PostMapping("/AddComplaintAndAssignToUser/{idU}")
     @ResponseBody
     public void  AddComplaintAndAssignToUser(@RequestBody Complaint c, @PathVariable("idU") Long idUser)
+
     {
+        Complaint c1 =new Complaint();
+        c1.setDescription(badWordConfig.filterText(c.getDescription()));
+        c1.setType(c.getType());
+        c1.setDateCom(c.getDateCom());
+        System.out.println(c1.getDescription());
      //  iSendEmailService.sendSimpleEmail("farouk.hajjej@esprit.tn","your complaint is taken care of!","Complaint Response");
-        womenService.AddComplaintAndAssignToUser(c,idUser);
+        womenService.AddComplaintAndAssignToUser(c1,idUser);
     }
 
 
@@ -215,6 +235,44 @@ public class WomenRestController {
     public List<User> ScoreDoctor(){
         return womenService.ScoreDoctor();
     }
+    @ApiOperation(value = "Download The List of Appointment")
+    @GetMapping("/download/appointments.xlsx")
+    public void downloadCsv(HttpServletResponse response) throws IOException {
+        List<Appointment> appointmentList =(List<Appointment>) womenService.RetrieveAllAppointments();
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=appointments.xlsx");
+        ByteArrayInputStream stream = exportExcelservice.Appointmentexportexcel(appointmentList);
+        IOUtils.copy(stream, response.getOutputStream());
+    }
+/*
+    @ApiOperation(value = "Download The List of Complaints")
+    @GetMapping("/exports/pdf")
+    public ResponseEntity<InputStreamResource> exportsTermPdf() throws IOException {
+        List<Complaint> complaintList =(List<Complaint>) womenService.RetrieveAllComplaints();
+        ByteArrayInputStream b = exportPdfservice.ComplaintPDFReport(complaintList);
+        HttpHeaders h=new HttpHeaders();
+        h.add("Content-Disposition","Inline;filename=ListComplaints.pdf");
+        return ResponseEntity.ok().headers(h).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(b));
+    }
+*/
+
+@GetMapping("/pdf/generate")
+@ApiOperation(value = " Generate PDF ")
+public void generatePDF(HttpServletResponse response) throws IOException, DocumentException {
+
+    // export.pdfReader();
+    response.setContentType("application/pdf");
+    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
+    String currentDateTime = dateFormatter.format(new Date());
+
+    String headerKey = "Content-Disposition";
+    String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
+    response.setHeader(headerKey, headerValue);
+
+    //this.pdfGeneratorService.exportFor(response);
+}
+
+
 
 
 }

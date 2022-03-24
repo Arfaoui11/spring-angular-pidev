@@ -2,6 +2,7 @@ package com.javachinna.service;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import com.javachinna.model.Complaint;
 import com.javachinna.model.Formation;
 import com.javachinna.model.PartnerInstitution;
 import com.javachinna.model.User;
@@ -303,6 +304,76 @@ public class exportPdf {
 
 
         } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        return new ByteArrayInputStream(out.toByteArray());
+    }
+    public  ByteArrayInputStream ComplaintPDFReport(List<Complaint> complaintList)  {
+        Document document=new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            PdfWriter.getInstance(document,out);
+            document.open();
+            //add text to pdf file
+            Font font= FontFactory.getFont(FontFactory.COURIER,12,BaseColor.LIGHT_GRAY);
+            Paragraph para = new Paragraph("Formation List ",font);
+            para.setAlignment(Element.ALIGN_CENTER);
+            document.add(para);
+            document.add(Chunk.NEWLINE);
+
+            PdfPTable table=new PdfPTable(9);
+            //make the columns
+            Stream.of("Id","Date Compalint","Description","Type").forEach(headerTitle -> {
+                PdfPCell header = new PdfPCell();
+                Font headfont= FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+                header.setBackgroundColor(BaseColor.YELLOW);
+                header.setBorderWidth(12);
+                header.setHorizontalAlignment(Element.ALIGN_CENTER);
+                header.setBorderWidth(1);
+                header.setPhrase(new Phrase(headerTitle,headfont));
+                table.addCell(header);
+
+
+            });
+
+            for (Complaint c : complaintList){
+
+
+                PdfPCell idCell = new PdfPCell(new Phrase((c.getIdCom().toString())));
+                idCell.setPaddingLeft(1);
+                idCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                idCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                table.addCell(idCell);
+
+                PdfPCell nameCell = new PdfPCell(new Phrase(c.getDateCom().toString()));
+                nameCell.setPaddingLeft(1);
+                nameCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                nameCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                table.addCell(nameCell);
+
+                PdfPCell countryCell = new PdfPCell(new Phrase(c.getDescription()));
+                countryCell.setPaddingLeft(1);
+                countryCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                countryCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                table.addCell(countryCell);
+
+                PdfPCell areaCell = new PdfPCell(new Phrase(String.valueOf(c.getType())));
+                areaCell.setPaddingLeft(1);
+                areaCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                areaCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                table.addCell(areaCell);
+
+            }
+            // Creating an ImageData object
+           // String url = "./src/main/resources/static/img/QRCode.png";
+           // Image image = Image.getInstance(url);
+           // document.add(image);
+
+
+            document.add(table);
+            document.close();
+
+        } catch ( DocumentException  e) {
             e.printStackTrace();
         }
         return new ByteArrayInputStream(out.toByteArray());

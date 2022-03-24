@@ -1,6 +1,7 @@
 package com.javachinna.service;
 
 
+import com.javachinna.model.Appointment;
 import com.javachinna.model.PartnerInstitution;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -103,6 +104,58 @@ public class exportExcel {
            return null;
        }
    }
+
+    public  ByteArrayInputStream Appointmentexportexcel(List<Appointment> appointmentList) {
+        try(Workbook workbook = new XSSFWorkbook()){
+            Sheet sheet = workbook.createSheet("AppointmentList");
+
+            Row row = sheet.createRow(0);
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            // Creating header
+            Cell cell = row.createCell(0);
+            cell.setCellValue("Id App");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(1);
+            cell.setCellValue(" Date App");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(2);
+            cell.setCellValue("Remark");
+            cell.setCellStyle(headerCellStyle);
+
+
+
+
+
+            // Creating data rows for each customer
+            for(int i = 0; i < appointmentList.size(); i++) {
+                Row dataRow = sheet.createRow(i + 1);
+                dataRow.createCell(0).setCellValue(appointmentList.get(i).getIdApp());
+                dataRow.createCell(1).setCellValue(String.valueOf(appointmentList.get(i).getDateApp()));
+                dataRow.createCell(2).setCellValue(appointmentList.get(i).getRemark());
+
+
+
+            }
+
+            // Making size of column auto resize to fit with data
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
+            sheet.autoSizeColumn(2);
+
+
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
 
 
