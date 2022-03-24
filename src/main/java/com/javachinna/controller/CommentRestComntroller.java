@@ -100,7 +100,7 @@ public void addReact(@RequestBody ReactComment reactComment){
     }
     @PostMapping("/addReactAndAffectToUserAndComment/{idUser}/{idComment}")
     @ResponseBody
-    @ApiOperation(value = "addDemandAndAssignToUserAndComment ")
+    @ApiOperation(value = "Add React And Assign To User And Comment ")
     public void addReactAndAffectToUserAndComment(TypeRating typeRating, @PathVariable("idUser") Long idUser
             , @PathVariable("idComment") Integer idComment){
         iReactCommentService.addReactAndAffectToUserAndComment(typeRating,idUser,idComment);
