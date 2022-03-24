@@ -1,4 +1,4 @@
-package com.javachinna.controller;
+package com.javachinna.config;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +19,10 @@ public class BadWordConfig {
     static int largestWordLength = 0;
     public static void loadConfigs() {
         try {			//change this path according to your pc project file's path - so you don't get errors
-            File f = new File("C:\\Users\\Farouk Hajjej\\IdeaProjects\\spring-angular-pidev-4se5\\src\\main\\resources\\Dict.txt");
+
+            //  mte3ek path dict.txt
+            //  File f = new File("C:\\Users\\Farouk Hajjej\\IdeaProjects\\spring-angular-pidev-4se5\\src\\main\\resources\\Dict.txt");
+            File f = new File("/Users/macos/IdeaProjects/springPidev/src/main/resources/Dict.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
             String line = "";
             int counter = 0;
@@ -126,7 +129,7 @@ public class BadWordConfig {
         }
         if(badWords.size() > 0) {
 
-            return "This message was blocked because a bad word was found. If you believe this word should not be blocked, please message support.";
+            return "This message was blocked";
         }
         return input;
     }

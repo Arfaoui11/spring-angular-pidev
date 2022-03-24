@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Component
@@ -14,7 +15,7 @@ import java.util.Date;
 @Setter
 @ToString
 @Table( name = "Search")
-public class Search {
+public class Search implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

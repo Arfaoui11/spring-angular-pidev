@@ -3,16 +3,13 @@ package com.javachinna.controller;
 
 
 import com.itextpdf.text.DocumentException;
+import com.javachinna.config.BadWordConfig;
 import com.javachinna.model.*;
 import com.javachinna.service.*;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;

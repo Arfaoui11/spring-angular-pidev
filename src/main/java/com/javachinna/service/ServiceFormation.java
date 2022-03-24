@@ -620,13 +620,59 @@ public class ServiceFormation implements IServiceFormation {
 
     @Override
     public void deleteComments(Integer idC) {
+        log.info("In methode deleteComment");
+        log.warn("Are you sure you want to delete Comment");
         iCommentsRepo.deleteById(idC);
+        log.error("exeption");
+    }
+
+    @Override
+    public PostComments upDateComment(PostComments postComments,Integer idF,Long idUser) {
+
+
+        User user =  iUserRepo.findById(idUser).orElse(null);
+        Formation f = iFormationRepo.findById(idF).orElse(null);
+
+
+        postComments.setFormation(f);
+        postComments.setUserC(user);
+
+
+
+        return iCommentsRepo.save(postComments);
+    }
+
+    @Override
+    public List<PostComments> getAllComments() {
+        return (List<PostComments>) iCommentsRepo.findAll();
     }
 
 
-
     @Override
+    @Scheduled(cron = "0 0/1 * * * *")
     public void LeanerStatus() {
+
+
+            for(User user: iUserRepo.findAll())
+            {
+                User u = iUserRepo.findById(user.getId()).orElse(null);
+                if (u != iUserRepo.findById(1L).orElse(null))
+                {
+                    if(iUserRepo.nbrCommentsBadByUser(user.getId())==1)
+                    {
+                        u.setState(State.WARNED);
+                    }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==2) {
+                        u.setState(State.PUNISHED);
+                    }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==3) {
+                        u.setState(State.EXCLUDED);
+                    }
+                }
+
+                iUserRepo.save(u);
+            }
+
+
+
 
     }
 

@@ -1,6 +1,7 @@
 package com.javachinna.controller;
 
 
+import com.javachinna.config.BadWordConfig;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -107,8 +107,8 @@ public class UserServiceImpl implements UserService {
 		final HashSet<Role> roles = new HashSet<Role>();
 		roles.add(roleRepository.findByName(Role.ROLE_USER));
 		user.setRoles(roles);
-		user.setAge(formDTO.getAge());
 		user.setFirstName(formDTO.getFirstName());
+		user.setAge(formDTO.getAge());
 		user.setLastName(formDTO.getLastName());
 		user.setSalary(formDTO.getSalary());
 		user.setTarifHoraire(formDTO.getTarifHoraire());
@@ -116,6 +116,7 @@ public class UserServiceImpl implements UserService {
 		user.setProfession(formDTO.getProfession());
 		user.setScore(formDTO.getScore());
 		user.setProvider(formDTO.getSocialProvider().getProviderType());
+		user.setState(formDTO.getState());
 		user.setEnabled(true);
 		user.setProviderUserId(formDTO.getProviderUserId());
 		return user;

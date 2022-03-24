@@ -1,6 +1,7 @@
 package com.javachinna.controller;
 
 
+import com.javachinna.config.BadWordConfig;
 import com.javachinna.model.*;
 import com.javachinna.QrCode.QRCodeGenerator;
 import com.javachinna.service.*;

@@ -88,6 +88,12 @@ public interface IServiceFormation {
     void addComments(PostComments postComments ,Integer idF,Long idUser);
     void deleteComments(Integer idC);
 
+    PostComments upDateComment (PostComments postComments,Integer idF,Long idUser);
+
+    List<PostComments> getAllComments();
+
+
+
 
 
     void LeanerStatus();

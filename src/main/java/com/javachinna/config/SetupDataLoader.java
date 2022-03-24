@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Set;
 
 import com.javachinna.model.Profession;
+import com.javachinna.model.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -60,6 +61,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 			user.setProfession(Profession.ADMIN);
 			Date now = Calendar.getInstance().getTime();
 			user.setCreatedDate(now);
+			user.setState(State.DISCIPLINED);
 			user.setModifiedDate(now);
 			user = userRepository.save(user);
 		}

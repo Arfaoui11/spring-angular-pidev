@@ -1,9 +1,12 @@
 package com.javachinna.dto;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import com.javachinna.model.Profession;
+import com.javachinna.model.State;
 import com.javachinna.validator.PasswordMatches;
 
 import lombok.Data;
@@ -53,7 +56,10 @@ public class SignUpRequest {
 
 	private String phoneNumber;
 
-	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age,String nationality,String phone)
+
+	private State state;
+
+	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age,String nationality,String phone,State state)
 	{
 		this.providerUserId = providerUserId;
 		this.displayName = displayName;
@@ -70,6 +76,7 @@ public class SignUpRequest {
 		this.age = age;
 		this.Nationality = nationality;
 		this.phoneNumber = phone;
+		this.state=state;
 	}
 
 	public static Builder getBuilder() {
@@ -97,6 +104,7 @@ public class SignUpRequest {
 
 		private String phoneNumber;
 
+		private State state;
 
 		public Builder addProviderUserID(final String userID) {
 			this.providerUserID = userID;
@@ -146,6 +154,11 @@ public class SignUpRequest {
 			return this;
 		}
 
+		public Builder addState(final State state) {
+			this.state = state;
+			return this;
+		}
+
 		public Builder addNationality(final String nationality) {
 			this.Nationality = nationality;
 			return this;
@@ -166,7 +179,7 @@ public class SignUpRequest {
 		}
 
 		public SignUpRequest build() {
-			return new SignUpRequest(providerUserID, displayName, email, password, socialProvider,profession,firstName,lastName,priceconsultation,Score,salary,tarifHoraire,age,Nationality,phoneNumber);
+			return new SignUpRequest(providerUserID, displayName, email, password, socialProvider,profession,firstName,lastName,priceconsultation,Score,salary,tarifHoraire,age,Nationality,phoneNumber,state);
 		}
 	}
 }

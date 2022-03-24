@@ -13,7 +13,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 @EnableWebSecurity
 @Configuration
-@RequestMapping("/swagger")
 public class SwaggerConfig {
 	@Bean
 	public Docket api()

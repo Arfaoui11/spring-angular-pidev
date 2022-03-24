@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Component
 @Entity
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Table( name = "Result")
-public class Result {
+public class Result implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

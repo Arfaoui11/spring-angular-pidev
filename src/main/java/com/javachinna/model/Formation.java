@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Table( name = "Courses")
-public class Formation {
+public class Formation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

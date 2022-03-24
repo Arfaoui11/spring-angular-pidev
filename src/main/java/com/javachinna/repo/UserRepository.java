@@ -96,5 +96,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("select count(d.idCandidacy) from CandidacyUniversity d where d.user.id=:idStudent and d.partnerInstitution.idPartner=:IdUniversity")
 	int studentDemands(@Param("idStudent") Long IdStudent ,@Param("IdUniversity") Integer IdUniversity);
 
+	@Query(value = "select count(c.idComn) from PostComments c join c.userC u where c.message='This message was blocked' and u.id=:id " )
+	Integer nbrCommentsBadByUser(@Param("id") Long idUser);
+
 
 }
