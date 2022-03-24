@@ -17,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -425,6 +426,7 @@ public class RestControllerForm {
 
     @PostMapping("/addComments/{idF}/{idU}")
     @ApiOperation(value = " ajouter Comments ")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseBody
     public void addComments(@RequestBody PostComments postComments,@PathVariable(name = "idF") Integer idF,@PathVariable(name = "idU") Long idUser)
     {

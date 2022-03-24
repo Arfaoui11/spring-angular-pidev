@@ -20,5 +20,7 @@ public interface ITopicService {
     public List<Topic> getAllTopics();
     Integer getNbrCommentTopic(Long idTopic);
 
+    void TopicWithRate(Long idTopic ,Double rate);
+
 
 }

@@ -1,5 +1,6 @@
 package com.javachinna.service;
 
+import com.javachinna.model.Formation;
 import com.javachinna.model.Topic;
 import com.javachinna.model.User;
 import com.javachinna.repo.ITopicRepo;
@@ -71,6 +72,22 @@ public class TopicService implements ITopicService{
         Topic topic = iTopicRepo.findById(idTopic).orElse(null);
         return iTopicRepo.getNbrCommentTopic(idTopic);
     }
+
+    @Override
+    public void TopicWithRate(Long idTopic, Double rate) {
+        Topic topic = iTopicRepo.findById(idTopic).orElse(null);
+
+        if(topic.getRating()==0)
+        {
+            topic.setRating(rate);
+        }else {
+            topic.setRating(((topic.getRating()+rate)/2.0));
+        }
+
+        iTopicRepo.save(topic);
+    }
+
+
 
 
 }

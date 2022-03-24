@@ -13,7 +13,6 @@ import java.util.List;
     public class StarRestController {
         /*
 
-
         @Autowired
         StarService starService;
         @PostMapping("/{idStar}")
