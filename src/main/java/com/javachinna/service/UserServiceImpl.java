@@ -42,7 +42,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User u) {
+	public void updateUser(User u, Long idU) {
+
+		User user=userRepository.findById(idU).orElse(null);
 
 		userRepository.save(u);
 	}
