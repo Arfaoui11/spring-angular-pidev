@@ -23,8 +23,8 @@ public class Complaint implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idCom;
-
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TypeComplaint type;
 
     private String description;
     @Temporal(TemporalType.DATE)
