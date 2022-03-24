@@ -2,6 +2,7 @@ package com.javachinna.service;
 
 import java.util.*;
 
+import com.javachinna.model.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -43,10 +44,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(User u, Long idU) {
-
 		User user=userRepository.findById(idU).orElse(null);
-
-		userRepository.save(u);
+		userRepository.save(user);
 	}
 
 	@Override
@@ -167,23 +166,26 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findById(id);
 	}
 
+	@Override
+	public User excluded(Long id) {
+		User user =  userRepository.findById(id).get();
+		user.setState(State.EXCLUDED);
+		return userRepository.save(user);
+	}
 
+	@Override
+	public User warned(Long id) {
+		User user =  userRepository.findById(id).get();
+		user.setState(State.WARNED);
+		return userRepository.save(user);
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	@Override
+	public User punished(Long id) {
+		User user =  userRepository.findById(id).get();
+		user.setState(State.PUNISHED);
+		return userRepository.save(user);
+	}
 
 
 	//OMAR

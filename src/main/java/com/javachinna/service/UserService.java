@@ -32,6 +32,10 @@ public interface UserService {
 
 	Optional<User> findUserById(Long id);
 
+	User excluded (Long id) ;
+	User warned (Long id);
+	User punished (Long id) ;
+
 
 	LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo);
 	//OMAR

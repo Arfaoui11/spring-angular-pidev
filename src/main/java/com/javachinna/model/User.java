@@ -81,6 +81,9 @@ public class User implements Serializable {
 
 	private String phoneNumber;
 
+	@Enumerated(EnumType.STRING)
+	private State state;
+
 
 	// bi-directional many-to-many association to Role
 	@JsonIgnore
