@@ -56,7 +56,6 @@ public class SignUpRequest {
 
 	private String phoneNumber;
 
-
 	private State state;
 
 	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age,String nationality,String phone,State state)

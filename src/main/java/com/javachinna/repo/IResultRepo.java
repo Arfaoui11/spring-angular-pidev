@@ -28,4 +28,14 @@ public interface IResultRepo extends CrudRepository<Result,Integer> {
     @Query(value = "select r from Formation f join f.quizzes q join q.results r join r.sUser u where u.id=:idu and f.idFormation=:idf and r.status=false and f.end < current_date  group by r")
     List<Result>  getResultByIdUAndAndIdF(@Param("idu") Long idU, @Param("idf") Integer idF);
 
+    @Query(value = "select r from Result r join r.quiz q join q.formation f where f.idFormation=:idf group by r.sUser order by SUM (r.totalCorrect) desc")
+    List<Result> getQuizResultByFormer(@Param("idf") Integer idF);
+
+    @Query(value = "select count(r.id) from Result r join r.quiz q join q.formation f where f.idFormation=:idf group by r.sUser order by SUM (r.totalCorrect) desc")
+    Integer nbrResultByCourses(@Param("idf") Integer idF);
+
+    @Query(value = "select r from Result r join r.quiz q where q.idQuiz=:idq")
+    List<Result> getResultByQuizCourses(@Param("idq") Integer idQ);
+
+
 }

@@ -94,9 +94,11 @@ public interface IServiceFormation {
 
 
 
-
+    void decisionUserPUNISHED();
 
     void LeanerStatus();
+
+    void ListComplete();
 
 
 

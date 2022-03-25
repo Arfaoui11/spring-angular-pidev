@@ -3,6 +3,7 @@ package com.javachinna.service;
 
 import com.javachinna.model.Appointment;
 import com.javachinna.model.PartnerInstitution;
+import com.javachinna.model.Result;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
@@ -145,6 +146,82 @@ public class exportExcel {
             sheet.autoSizeColumn(0);
             sheet.autoSizeColumn(1);
             sheet.autoSizeColumn(2);
+
+
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public  ByteArrayInputStream quizexportexcel(List<Result> resultList) {
+        try(Workbook workbook = new XSSFWorkbook()){
+            Sheet sheet = workbook.createSheet("Quiz Result List");
+
+            Row row = sheet.createRow(0);
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            // Creating header
+            Cell cell = row.createCell(0);
+            cell.setCellValue("Id Quiz");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(1);
+            cell.setCellValue(" correct answer ");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(2);
+            cell.setCellValue(" Incorrect answer ");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(3);
+            cell.setCellValue(" Total Correct ");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(4);
+            cell.setCellValue("Username");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(5);
+            cell.setCellValue("Quiz Id");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(6);
+            cell.setCellValue("User Id");
+            cell.setCellStyle(headerCellStyle);
+
+
+
+
+
+
+            // Creating data rows for each customer
+            for(int i = 0; i < resultList.size(); i++) {
+                Row dataRow = sheet.createRow(i + 1);
+                dataRow.createCell(0).setCellValue(resultList.get(i).getId());
+                dataRow.createCell(1).setCellValue(String.valueOf(resultList.get(i).getCorrectAnswer()));
+                dataRow.createCell(2).setCellValue(resultList.get(i).getInCorrectAnswer());
+                dataRow.createCell(3).setCellValue(resultList.get(i).getTotalCorrect());
+                dataRow.createCell(4).setCellValue(resultList.get(i).getUsername());
+                dataRow.createCell(5).setCellValue(resultList.get(i).getQuiz().getTitle());
+                dataRow.createCell(6).setCellValue(resultList.get(i).getSUser().getDisplayName());
+
+            }
+
+            // Making size of column auto resize to fit with data
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
+            sheet.autoSizeColumn(2);
+            sheet.autoSizeColumn(3);
+            sheet.autoSizeColumn(4);
+            sheet.autoSizeColumn(5);
+            sheet.autoSizeColumn(6);
 
 
 

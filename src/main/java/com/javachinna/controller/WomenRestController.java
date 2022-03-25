@@ -232,6 +232,8 @@ public class WomenRestController {
     public List<User> ScoreDoctor(){
         return womenService.ScoreDoctor();
     }
+
+
     @ApiOperation(value = "Download The List of Appointment")
     @GetMapping("/download/appointments.xlsx")
     public void downloadCsv(HttpServletResponse response) throws IOException {

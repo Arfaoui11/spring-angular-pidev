@@ -224,8 +224,10 @@ public class WomenServiceImpl implements IWomenService {
         double TRAINING=0;
         double OFFER=0;
         double CANDIDACY=0;
+
         List<Complaint> complaints=  (List<Complaint>) myReclamationRepository.findAll();
         System.out.println(complaints.toString());
+
         for (Complaint complaint: complaints) {
 
 
@@ -248,14 +250,15 @@ public class WomenServiceImpl implements IWomenService {
 
             System.out.println("number_reclamations:"+complaints.size());
 
-            PUBLICATION=  ((PUBLICATION/(complaints.size()))*100);
+            PUBLICATION =  ((PUBLICATION/(complaints.size()))*100);
 
 
-            TRAINING= ((TRAINING/complaints.size()))*100;
+            TRAINING = ((TRAINING/complaints.size()))*100;
 
 
-            OFFER= ((OFFER/complaints.size()))*100;
-            CANDIDACY= ((CANDIDACY/complaints.size()))*100;
+            OFFER = ((OFFER/complaints.size()))*100;
+
+            CANDIDACY = ((CANDIDACY/complaints.size()))*100;
         }
         pourcentages.add(PUBLICATION);
 

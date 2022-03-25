@@ -44,9 +44,6 @@ public class Result implements Serializable {
     @JsonIgnore
     private QuizCourses quiz;
 
-    @ManyToOne
-    @JsonIgnore
-    private Quiz quizz;
 
     @ManyToOne
     @JsonIgnore

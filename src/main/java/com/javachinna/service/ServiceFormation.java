@@ -300,13 +300,6 @@ public class ServiceFormation implements IServiceFormation {
 
             }
 
-
-
-
-
-
-
-
         } catch (WriterException | IOException | MessagingException e) {
 
             e.printStackTrace();
@@ -385,7 +378,8 @@ public class ServiceFormation implements IServiceFormation {
 
         ///User with gifts Free for Max Score
 
-
+    if(apprenant.getState() == State.DISCIPLINED)
+    {
         if(iResultRepo.getScore(idApprenant)==null)
         {
             if (iFormationRepo.getNbrApprenantByFormationId(idFormation) < formation.getNbrMaxParticipant() && apprenant.getProfession() == Profession.LEARNER) {
@@ -442,10 +436,31 @@ public class ServiceFormation implements IServiceFormation {
             }
         }
 
-
-
+    }else
+    {
+        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "You are PUNISHED  ", " we don't have access to add new courses you are (PUNISHED/EXCLUDED)" + apprenant.getLastName() + " - " + apprenant.getFirstName() + "  .");
+        log.info(" no add  " + apprenant.getState());
+    }
 
     }
+
+
+   // @Scheduled(cron = "0 0/1 * * * *")
+    public void ListComplete()
+    {
+        for(Formation f : iFormationRepo.findAll())
+        {
+            if (iFormationRepo.getNbrApprenantByFormationId(f.getIdFormation()) < f.getNbrMaxParticipant())
+            {
+                this.emailSenderService.sendSimpleEmail("mahdi.arfaoui1@esprit.tn", "Learner list no complete   ", " we have in this courses "+iFormationRepo.getNbrApprenantByFormationId(f.getIdFormation()) +" learner in this formation "+f.getTitle() +" " + f.getDomain());
+                log.info(" we have access to add this courses " + f.getNbrMaxParticipant());
+            }else {
+                this.emailSenderService.sendSimpleEmail("mahdi.arfaoui1@esprit.tn", "Learner list complete Max    ", " we have in this courses "+iFormationRepo.getNbrApprenantByFormationId(f.getIdFormation()) +" learner  in this formation "+f.getTitle() +" " + f.getDomain());
+                log.info(" Learner list complete Max learner " + f.getNbrMaxParticipant());
+            }
+        }
+    }
+
 /*
     @EventListener(ApplicationReadyEvent.class)
     public void sendMail() throws MessagingException {
@@ -647,34 +662,65 @@ public class ServiceFormation implements IServiceFormation {
         return (List<PostComments>) iCommentsRepo.findAll();
     }
 
-
     @Override
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/2 * * * *")
     public void LeanerStatus() {
 
 
-            for(User user: iUserRepo.findAll())
-            {
-                User u = iUserRepo.findById(user.getId()).orElse(null);
-                if (u != iUserRepo.findById(1L).orElse(null))
-                {
-                    if(iUserRepo.nbrCommentsBadByUser(user.getId())==1)
-                    {
-                        u.setState(State.WARNED);
-                    }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==2) {
-                        u.setState(State.PUNISHED);
-                    }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==3) {
-                        u.setState(State.EXCLUDED);
-                    }
-                }
+        for(User user: iUserRepo.findAll())
+        {
+            User u = iUserRepo.findById(user.getId()).orElse(null);
 
-                iUserRepo.save(u);
+            if (u != iUserRepo.findById(1L).orElse(null) )
+            {
+                if(iUserRepo.nbrCommentsBadByUser(user.getId())==1 && u.getState()!=State.WARNED)
+                {
+                    u.setState(State.WARNED);
+                    iUserRepo.save(u);
+                }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==2 && u.getState()!=State.PUNISHED) {
+                    u.setState(State.PUNISHED);
+                    iUserRepo.save(u);
+                }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==3 && u.getState()!=State.EXCLUDED) {
+                    u.setState(State.EXCLUDED);
+                    iUserRepo.save(u);
+                }
             }
 
 
-
+        }
 
     }
+
+
+    @Override
+    @Scheduled(cron = "0 0/1 * * * *")
+    public void decisionUserPUNISHED() {
+
+
+        Date date = new Date();
+
+        for (User user : iUserRepo.findAll())
+        {
+            if (user.getState()==State.PUNISHED)
+            {
+            for (PostComments p : iUserRepo.CommentsByUser(user.getId()))
+            {
+                Date period20J = new Date(p.getCreateAt().getTime() + (1000 * 60 * 60 * 48));
+                if(date.after(period20J) && iUserRepo.nbrCommentsBadByUser(user.getId()) >=1)
+                {
+                    user.setState(State.DISCIPLINED);
+                    iUserRepo.save(user);
+                    iCommentsRepo.deleteById(p.getIdComn());
+                }
+            }
+            }
+
+        }
+
+    }
+
+
+
 
 
 }

@@ -1,5 +1,8 @@
 package com.javachinna.repo;
 
+import com.javachinna.model.PostComments;
+import com.javachinna.model.QuizCourses;
+import com.javachinna.model.Result;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -69,8 +72,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 			" where u.profession='LEARNER') and f.idFormation=:id")
 	User ApprenentwithMaxScoreInFormation(@Param("id") Integer id);
 
-	@Query(value = "select r.sUser,SUM (r.totalCorrect) from Result r join r.quiz q join q.formation f where f.idFormation=:id group by r.sUser order by SUM (r.totalCorrect) desc")
+	@Query(value = "select r from Result r join r.quiz q join q.formation f where f.idFormation=:idf group by r.sUser order by SUM (r.totalCorrect) desc")
 	List<Object> getApprenantWithScoreQuiz(@Param("id") Integer id);
+
 
 
 
@@ -98,6 +102,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query(value = "select count(c.idComn) from PostComments c join c.userC u where c.message='This message was blocked' and u.id=:id " )
 	Integer nbrCommentsBadByUser(@Param("id") Long idUser);
+
+	@Query(value = "select c from PostComments c join c.userC u where u.id=:id")
+	List<PostComments> CommentsByUser(@Param("id") Long idUser);
 
 
 }

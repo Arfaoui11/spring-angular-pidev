@@ -9,6 +9,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +42,8 @@ public class ServiceQuiz implements IServicesQuiz {
     Result result;
     @Autowired
     private SendEmailService emailSenderService;
+    @Autowired
+    exportExcel exportExcelservice;
 
 
 
@@ -153,7 +161,7 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
-    @Scheduled(cron = "0 0/1 * * * *")
+   // @Scheduled(cron = "0 0/1 * * * *")
    // @Scheduled(cron = "0 0 20 ? * *") //every day 20:00
     public void giftsToUserMaxScoreInCourses() {
         User user = new User();
@@ -183,6 +191,67 @@ public class ServiceQuiz implements IServicesQuiz {
 
         }
 
+    }
+
+    @Override
+    @Scheduled(cron = "0 0/1 * * * *")
+    public List<Result> ResultQuiz() throws IOException, MessagingException {
+
+        List<Result> r = new ArrayList<>();
+
+        User user = new User();
+        Formation form = new Formation();
+
+        for (Formation f : iFormationRepo.findAll()) {
+
+                if(iResultRepo.nbrResultByCourses(f.getIdFormation())>=1 && f.getEnd().before(new Date()))
+                {
+                    for (QuizCourses quiz : iQuizRepo.getQuizByCourses(f.getIdFormation()))
+                    {
+                        for (Result result : iResultRepo.getResultByQuizCourses(quiz.getIdQuiz()))
+                        {
+                            r.add(result);
+                            user = f.getFormateur();
+                            form = f;
+                        }
+                    }
+
+
+                }
+
+
+        }
+        Date tomorow = new Date(form.getEnd().getTime() + (1000 * 60 * 60 * 24));
+        Date now = new Date();
+        if(now.after(form.getEnd()) && now.before(tomorow))
+        {
+            ByteArrayInputStream stream = exportExcelservice.quizexportexcel(r);
+
+            FileOutputStream out = new FileOutputStream("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
+
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = stream.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            wait(1000);
+
+            this.emailSenderService.sendSimpleEmailWithFils(user.getEmail(),"your courses was finished yours Excel liste of score  " ," finished At : "+ new Date()+"  in Courses of Domain "+form.getDomain()+" "+" And Niveau : " +form.getLevel() +" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
+
+        }
+      return r;
+    }
+
+    public static void wait(int ms)
+    {
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override

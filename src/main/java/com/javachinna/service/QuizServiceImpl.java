@@ -93,7 +93,7 @@ public class QuizServiceImpl implements QuizService{
 		if (iResultRepo.findUserQuiz(idUser, Math.toIntExact(idQuiz)) == 0)
 		{
 			saveResult.setSUser(user);
-			saveResult.setQuizz(quizz);
+			// saveResult.setQuizz(quizz);
 
 			saveResult.setUsername(result.getUsername());
 			saveResult.setTotalCorrect(result.getTotalCorrect());

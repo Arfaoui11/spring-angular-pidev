@@ -4,12 +4,15 @@ package com.javachinna.controller;
 import com.javachinna.config.BadWordConfig;
 import com.javachinna.model.*;
 import com.javachinna.QrCode.QRCodeGenerator;
+import com.javachinna.repo.IResultRepo;
 import com.javachinna.service.*;
 import com.javachinna.payLoad.Response;
 import com.google.zxing.WriterException;
 import com.itextpdf.text.DocumentException;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
@@ -28,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,9 +50,13 @@ public class RestControllerForm {
     @Autowired
     private IServicesQuiz iServicesQuiz;
     @Autowired
+    private IResultRepo iResultRepo;
+    @Autowired
     private ISendEmailService iServiceEmail;
     @Autowired
     private SendEmailService emailSenderService;
+    @Autowired
+    exportExcel exportExcelservice;
     @Autowired
     private DatabaseFileService fileStorageService;
 
@@ -94,6 +102,8 @@ public class RestControllerForm {
 
             // Generate and Return Qr Code in Byte Array
             image = QRCodeGenerator.getQRCodeImage(formateur.getEmail(),250,250);
+
+
 
              QRCodeGenerator.generateQRCodeImage(formateur.getEmail(),250,250,QR_CODE_IMAGE_PATH);
 
@@ -427,7 +437,7 @@ public class RestControllerForm {
 
     @PostMapping("/addComments/{idF}/{idU}")
     @ApiOperation(value = " ajouter Comments ")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseBody
     public void addComments(@RequestBody PostComments postComments,@PathVariable(name = "idF") Integer idF,@PathVariable(name = "idU") Long idUser)
     {
@@ -437,6 +447,40 @@ public class RestControllerForm {
         p.setDislikes(postComments.getDislikes());
         p.setCreateAt(postComments.getCreateAt());
         iServiceFormation.addComments(p,idF,idUser);
+
+    }
+
+
+    @ApiOperation(value = "Download The List of Result Quiz")
+    @GetMapping("/download/ResultQuiz.xlsx")
+    public void downloadCsv(HttpServletResponse response) throws IOException {
+     //   SXSSFWorkbook wb = new SXSSFWorkbook(100);
+
+        List<Result> list =(List<Result>) iResultRepo.findAll();
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=ResultQuiz.xlsx");
+        ByteArrayInputStream stream = exportExcelservice.quizexportexcel(list);
+
+        FileOutputStream out = new FileOutputStream("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz.xlsx");
+
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = stream.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+/* version 2
+        ByteArrayInputStream stream  = <<Assign stream>>;
+        byte[] bytes = new byte[1024];
+        stream.read(bytes);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("FileLocation")));
+        writer.write(new String(bytes));
+        writer.close();
+
+ */
+
+        IOUtils.copy(stream, response.getOutputStream());
+
+
 
     }
 
@@ -473,6 +517,20 @@ public class RestControllerForm {
     {
         return iServicesQuiz.ApprenentwithMaxScoreQuiz(id);
     }
+
+
+    @ApiOperation(value = " get Result Formateur")
+    @GetMapping("/ResultQuiz")
+    @ResponseBody
+    public List<Result> ResultQuiz() throws IOException, MessagingException {
+        return iServicesQuiz.ResultQuiz();
+    }
+
+
+
+
+
+
 
 
     @ApiOperation(value = " Search Multiple  ")

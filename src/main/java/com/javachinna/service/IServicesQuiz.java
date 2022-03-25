@@ -4,6 +4,9 @@ package com.javachinna.service;
 import com.javachinna.model.*;
 import org.springframework.data.repository.query.Param;
 
+import javax.mail.MessagingException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -21,10 +24,10 @@ public interface IServicesQuiz {
     Integer saveScore(Result result, Long idUser, Integer idQuiz);
     User ApprenentwithMaxScoreInFormation(Integer id);
 
-    Object ApprenentwithMaxScore(@Param("id") Integer id);
+    Object ApprenentwithMaxScore(Integer id);
     Integer MaxScoreInFormation();
 
-    List<Object> getApprenantWithScoreQuiz(@Param("id") Integer id);
+    List<Object> getApprenantWithScoreQuiz( Integer id);
 
     List<Result> getTopScore();
 
@@ -38,6 +41,9 @@ public interface IServicesQuiz {
 
 
     void giftsToUserMaxScoreInCourses();
+
+
+    List<Result> ResultQuiz() throws IOException, MessagingException;
 
 
 
