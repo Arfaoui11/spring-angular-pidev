@@ -1,11 +1,11 @@
 package com.javachinna.service;
 
-import com.javachinna.model.Formation;
-import com.javachinna.model.Subscription;
-import com.javachinna.model.Surprise;
-import com.javachinna.model.User;
+import com.javachinna.model.*;
+import com.javachinna.repo.IDislikesRepo;
+import com.javachinna.repo.ILikesRepo;
 import com.javachinna.repo.SubscriptionRepo;
 import com.javachinna.repo.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-
+@Slf4j
 @Service
 public class SubscriptionService implements ISubscriptionService {
 
@@ -26,6 +26,10 @@ public class SubscriptionService implements ISubscriptionService {
     UserRepository userRepo;
     @Autowired
     SendEmailService emailService;
+    @Autowired
+    ILikesRepo iLikesRepo;
+    @Autowired
+    IDislikesRepo iDislikesRepo;
 
 
     @Override
@@ -55,7 +59,10 @@ public class SubscriptionService implements ISubscriptionService {
 
     @Override
     public void deleteSubscription(Integer id) {
+        log.info("In methode deleteSubscription");
+        log.warn("Are you sure you want to delete this subscription");
         subscRepo.deleteById(id);
+        log.error("exeption");
 
     }
 
@@ -95,10 +102,55 @@ public class SubscriptionService implements ISubscriptionService {
                 int rand = random.nextInt(i);
             }
 
-            emailService.sendSimpleEmail(user.getEmail(), "you win Surprise with us", "Surprise");
+            emailService.sendSimpleEmail(user.getEmail()," Congratulations Mr's : "+user.getLastName()+" "+user.getFirstName()+" you win with us this gift"," Subscription gift ");
 
         }
 
+
+    }
+    @Override
+    public void likeSub(Long idS ){
+        Subscription s = subscRepo.findById(Math.toIntExact(idS)).orElse(null);
+        //  User user = iUserRepo.findById(idU).orElse(null);
+        Likes likes = new Likes();
+
+
+        if(s.getLikes().size() == 0)
+        {
+            likes.setSubscs(s);
+            //  likes.setUser(user);
+            likes.setNbrSubsLikes(1);
+            iLikesRepo.save(likes);
+        }
+        else{
+            Likes l = iLikesRepo.findById(s.getLikes().stream().findFirst().get().getId()).orElse(null);
+            l.setNbrSubsLikes(l.getNbrLikes()+1);
+            iLikesRepo.save(l);
+        }
+
+    }
+    @Override
+    public void dislikeSubs (Long idS ) {
+        Subscription s = subscRepo.findById(Math.toIntExact(idS)).orElse(null);
+        //  User user = iUserRepo.findById(idU).orElse(null);
+        Dislikes dislikes = new Dislikes();
+
+        if(s.getDislikes().size() == 0)
+        {
+
+            dislikes.setSubscss(s);
+            //  dislikes.setUser(user);
+            dislikes.setNbrSubsDislikes(1);
+
+            iDislikesRepo.save(dislikes);
+        }
+        else{
+            Dislikes d = iDislikesRepo.findById(s.getDislikes().stream().findFirst().get().getId()).orElse(null);
+            d.setNbrSubsDislikes(d.getNbrSubsDislikes()+1);
+
+            iDislikesRepo.save(d);
+
+        }
 
     }
 
@@ -122,8 +174,9 @@ public class SubscriptionService implements ISubscriptionService {
         if (key.equals("")) {
             return (List<Subscription>) subscRepo.findAll();
         } else {
-         //   return subscRepo.reaserch(key);
+            return subscRepo.reaserch(key);
         }
-        return null;
+
     }
+
 }

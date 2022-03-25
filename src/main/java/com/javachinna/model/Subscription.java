@@ -28,6 +28,9 @@ public class Subscription implements Serializable {
 	private String Description;
 	private Float price;
 
+	private Integer likeSubscription;
+	private Integer dislikeSubscroption;
+
 	@Max(5)
 	@Min(0)
 	private Double Rating;
@@ -42,4 +45,12 @@ public class Subscription implements Serializable {
 	@JsonIgnore
 	@ManyToMany
 	private Set<User> users;
+
+	@OneToMany (mappedBy = "subscs",cascade = {CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<Likes> likes;
+
+	@OneToMany (mappedBy = "subscss",cascade = {CascadeType.REMOVE})
+	@JsonIgnore
+	private Set<Dislikes> Dislikes;
 }

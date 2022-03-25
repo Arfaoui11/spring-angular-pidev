@@ -86,6 +86,20 @@ public class SubscriptionController {
         subscriptionService.Surprise(idUser);
     }
 
+    @PutMapping("/addLikes/{idS}")
+    @ApiOperation(value = " add Likes ")
+    public void likeSubsc(@PathVariable(name = "idS") Long idS){
+        subscriptionService.likeSub(idS);
+    }
+
+
+    @PutMapping("/addDisLikes/{idS}")
+    @ApiOperation(value = " add DisLikes ")
+    public void dislikeSubsc(@PathVariable(name = "idS") Long idS )
+    {subscriptionService.dislikeSubs(idS);
+    }
+
+
 
 }
 
