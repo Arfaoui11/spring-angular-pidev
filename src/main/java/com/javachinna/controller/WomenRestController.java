@@ -270,9 +270,10 @@ public void generatePDF(HttpServletResponse response) throws IOException, Docume
 
     //this.pdfGeneratorService.exportFor(response);
 }
-    @GetMapping("countReclamationByType")
+    @GetMapping("/countReclamationByType")
     @ResponseBody
     public List<Double> PourcentageReclamationByType(){
+
     return womenService.PourcentageReclamationByType();
 
     }

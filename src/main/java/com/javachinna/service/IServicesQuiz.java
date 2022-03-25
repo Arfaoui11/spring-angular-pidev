@@ -43,7 +43,7 @@ public interface IServicesQuiz {
     void giftsToUserMaxScoreInCourses();
 
 
-    List<Result> ResultQuiz() throws IOException, MessagingException;
+    void ResultQuiz() throws IOException, MessagingException;
 
 
 

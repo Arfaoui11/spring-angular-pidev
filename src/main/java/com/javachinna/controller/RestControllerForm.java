@@ -518,14 +518,14 @@ public class RestControllerForm {
         return iServicesQuiz.ApprenentwithMaxScoreQuiz(id);
     }
 
-
+/*
     @ApiOperation(value = " get Result Formateur")
     @GetMapping("/ResultQuiz")
     @ResponseBody
     public List<Result> ResultQuiz() throws IOException, MessagingException {
         return iServicesQuiz.ResultQuiz();
     }
-
+ */
 
 
 

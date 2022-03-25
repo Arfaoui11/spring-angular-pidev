@@ -195,7 +195,7 @@ public class ServiceQuiz implements IServicesQuiz {
 
     @Override
     @Scheduled(cron = "0 0/1 * * * *")
-    public List<Result> ResultQuiz() throws IOException, MessagingException {
+    public void  ResultQuiz() throws IOException, MessagingException {
 
         List<Result> r = new ArrayList<>();
 
@@ -204,8 +204,8 @@ public class ServiceQuiz implements IServicesQuiz {
 
         for (Formation f : iFormationRepo.findAll()) {
 
-                if(iResultRepo.nbrResultByCourses(f.getIdFormation())>=1 && f.getEnd().before(new Date()))
-                {
+             //   if(iResultRepo.nbrResultByCourses(f.getIdFormation())>=1 && f.getEnd().before(new Date()))
+             //   {
                     for (QuizCourses quiz : iQuizRepo.getQuizByCourses(f.getIdFormation()))
                     {
                         for (Result result : iResultRepo.getResultByQuizCourses(quiz.getIdQuiz()))
@@ -215,15 +215,12 @@ public class ServiceQuiz implements IServicesQuiz {
                             form = f;
                         }
                     }
-
-
-                }
-
+              //  }
 
         }
         Date tomorow = new Date(form.getEnd().getTime() + (1000 * 60 * 60 * 24));
         Date now = new Date();
-        if(now.after(form.getEnd()) && now.before(tomorow))
+       if(now.after(form.getEnd()) && now.before(tomorow))
         {
             ByteArrayInputStream stream = exportExcelservice.quizexportexcel(r);
 
@@ -238,8 +235,8 @@ public class ServiceQuiz implements IServicesQuiz {
 
             this.emailSenderService.sendSimpleEmailWithFils(user.getEmail(),"your courses was finished yours Excel liste of score  " ," finished At : "+ new Date()+"  in Courses of Domain "+form.getDomain()+" "+" And Niveau : " +form.getLevel() +" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
 
-        }
-      return r;
+       }
+    //  return r;
     }
 
     public static void wait(int ms)
