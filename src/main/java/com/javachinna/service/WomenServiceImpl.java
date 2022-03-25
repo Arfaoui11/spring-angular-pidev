@@ -156,6 +156,11 @@ public class WomenServiceImpl implements IWomenService {
 
     }
 
+
+
+
+
+  ///////////// modif  11:16 /////////////////////////
     @Override
     @Scheduled(cron = "0 0/1 * * * *")
     public void DeleteAppointmentAfterfinalDate() {
