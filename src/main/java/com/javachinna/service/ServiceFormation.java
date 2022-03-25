@@ -18,10 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 
 @Slf4j
@@ -719,7 +716,91 @@ public class ServiceFormation implements IServiceFormation {
 
     }
 
+    @Override
+    public Map<String,Double> PourcentageCoursesByDomain() {
+        Map<String,Double> pourcentages=new HashMap<>();
 
+        double IT = 0;
+        double ART=0;
+        double CINEMA=0;
+        double MUSIC=0;
+        double DANCE=0;
+        double PHY=0;
+        double ECONOMIC=0;
+        double MARKETING=0;
+
+        List<Formation> formations=  (List<Formation>) iFormationRepo.findAll();
+
+
+        for (Formation formation: formations) {
+            if(formation.getEnd().before(new Date()))
+            {
+                if (formation.getDomain().equals(Domain.IT)) {
+                    IT++;
+                }
+                else if (formation.getDomain().equals(Domain.ART)) {
+                    ART++;}
+
+                else if (formation.getDomain().equals(Domain.CINEMA)) {
+                    CINEMA++;}
+
+                else if (formation.getDomain().equals(Domain.DANCE)) {
+                    DANCE++;}
+                else if (formation.getDomain().equals(Domain.PHY)) {
+                    PHY++;}
+                else if (formation.getDomain().equals(Domain.ECONOMIC)) {
+                    ECONOMIC++;}
+                else if (formation.getDomain().equals(Domain.MARKETING)) {
+                    MARKETING++;}
+                else if (formation.getDomain().equals(Domain.MUSIC)) {
+                    MUSIC++;}
+            }
+
+
+        }
+        if (formations.size() !=0) {
+
+            System.out.println("Number Courses:"+formations.size());
+
+            IT =  ((IT/(formations.size()))*100);
+
+
+            ART = ((ART/formations.size()))*100;
+
+
+            CINEMA = ((CINEMA/formations.size()))*100;
+
+            DANCE = ((DANCE/formations.size()))*100;
+
+            PHY = ((PHY/formations.size()))*100;
+
+            ECONOMIC = ((ECONOMIC/formations.size()))*100;
+
+            MARKETING = ((MARKETING/formations.size()))*100;
+
+            MUSIC = ((MUSIC/formations.size()))*100;
+
+        }
+        pourcentages.put("IT",IT);
+
+        pourcentages.put("ART",ART);
+
+        pourcentages.put("CINEMA",CINEMA);
+
+        pourcentages.put("DANCE",DANCE);
+
+        pourcentages.put("PHY",PHY);
+
+        pourcentages.put("ECONOMIC",ECONOMIC);
+
+        pourcentages.put("MARKETING",MARKETING);
+
+        pourcentages.put("MUSIC",MUSIC);
+
+        System.out.println(pourcentages);
+
+        return pourcentages;
+    }
 
 
 

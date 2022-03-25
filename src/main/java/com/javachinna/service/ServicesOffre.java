@@ -26,12 +26,12 @@ public class ServicesOffre implements IServices{
 
     @Override
     public void updateOffer(Offres offer, Long idUser) {
+
         User user = repoUser.findById(idUser).orElse(null);
         offer.setUsers(user);
         repoOff.save(offer);
 
     }
-
 
     @Override
     public void  updateOffer(Offres offer){

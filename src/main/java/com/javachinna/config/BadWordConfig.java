@@ -116,6 +116,7 @@ public class BadWordConfig {
         return badWords;
     }
 
+
     public static String filterText(String input) {
         ArrayList<String> badWords = badWordsFound(input);
 //        words.forEach((s) -> {
