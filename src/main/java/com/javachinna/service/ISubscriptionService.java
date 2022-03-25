@@ -27,7 +27,7 @@ public interface ISubscriptionService {
 
 	//List<Object> getUserRemunerationByDateTrie();
 
-	List<Subscription>  SearchMultiple(String key);
+	//List<Subscription>  SearchMultiple(String key);
 	void likeSub(Long idS );
 	void dislikeSubs (Long idS );
 }

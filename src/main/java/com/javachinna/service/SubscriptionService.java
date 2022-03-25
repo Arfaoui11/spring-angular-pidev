@@ -168,15 +168,15 @@ public class SubscriptionService implements ISubscriptionService {
 
 //}
 //
-    @Override
-    public List<Subscription> SearchMultiple(String key) {
-
-        if (key.equals("")) {
-            return (List<Subscription>) subscRepo.findAll();
-        } else {
-            return subscRepo.reaserch(key);
-        }
-
-    }
+//    @Override
+//    public List<Subscription> SearchMultiple(String key) {
+//
+//        if (key.equals("")) {
+//            return (List<Subscription>) subscRepo.findAll();
+//        } else {
+//            return subscRepo.reaserch(key);
+//        }
+//
+//    }
 
 }
