@@ -25,6 +25,8 @@ public class WomenServiceImpl implements IWomenService {
    @Autowired
    private IRendezVousRepository myRendezVousRepository;
    @Autowired
+   private IRendezVousArchiveRepos iRendezVousArchiveRepos;
+   @Autowired
    private UserRepository myUserRepository;
    @Autowired
    private IClinicalRepository myClinicalRepository;
@@ -164,6 +166,14 @@ public class WomenServiceImpl implements IWomenService {
         Date dd = Date.from(currentdDate1.atStartOfDay(defaultZoneId).toInstant());
         for (Appointment a :  myRendezVousRepository.DeleteAppointmentAfterfinalDate(dd)
              ) {
+            ArchiveAppointment ar = new ArchiveAppointment();
+            ar.setUsers(a.getUsers());
+            ar.setDoctor(a.getDoctor());
+            ar.setIdApp(a.getIdApp());
+            ar.setRemark(a.getRemark());
+            ar.setDateApp(a.getDateApp());
+            ar.setDelete_At(new Date());
+            iRendezVousArchiveRepos.save(ar);
             myRendezVousRepository.delete(a);
 
         }
