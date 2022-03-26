@@ -46,10 +46,24 @@ public class PartnerInstitution implements Serializable {
     @JsonIgnore
     private Set<CandidacyUniversity>candidacies;
 
+    @OneToMany(mappedBy = "partnerInstitution",cascade={CascadeType.PERSIST, CascadeType.REMOVE,CascadeType.MERGE},
+            fetch=FetchType.LAZY)
     @JsonIgnore
-    @OneToMany(mappedBy ="partnerInstitution" ,cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+    private Set<CommentUniversity> commentUniversities;
+
+
+    @OneToMany(mappedBy = "partnerInstitution",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
             fetch=FetchType.EAGER)
-    private Set<RatingPartner>ratingPartners;
+    @JsonIgnore
+    private Set<Rating>ratings;
+
+    @OneToMany(mappedBy = "partnerInstitution",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch=FetchType.EAGER)
+    @JsonIgnore
+    private Set<React> reacts;
+
+
+
 
 
 

@@ -181,6 +181,31 @@ public class PartnerServiceImpl implements IPartnerService{
     public List<PartnerInstitution> getAllUniversityByTopRating() {
         return partnerrepo.getAllUniversityByTopRating();
     }
+    @Override
+    public int getRemainingCapacityReception(Integer idUniversity) {
+        PartnerInstitution university = partnerrepo.findById(idUniversity).orElse(null);
+        assert university != null;
+        return (university.getCapacityReception()-candirepo.countAcceptedDemandByUniversity(idUniversity));
+    }
+
+    @Override
+    public boolean checkAvailableUniversity(Integer IdUniversity) {
+        PartnerInstitution university = partnerrepo.findById(IdUniversity).orElse(null);
+        if (getRemainingCapacityReception(IdUniversity) != 0 ){
+            assert university != null;
+            university.setActive(true);
+            university.setCapacityReception(getRemainingCapacityReception(IdUniversity));
+            partnerrepo.save(university);
+            return true;
+        }
+        else {
+            assert university != null;
+            university.setActive(false);
+            university.setCapacityReception(0);
+            partnerrepo.save(university);
+            return false;
+        }
+    }
 
 
 

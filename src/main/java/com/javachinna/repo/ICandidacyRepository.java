@@ -36,6 +36,24 @@ public interface ICandidacyRepository extends CrudRepository<CandidacyUniversity
     @Query("select count (d.idCandidacy) from CandidacyUniversity  d where d.status='ACCEPTED' and d.DateOFCandidacy>=:dateD and d.DateOFCandidacy<=:dateF and d.user.Nationality=:ch")
     List<Object[]> countNumberStudentPerNationalityByYear(@Param("ch")String ch ,@Param("dateD") Date dateDebut,@Param("dateF") Date dateFin);
 
+    @Query("select count(d.idCandidacy) from CandidacyUniversity  d where d.status='ACCEPTED' and d.partnerInstitution.idPartner=:id ")
+    int countAcceptedDemandByUniversity(@Param("id") Integer idUniversity);
+
+
+    @Query("select d from CandidacyUniversity d where d.status='WAITING'")
+    public List<CandidacyUniversity>findAllWaitingDemands();
+
+    @Query("select d from CandidacyUniversity d where d.status='ACCEPTED'")
+    public List<CandidacyUniversity>findAllAcceptedDemands();
+
+    @Query("select d from CandidacyUniversity d where d.status='INPROGRESS'")
+    public List<CandidacyUniversity>findAllInProgressDemands();
+
+    @Query("select d from CandidacyUniversity d where d.status not in (select d from CandidacyUniversity d where d.status='WAITING') and d.partnerInstitution.idPartner=:id")
+    List<CandidacyUniversity>findAllTreatedByUniversity(@Param("id") Integer idUniversity);
+
+
+
 
 
 

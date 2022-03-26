@@ -83,7 +83,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	//////////////////////////////             03/19/2022             ///////////////////////////////
 	//omar
-	@Query(" select s from User s WHERE s.id not in (select r from RatingPartner r)")
+	@Query(" select s from User s WHERE s.id not in (select r from Rating r)")
 	List<User> findStudentWithoutRatings() ;
 	//List<User> highestStudentDemands();
 

@@ -42,7 +42,7 @@ public interface IPartnerRepository extends CrudRepository<PartnerInstitution, I
     @Query("select count (d.idCandidacy)*d.partnerInstitution.fees from CandidacyUniversity d where d.status='ACCEPTED'  and d.DateOFCandidacy>=:dateD and d.DateOFCandidacy<=:dateF group by d.partnerInstitution.idPartner")
     List<Object> getUniversitiesRemunerationByDateTrie(@Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
 
-    @Query("select p from PartnerInstitution p order by p.ratingPartners.size DESC ")
+    @Query("select p from PartnerInstitution p order by p.ratings.size DESC ")
     List<PartnerInstitution> getAllUniversityByTopRating();
 
 

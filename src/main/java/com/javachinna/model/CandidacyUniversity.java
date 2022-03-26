@@ -22,6 +22,8 @@ public class CandidacyUniversity implements Serializable {
     private Date DateOFCandidacy;
     @Enumerated(EnumType.STRING)
     private  StatusOfCandidacy status;
+    @JsonIgnore
+    private Date dateResponse;
 
 
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE},

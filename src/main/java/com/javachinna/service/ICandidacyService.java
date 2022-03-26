@@ -25,6 +25,10 @@ public interface ICandidacyService {
     public List<Object[]> countAcceptedDemandByDate();
     public List <Object[]> countDemandByUniversity();
     List<Object[]> countNumberStudentPerNationalityByYear(String ch,Date dateDebut,Date dateFin);
+    public long getTimeAttendForDemandResponse(int idDemand);
+
+    public long getAverageWaitingTimeDemandByUniversity(Integer idUniversity);
+
 
 
 }

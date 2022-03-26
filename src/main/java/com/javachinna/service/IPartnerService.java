@@ -26,6 +26,8 @@ public interface IPartnerService {
     public int getNumberOfStudentsByUniversity( Integer idUniversity);
     public List<PartnerInstitution> getAllUniversityByTopRating();
     //Page<PartnerInstitution> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+    public int getRemainingCapacityReception(Integer idUniversity);
+    public boolean checkAvailableUniversity(Integer IdUniversity);
 
 
 

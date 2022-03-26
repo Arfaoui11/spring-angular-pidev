@@ -78,6 +78,8 @@ public class User implements Serializable {
 	private Integer age;
 
 	private String Nationality;
+	@JsonIgnore
+	private int banned;
 
 	private String phoneNumber;
 
@@ -183,9 +185,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Set<PartnerInstitution> partnerInstitutions ;
 
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<RatingPartner> ratingPartners;
+
 
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -211,5 +211,20 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<ReactComment> reactComments;
+
+	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE,CascadeType.MERGE},
+			fetch=FetchType.LAZY)
+	@JsonIgnore
+	private Set<CommentUniversity> commentUniversities;
+
+	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+			fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<Rating>ratings;
+
+	@OneToMany(mappedBy = "user",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+			fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<React> reacts;
 
 }
