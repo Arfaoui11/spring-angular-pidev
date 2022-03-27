@@ -698,14 +698,16 @@ public class ServiceFormation implements IServiceFormation {
             {
                 if(iUserRepo.nbrCommentsBadByUser(user.getId())==1 && user.getState()!=State.WARNED)
                 {
+                    this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create bad Comment in this Courses next comment with bad word we punished 20 day please Mr's  "+user.getLastName() +" " + user.getLastName() +" this web site is for association of women empowerment not to write this type of comment !!! ");
                     user.setState(State.WARNED);
                     iUserRepo.save(user);
                 }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==2 && user.getState()!=State.PUNISHED) {
+                    this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create Comment with bad word in this Courses we punished in all Courses   Mr's  "+user.getLastName() +" " + user.getLastName()+" this web site is for association of women empowerment not to write this type of comment !!!! ");
                     user.setState(State.PUNISHED);
-
                     iUserRepo.save(user);
                 }else if(iUserRepo.nbrCommentsBadByUser(user.getId())>=3 && user.getState()!=State.EXCLUDED) {
 
+                    this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create Comment with bad word in this Courses we excluded in all Courses   Mr's  "+user.getLastName() +" " + user.getLastName()+" this web site is for association of women empowerment not to write this type of comment !!!! ");
                     for (Formation f : iFormationRepo.listFormationParApprenant(user.getId()))
                     {
                         if(user.getState() == State.EXCLUDED)
