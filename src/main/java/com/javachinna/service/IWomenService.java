@@ -12,6 +12,7 @@ public interface IWomenService {
     void  DeleteComplaint(Long idCom);
     void UpdateComplaint(Complaint c, Long idUser);
     Complaint RetrieveComplaint (Long idCom);
+    public List<Complaint> SearchComplaintMultiple(String key);
 
 
     List<ComplaintResponse> RetrieveAllComplaintsResponses();

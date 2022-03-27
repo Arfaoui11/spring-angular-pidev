@@ -22,7 +22,8 @@ public class ComplaintResponse implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long idResp;
     private String response;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusComplaint status;
     @Temporal(TemporalType.DATE)
     private Date dateResp;
     @ManyToOne

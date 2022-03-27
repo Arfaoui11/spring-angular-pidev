@@ -108,6 +108,14 @@ public class WomenRestController {
         return womenService.RetrieveComplaint(idCom);
     }
 
+    @ApiOperation(value = " Search Complaint Multiple  ")
+    @GetMapping("/SearchMultiple/{keyword}")
+    @ResponseBody
+    public List<Complaint> SearchComplaintMultiple(@PathVariable("keyword")  String key){
+        return  womenService.SearchComplaintMultiple(key);
+
+    }
+
 
     @ApiOperation(value = "Retrieve All Complaint Responses ")
     @GetMapping("/retrieve-All-ComplaintResponses")
@@ -270,13 +278,16 @@ public void generatePDF(HttpServletResponse response) throws IOException, Docume
 
     //this.pdfGeneratorService.exportFor(response);
 }
-    @GetMapping("/countReclamationByType")
-    @ResponseBody
+    @GetMapping("/CountReclamationByType")
+   // @ResponseBody
     public List<Double> PourcentageReclamationByType(){
 
-    return womenService.PourcentageReclamationByType();
+        return womenService.PourcentageReclamationByType();
 
     }
+
+
+
 
 
 

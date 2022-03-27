@@ -82,6 +82,19 @@ public class WomenServiceImpl implements IWomenService {
 
 
     }
+    @Override
+    public List<Complaint> SearchComplaintMultiple(String key) {
+
+        if (key.equals(""))
+        {
+            return (List<Complaint>) myReclamationRepository.findAll();
+        }else
+        {
+            return myReclamationRepository.searchmultilplcomplaint(key);
+        }
+
+    }
+
 
 
 
@@ -258,9 +271,9 @@ public class WomenServiceImpl implements IWomenService {
             else if (complaint.getType().equals(TypeComplaint.OFFER)) {
                 OFFER++;}
 
-         else if (complaint.getType().equals(TypeComplaint.CANDIDACY)) {
-            CANDIDACY++;}
-    }
+            else if (complaint.getType().equals(TypeComplaint.CANDIDACY)) {
+                CANDIDACY++;}
+        }
         if (complaints.size() !=0) {
 
             System.out.println("number_reclamations:"+complaints.size());
@@ -268,12 +281,12 @@ public class WomenServiceImpl implements IWomenService {
             PUBLICATION =  ((PUBLICATION/(complaints.size()))*100);
 
 
-            TRAINING = ((TRAINING/complaints.size()))*100;
+            TRAINING = ((TRAINING/(complaints.size()))*100);
 
 
-            OFFER = ((OFFER/complaints.size()))*100;
+            OFFER = ((OFFER/(complaints.size()))*100);
 
-            CANDIDACY = ((CANDIDACY/complaints.size()))*100;
+            CANDIDACY = ((CANDIDACY/(complaints.size()))*100);
         }
         pourcentages.add(PUBLICATION);
 
