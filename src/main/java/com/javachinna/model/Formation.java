@@ -35,6 +35,8 @@ public class Formation implements Serializable {
     @Enumerated(EnumType.STRING)
     private Domain domain;
 
+    @Max(30)
+    @Min(0)
     private Integer nbrMaxParticipant;
     private Integer frais;
 

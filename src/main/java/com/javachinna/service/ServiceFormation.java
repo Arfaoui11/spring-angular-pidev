@@ -849,8 +849,8 @@ public class ServiceFormation implements IServiceFormation {
 
         System.out.println(pourcentages);
 
-        /*
 
+/*
         for(Formation f : iFormationRepo.findAll())
         {
 
@@ -866,7 +866,9 @@ public class ServiceFormation implements IServiceFormation {
         }
         this.emailSenderService.sendSimpleEmailWithFils(user.getEmail(),"your courses was finished yours Excel liste of score  " ," finished At : "+ new Date()+"  in Courses of Domain "+form.getDomain()+" "+" And Niveau : " +form.getLevel() +" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
 
-        */
+
+ */
+
 
 
 

@@ -1,15 +1,13 @@
 package com.javachinna.service;
 
-import com.javachinna.model.Candidacy;
-import com.javachinna.model.Offres;
-import com.javachinna.model.Profession;
-import com.javachinna.model.User;
+import com.javachinna.model.*;
 import com.javachinna.repo.RepoCandidacy;
 import com.javachinna.repo.RepoOffers;
 import com.javachinna.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -164,5 +162,61 @@ public class ServicesOffre implements IServices{
     public List<Offres> OffreByProfession(Profession profession){
         return repoOff.offerByProfession(profession);
     }*/
+/*
+    public List<Double> PourcentageReclamationByType() {
+        List<Double> pourcentages=new ArrayList<Double>();
+        double PUBLICATION = 0;
+        double TRAINING=0;
+        double OFFER=0;
+        double CANDIDACY=0;
+
+        List<Complaint> complaints=  (List<Complaint>) myReclamationRepository.findAll();
+        System.out.println(complaints.toString());
+
+        for (Complaint complaint: complaints) {
+
+
+            if (complaint.getType().equals(TypeComplaint.PUBLICATION)) {
+                PUBLICATION++;
+            }
+
+
+            else if (complaint.getType().equals(TypeComplaint.TRAINING)) {
+                TRAINING++;}
+
+
+            else if (complaint.getType().equals(TypeComplaint.OFFER)) {
+                OFFER++;}
+
+            else if (complaint.getType().equals(TypeComplaint.CANDIDACY)) {
+                CANDIDACY++;}
+        }
+        if (complaints.size() !=0) {
+
+            System.out.println("number_reclamations:"+complaints.size());
+
+            PUBLICATION =  ((PUBLICATION/(complaints.size()))*100);
+
+
+            TRAINING = ((TRAINING/(complaints.size()))*100);
+
+
+            OFFER = ((OFFER/(complaints.size()))*100);
+
+            CANDIDACY = ((CANDIDACY/(complaints.size()))*100);
+        }
+        pourcentages.add(PUBLICATION);
+
+        pourcentages.add(TRAINING);
+
+        pourcentages.add(OFFER);
+        pourcentages.add(CANDIDACY);
+
+        System.out.println(pourcentages);
+
+        return pourcentages;
+    }
+
+    */
 
 }
