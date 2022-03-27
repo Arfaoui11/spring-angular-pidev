@@ -27,7 +27,7 @@ public class QuizCandidacy implements Serializable {
 
     private Integer score;
 
-    @Temporal (TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     private Date createAt;
 
     private String content ;

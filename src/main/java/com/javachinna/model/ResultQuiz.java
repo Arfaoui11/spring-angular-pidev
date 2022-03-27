@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@Table( name = "Result")
+@Table( name = "ResultQuiz")
 public class ResultQuiz implements Serializable {
 
     @Id
