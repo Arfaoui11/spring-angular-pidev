@@ -101,6 +101,7 @@ public class QuizzService implements IQuizServiceC{
 
         User user = this.repoUser.findById(idUser).orElse(null);
         QuizCandidacy quiz = this.repoQuiz.findById(idQuiz).orElse(null);
+
         if (repoResultQuiz.findUser(idUser,idQuiz) == 0)
         {
 

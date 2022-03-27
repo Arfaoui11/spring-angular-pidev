@@ -13,7 +13,7 @@ public interface RepoResultQuiz extends CrudRepository<ResultQuiz, Integer> {
 
 
 
-    @Query(value = "select count(r.id) from ResultQuiz r join r.sUser u join r.quiz q where u.id=:idUser and q.idQuiz=:idquiz and r.status=false")
+    @Query(value = "select count(r.id) from ResultQuiz r join r.sUser u join r.quiz q where u.id=:idu and q.idQuiz=:idq and r.status=false")
     Integer findUser(@Param("idu") Long idUser, @Param("idq") Integer idQuiz);
 
 
