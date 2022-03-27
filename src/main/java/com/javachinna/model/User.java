@@ -88,14 +88,16 @@ public class User implements Serializable {
 
 
 	// bi-directional many-to-many association to Role
-	@JsonIgnore
+
+
 	@ManyToMany
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
+	@JsonIgnore
 	private Set<Role> roles;
 
 
-	@JsonIgnore
 	@ManyToMany(mappedBy = "users",cascade =CascadeType.ALL)
+	@JsonIgnore
 	private Set<Subscription> subscs;
 
 
@@ -137,7 +139,7 @@ public class User implements Serializable {
 					CascadeType.PERSIST,
 					CascadeType.MERGE,
 					CascadeType.REMOVE
-			} )
+			})
 	@JsonIgnore
 	private  Set<Candidacy> candidacy;
 

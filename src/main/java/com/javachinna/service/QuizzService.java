@@ -104,7 +104,6 @@ public class QuizzService implements IQuizServiceC{
 
         if (repoResultQuiz.findUser(idUser,idQuiz) == 0)
         {
-
             saveResult.setSUser(user);
             saveResult.setQuiz(quiz);
             saveResult.setUsername(resultQuiz.getUsername());
@@ -118,6 +117,7 @@ public class QuizzService implements IQuizServiceC{
             log.info("This user is tested with this quiz");
             return 0;
         }
+
     }
 
 

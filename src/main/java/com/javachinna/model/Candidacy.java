@@ -24,6 +24,7 @@ public class Candidacy {
     private String Status ;
     @Temporal(TemporalType.DATE)
     private Date dateOfCandidacy;
+
     private String cv;
 
     @ManyToOne

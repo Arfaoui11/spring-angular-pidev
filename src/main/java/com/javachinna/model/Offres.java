@@ -36,12 +36,7 @@ public class Offres {
     private User users;
 
 
-    @OneToMany(mappedBy ="offers",fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.REMOVE
-            })
+    @OneToMany(mappedBy ="offers",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Candidacy> candidacy;
 
