@@ -52,10 +52,6 @@ public class RestControllerForm {
     @Autowired
     private IResultRepo iResultRepo;
     @Autowired
-    private ISendEmailService iServiceEmail;
-    @Autowired
-    private SendEmailService emailSenderService;
-    @Autowired
     exportExcel exportExcelservice;
     @Autowired
     private DatabaseFileService fileStorageService;
@@ -67,7 +63,7 @@ public class RestControllerForm {
     @Autowired
     private exportPdf export;
 
-    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
+
 
     public RestControllerForm(PDFGeneratorService pdfGeneratorService) {
         this.pdfGeneratorService = pdfGeneratorService;
@@ -77,7 +73,6 @@ public class RestControllerForm {
     @ApiOperation(value = " Generate PDF ")
     public void generatePDF(HttpServletResponse response,String p1 ,String p2 ,String qrcode) throws IOException, DocumentException {
 
-     // export.pdfReader();
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -96,30 +91,6 @@ public class RestControllerForm {
     @ApiOperation(value = " ajouter Formateur ")
     public void ajouterFormateur(@RequestBody User formateur,HttpServletResponse response) {
 
-
-        byte[] image = new byte[0];
-        try {
-
-            // Generate and Return Qr Code in Byte Array
-            image = QRCodeGenerator.getQRCodeImage(formateur.getEmail(),250,250);
-
-
-
-             QRCodeGenerator.generateQRCodeImage(formateur.getEmail(),250,250,QR_CODE_IMAGE_PATH);
-
-            // Generate and Save Qr Code Image in static/image folder
-
-        } catch (WriterException | IOException e) {
-
-            e.printStackTrace();
-        }
-        // Convert Byte Array into Base64 Encode String
-        String qrcode = Base64.getEncoder().encodeToString(image);
-       // log.info(qrcode);
-
-
-      //  generatePDF(response,formateur.getEmail(),formateur.getEmail(),qrcode);
-        iServiceEmail.sendSimpleEmail("mahdijr2015@gmail.com"," add Formateur " ," add succesful ... ");
         iServiceFormation.ajouterFormateur(formateur);
 
     }
@@ -495,9 +466,9 @@ public class RestControllerForm {
 
 
     @ApiOperation(value = " get Apprenant With Score Quiz ")
-    @GetMapping("/getApprenantWithScoreQuiz/{idF}")
+    @GetMapping("/getAllApprenantWithScoreQuiz/{idF}")
     @ResponseBody
-    List<Object> getApprenantWithScoreQuiz(@PathVariable("idF") Integer id)
+    List<User> getApprenantWithScoreQuiz(@PathVariable("idF") Integer id)
     {
         return this.iServicesQuiz.getApprenantWithScoreQuiz(id);
     }
@@ -505,10 +476,11 @@ public class RestControllerForm {
     @ApiOperation(value = " get Apprenant With Score  ")
     @GetMapping("/ApprenentwithMaxScore/{idF}")
     @ResponseBody
-    public Object ApprenentwithMaxScore(@PathVariable("idF") Integer id)
+    public List<Object> ApprenentwithMaxScore(@PathVariable("idF") Integer id)
     {
         return iServicesQuiz.ApprenentwithMaxScore(id);
     }
+
 
     @ApiOperation(value = " get Apprenant With Score in All Quiz formation ")
     @GetMapping("/ApprenentwithMaxScoreQuiz/{idF}")

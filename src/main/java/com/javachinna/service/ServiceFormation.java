@@ -11,9 +11,9 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -40,6 +40,8 @@ public class ServiceFormation implements IServiceFormation {
     private ILikesRepo iLikesRepo;
     @Autowired
     private IDislikesRepo iDislikesRepo;
+    @Autowired
+    private ICertificatRepo iCertificatRepo;
 
     @Autowired
     private exportPdf export;
@@ -116,7 +118,7 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-  //  @Scheduled(cron = "0 0/20 * * * *")
+   // @Scheduled(cron = "0 0/1 * * * *")
     @Scheduled(cron = "0 0 9 28 * ?")
     public User getFormateurRemunerationMaxSalaire() throws MessagingException {
 
@@ -192,7 +194,7 @@ public class ServiceFormation implements IServiceFormation {
 
             u.setSalary(max + 200 );
             iUserRepo.save(u);
-            this.emailSenderService.sendSimpleEmailWithFils(u.getEmail(), "we have max houre of travel ", "we have max houre of travel we elevate salary with 200 $  : " + u.getSalary()+ "$  Name " + u.getLastName() + "--" + u.getFirstName() + " . ","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/mybadges/goldbadge.png");
+            this.emailSenderService.sendSimpleEmailWithFils(u.getEmail(), "we have max houre of travel ", "we have max houre of travel we elevate salary with 200 $   Your salary  " + u.getSalary()+ "$  Name " + u.getLastName() + "--" + u.getFirstName() + " . ","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/mybadges/goldbadge.png");
 
             return u;
         }
@@ -244,11 +246,13 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/2 * * * *")
     public void CertifactionStudents() {
 
         boolean status = false;
         boolean fin;
+
+        String Path="";
 
 
         try {
@@ -278,8 +282,30 @@ public class ServiceFormation implements IServiceFormation {
                             {
                                 log.info( " Status  true ");
 
-                              export.pdfReader(f,u);
+                                Certificat certificat = new Certificat();
 
+                                certificat.setFormation(f);
+                                certificat.setDate(new Date());
+                                certificat.setName(u.getDisplayName());
+                                certificat.setPath("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Certif/C"+u.getId()+".pdf");
+                                certificat.setUser(u);
+
+                                iCertificatRepo.save(certificat);
+
+                                if(this.iUserRepo.getApprenantWithScore(f.getIdFormation()).get(0).getId().equals(u.getId()))
+                                {
+                                    Path = "/Users/macos/IdeaProjects/springPidev/src/main/resources/static/mybadges/goldbadge.png";
+                                }else if(this.iUserRepo.getApprenantWithScore(f.getIdFormation()).get(1).getId().equals(u.getId())){
+                                    Path = "/Users/macos/IdeaProjects/springPidev/src/main/resources/static/mybadges/silverbadge.png";
+                                }else if(this.iUserRepo.getApprenantWithScore(f.getIdFormation()).get(2).getId().equals(u.getId()))
+                                {
+                                    Path = "/Users/macos/IdeaProjects/springPidev/src/main/resources/static/mybadges/bronzebadge.png";
+                                }
+
+                                log.info(Path);
+
+
+                                export.pdfReader(f,u,Path);
                                 QRCodeGenerator.generateQRCodeImage(f.getDomain().toString(),150,150,QR_CODE_IMAGE_PATH);
                                 this.emailSenderService.sendSimpleEmailWithFils(u.getEmail()," Congratulations Mr's : "+u.getLastName()+" "+u.getFirstName()+" you have finished your Courses  " ," Certification At : "+ new Date()+"  in Courses of Domain "+f.getDomain()+" "+" And Niveau : " +f.getLevel() +" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Certif/C"+u.getId()+".pdf");
                                 fin=true; /// return /////
@@ -287,9 +313,6 @@ public class ServiceFormation implements IServiceFormation {
 
 
                         }
-
-
-
 
                     }
 
@@ -340,6 +363,7 @@ public class ServiceFormation implements IServiceFormation {
 
             if (this.iFormationRepo.nbrCoursesParFormateur(idFormateur,dd,df) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
             {
+                this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"Congratulations Mr's : NAME : "+formateur.getLastName() +" "+formateur.getFirstName() +" ." ," We accepted you to teach with usthis courses of "+formation.getDomain()+" this courses start at : "+formation.getStart()+" and finish "+formation.getEnd()+" .");
                 formation.setRating(0.0);
                 formation.setFormateur(formateur);
                 iFormationRepo.save(formation);
@@ -358,7 +382,6 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-   // @Scheduled(cron = "*/30 * * * * *")
     public void affecterApprenantFormationWithMax(Long idApprenant, Integer idFormation) {
 
         Formation formation = iFormationRepo.findById(idFormation).orElse(null);
@@ -374,6 +397,8 @@ public class ServiceFormation implements IServiceFormation {
         Date df =Date.from(currentdDate1.plusMonths(3).atStartOfDay(defaultZoneId).toInstant());
 
         ///User with gifts Free for Max Score
+
+
 
     if(apprenant.getState() == State.DISCIPLINED)
     {
@@ -435,7 +460,9 @@ public class ServiceFormation implements IServiceFormation {
 
     }else
     {
-        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "You are PUNISHED  ", " we don't have access to add new courses you are (PUNISHED/EXCLUDED)" + apprenant.getLastName() + " - " + apprenant.getFirstName() + "  .");
+        formation.getApprenant().remove(apprenant);
+        iFormationRepo.save(formation);
+        this.emailSenderService.sendSimpleEmail(apprenant.getEmail(), "You are (PUNISHED/EXCLUDED) ", " we don't have access to add new courses you are (PUNISHED/EXCLUDED)" + apprenant.getLastName() + " - " + apprenant.getFirstName() + "  .");
         log.info(" no add  " + apprenant.getState());
     }
 
@@ -659,32 +686,50 @@ public class ServiceFormation implements IServiceFormation {
         return (List<PostComments>) iCommentsRepo.findAll();
     }
 
+
     @Override
     @Scheduled(cron = "0 0/2 * * * *")
+    @Transactional
     public void LeanerStatus() {
-
 
         for(User user: iUserRepo.findAll())
         {
-            User u = iUserRepo.findById(user.getId()).orElse(null);
-
-            if (u != iUserRepo.findById(1L).orElse(null) )
+            if (user != iUserRepo.findById(1L).orElse(null) )
             {
-                if(iUserRepo.nbrCommentsBadByUser(user.getId())==1 && u.getState()!=State.WARNED)
+                if(iUserRepo.nbrCommentsBadByUser(user.getId())==1 && user.getState()!=State.WARNED)
                 {
-                    u.setState(State.WARNED);
-                    iUserRepo.save(u);
-                }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==2 && u.getState()!=State.PUNISHED) {
-                    u.setState(State.PUNISHED);
-                    iUserRepo.save(u);
-                }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==3 && u.getState()!=State.EXCLUDED) {
-                    u.setState(State.EXCLUDED);
-                    iUserRepo.save(u);
+                    user.setState(State.WARNED);
+                    iUserRepo.save(user);
+                }else if(iUserRepo.nbrCommentsBadByUser(user.getId())==2 && user.getState()!=State.PUNISHED) {
+                    user.setState(State.PUNISHED);
+
+                    iUserRepo.save(user);
+                }else if(iUserRepo.nbrCommentsBadByUser(user.getId())>=3 && user.getState()!=State.EXCLUDED) {
+
+                    for (Formation f : iFormationRepo.listFormationParApprenant(user.getId()))
+                    {
+                        if(user.getState() == State.EXCLUDED)
+                        {
+                            f.getApprenant().remove(user);
+                            iFormationRepo.save(f);
+                        }
+                    }
+
+                    for (PostComments p : iCommentsRepo.listeCommentParUser(user.getId()))
+                    {
+                        iCommentsRepo.deleteById(p.getIdComn());
+                    }
+
+                    user.setState(State.EXCLUDED);
+                    iUserRepo.save(user);
+
+
                 }
             }
-
-
         }
+
+
+
 
     }
 

@@ -105,6 +105,7 @@ public class ServiceQuiz implements IServicesQuiz {
         return qList;
     }
 
+
     public int getResult(QuestionForm qForm) {
         int correct = 0;
 
@@ -114,6 +115,8 @@ public class ServiceQuiz implements IServicesQuiz {
 
         return correct;
     }
+
+
 
     @Override
     public Integer saveScore(Result result, Long idUser, Integer idQuiz ) {
@@ -140,25 +143,7 @@ public class ServiceQuiz implements IServicesQuiz {
 
     }
 
-    @Override
-    public User ApprenentwithMaxScoreInFormation(Integer id) {
-        return this.iUserRepo.ApprenentwithMaxScoreInFormation(id);
-    }
 
-    @Override
-    public Object ApprenentwithMaxScore(Integer id) {
-        Formation f = iFormationRepo.findById(id).orElse(null);
-
-        return  iUserRepo.getApprenantWithScoreQuiz(id).get(0);
-
-
-    }
-
-    @Override
-    public User ApprenentwithMaxScoreQuiz(Integer id) {
-
-        return iUserRepo.getApprenantWithScoreForGifts(id).get(0);
-    }
 
     @Override
    // @Scheduled(cron = "0 0/1 * * * *")
@@ -252,14 +237,34 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
+    public User ApprenentwithMaxScoreInFormation(Integer id) {
+        return this.iUserRepo.ApprenentwithMaxScoreInFormation(id);
+    }
+
+    @Override
+    public List<Object> ApprenentwithMaxScore(Integer id) {
+
+        return  iUserRepo.getApprenantWithScoreQuiz(id);
+
+
+    }
+
+    @Override
+    public User ApprenentwithMaxScoreQuiz(Integer id) {
+
+        return iUserRepo.getApprenantWithScoreForGifts(id).get(0);
+    }
+
+    @Override
     public Integer MaxScoreInFormation() {
         return this.iUserRepo.MaxScoreInFormation();
     }
 
     @Override
-    public List<Object> getApprenantWithScoreQuiz(Integer id) {
-        return this.iUserRepo.getApprenantWithScoreQuiz(id);
+    public List<User> getApprenantWithScoreQuiz(Integer id) {
+        return this.iUserRepo.getApprenantWithScore(id);
     }
+
     @Override
      public List<Result> getTopScore() {
         List<Result> sList = (List<Result>) iResultRepo.findAll(Sort.by(Sort.Direction.DESC, "totalCorrect"));

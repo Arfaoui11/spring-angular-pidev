@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -296,29 +297,35 @@ public class exportPdf {
     }
 
 
-    public void pdfReader(Formation f , User user )
+    public void pdfReader(Formation f , User user,String path)
     {
 
 
         try
         {
 
-            String Nom="Firstname : "+user.getLastName();
-            String Prenom="Lastname : "+user.getFirstName();
-            String Email="Email : "+user.getEmail();
-            String Formation="Formation : "+f.getTitle();
+
+            String  nbrheurs =" Courses  : "+f.getNbrHeures() +" hours total ";
             String Domain = "Domain : "+f.getDomain();
+            String Formateur = f.getFormateur().getFirstName() + " " + f.getFormateur().getLastName();
+            String Title = f.getTitle();
+            String User = user.getFirstName() +" "+user.getLastName();
+
             //Read file using PdfReader
-            PdfReader pdfReader = new PdfReader("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Certif/cc.pdf");
+            PdfReader pdfReader = new PdfReader("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Certif/Certif.pdf");
 
             //Modify file using PdfReader
             PdfStamper pdfStamper = new PdfStamper(pdfReader, new FileOutputStream("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Certif/C"+user.getId()+".pdf"));
 
 
-            Image image = Image.getInstance("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/mybadges/goldbadge.png");
+            Image image = Image.getInstance(path);
             Image image2 = Image.getInstance("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/img/img.png");
+
+
             image.scaleAbsolute(100, 100);
-            image.setAbsolutePosition(450f, 450f);
+            image.setAbsolutePosition(480f, 467f);
+
+
 
 
             image2.scaleAbsolute(90, 90);
@@ -336,36 +343,41 @@ public class exportPdf {
             canvas.addImage(qrCode);
 
             Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-            fontTitle.setSize(20);
+            fontTitle.setSize(30);
 
-            Paragraph paragraph = new Paragraph("Certificat of Achivement ", fontTitle);
+
+
+            Paragraph paragraph = new Paragraph(Title, fontTitle);
             paragraph.setAlignment(Paragraph.ALIGN_CENTER);
 
             Font fontParagraph = FontFactory.getFont(FontFactory.HELVETICA);
             fontParagraph.setSize(16);
 
-            Paragraph paragraph2 = new Paragraph( Nom, fontParagraph);
+            Paragraph paragraph1 = new Paragraph(Domain, fontParagraph);
+            paragraph1.setAlignment(Paragraph.ALIGN_CENTER);
+
+
+
+            Paragraph paragraph2 = new Paragraph( "Username : "+User, fontParagraph);
             paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
 
-            Paragraph paragraph3 = new Paragraph(Prenom, fontParagraph);
-            paragraph3.setAlignment(Paragraph.ALIGN_CENTER);
+            Paragraph paragraph3 = new Paragraph( Formateur, fontParagraph);
+            paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
 
-            Paragraph paragraph4 = new Paragraph(Email, fontParagraph);
-            paragraph4.setAlignment(Paragraph.ALIGN_CENTER);
-
-            Paragraph paragraph5 = new Paragraph(Formation, fontParagraph);
-            paragraph5.setAlignment(Paragraph.ALIGN_CENTER);
-
-            Paragraph paragraph6 = new Paragraph(Domain, fontParagraph);
-            paragraph6.setAlignment(Paragraph.ALIGN_CENTER);
+            Paragraph paragraph4 = new Paragraph( new Date().toString(), fontParagraph);
+            paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
 
 
-            ColumnText.showTextAligned(canvas, Element.BODY, paragraph, 450, 350, 0);
-            ColumnText.showTextAligned(canvas, Element.BODY, paragraph2, 450, 320, 0);
-            ColumnText.showTextAligned(canvas, Element.BODY, paragraph3, 450, 300, 0);
-            ColumnText.showTextAligned(canvas, Element.BODY, paragraph4, 450, 280, 0);
-            ColumnText.showTextAligned(canvas, Element.BODY, paragraph5, 450, 260, 0);
-            ColumnText.showTextAligned(canvas, Element.BODY, paragraph6, 450, 240, 0);
+            Paragraph paragraph5 = new Paragraph(nbrheurs, fontParagraph);
+            paragraph2.setAlignment(Paragraph.ALIGN_CENTER);
+
+
+            ColumnText.showTextAligned(canvas, Element.BODY, paragraph, 400, 350, 0);
+            ColumnText.showTextAligned(canvas, Element.BODY, paragraph2, 400, 220, 0);
+            ColumnText.showTextAligned(canvas, Element.BODY, paragraph3, 470, 182, 0);
+            ColumnText.showTextAligned(canvas, Element.BODY, paragraph4, 460, 112, 0);
+            ColumnText.showTextAligned(canvas, Element.BODY, paragraph5, 500, 140, 0);
+
 
 
             pdfStamper.close();

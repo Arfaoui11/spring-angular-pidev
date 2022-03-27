@@ -67,7 +67,7 @@ public class CertificatService implements ICrudRepository<Certificat>  {
 
     @Override
     public List<Certificat> findAll() {
-        return certificatRepository.findAll();
+        return (List<Certificat>) certificatRepository.findAll();
     }
 
     public void affecterCertifUser(Long idCertif, Long idUser) {

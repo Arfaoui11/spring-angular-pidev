@@ -22,12 +22,15 @@ public interface IServicesQuiz {
     int getResult(QuestionForm qForm);
 
     Integer saveScore(Result result, Long idUser, Integer idQuiz);
+
     User ApprenentwithMaxScoreInFormation(Integer id);
 
-    Object ApprenentwithMaxScore(Integer id);
+    List<Object> ApprenentwithMaxScore(Integer id);
+
     Integer MaxScoreInFormation();
 
-    List<Object> getApprenantWithScoreQuiz( Integer id);
+    List<User> getApprenantWithScoreQuiz( Integer id);
+    User ApprenentwithMaxScoreQuiz(Integer id);
 
     List<Result> getTopScore();
 
@@ -37,7 +40,7 @@ public interface IServicesQuiz {
 
     void DeleteQuiz(Integer idQ);
 
-    User ApprenentwithMaxScoreQuiz(Integer id);
+
 
 
     void giftsToUserMaxScoreInCourses();

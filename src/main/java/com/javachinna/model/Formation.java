@@ -66,6 +66,11 @@ public class Formation implements Serializable {
     private Set<PostComments> postComments;
 
 
+    @OneToMany(mappedBy = "formation")
+    @JsonIgnore
+    private Set<Certificat> certificat;
+
+
 
 
 

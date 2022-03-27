@@ -149,7 +149,7 @@ public class User implements Serializable {
 	private Set<Formation> formationF;
 
 
-	@ManyToMany(mappedBy = "apprenant", fetch = FetchType.EAGER
+	@ManyToMany(mappedBy = "apprenant", fetch = FetchType.LAZY
 			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JsonIgnore
 	private Set<Formation> formationA;

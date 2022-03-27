@@ -14,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Table( name = "QuizCourses")
 public class QuizCourses  implements Serializable {
 

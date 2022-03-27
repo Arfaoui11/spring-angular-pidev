@@ -26,8 +26,8 @@ public class Certificat {
     @ManyToOne
     User user;
 
-//    @ManyToOne
-//    Formation formation;
+    @ManyToOne
+    Formation formation;
 
     public Certificat(String fileName, String contentType, byte[] bytes) {
     }

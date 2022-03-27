@@ -40,7 +40,6 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
 
   //  @Query(value = "select f from Formation f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by sum(f.likes-f.dislikes) desc")
     @Query(value = "select f from Formation f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by f.Rating desc")
-
     List<Formation> rech(String keyword);
 
     @Query(value = "select f from Formation f join f.apprenant a where a.id=:id")

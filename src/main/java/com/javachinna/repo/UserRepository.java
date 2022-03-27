@@ -72,10 +72,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
 			" where u.profession='LEARNER') and f.idFormation=:id")
 	User ApprenentwithMaxScoreInFormation(@Param("id") Integer id);
 
-	@Query(value = "select r from Result r join r.quiz q join q.formation f where f.idFormation=:idf group by r.sUser order by SUM (r.totalCorrect) desc")
+	@Query(value = "select r.sUser from Result r join r.quiz q join q.formation f where f.idFormation=:id group by r.sUser order by SUM (r.totalCorrect) desc")
+	List<User> getApprenantWithScore(@Param("id") Integer id);
+
+
+	@Query(value = "select r.sUser,SUM (r.totalCorrect) from Result r join r.quiz q join q.formation f where f.idFormation=:id group by r.sUser order by SUM (r.totalCorrect) desc")
 	List<Object> getApprenantWithScoreQuiz(@Param("id") Integer id);
 
+	@Query(value = "select count(c.idComn) from PostComments c join c.userC u where c.message='This message was blocked' and u.id=:id " )
+	Integer nbrCommentsBadByUser(@Param("id") Long idUser);
 
+	@Query(value = "select c from PostComments c join c.userC u where u.id=:id")
+	List<PostComments> CommentsByUser(@Param("id") Long idUser);
 
 
 	@Query(value = "select r.sUser from Result r join r.quiz q join q.formation f where f.idFormation=:id group by r.sUser order by SUM (r.totalCorrect) desc")
@@ -100,11 +108,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("select count(d.idCandidacy) from CandidacyUniversity d where d.user.id=:idStudent and d.partnerInstitution.idPartner=:IdUniversity")
 	int studentDemands(@Param("idStudent") Long IdStudent ,@Param("IdUniversity") Integer IdUniversity);
 
-	@Query(value = "select count(c.idComn) from PostComments c join c.userC u where c.message='This message was blocked' and u.id=:id " )
-	Integer nbrCommentsBadByUser(@Param("id") Long idUser);
 
-	@Query(value = "select c from PostComments c join c.userC u where u.id=:id")
-	List<PostComments> CommentsByUser(@Param("id") Long idUser);
 
 
 }
