@@ -60,7 +60,7 @@ public class QuizCandidacyController {
 		return iQuizServiceC.getQuestions();
 	}
 
-/*
+
 	@PostMapping("/SaveScore/{idUser}/{idQuiz}")
 	@ApiOperation(value = " Save Score Quiz ")
 	public Integer saveScore(@RequestBody ResultQuiz result, @PathVariable(name = "idUser") Long idUser, @PathVariable(name = "idQuiz") Integer idQuiz)
@@ -68,7 +68,7 @@ public class QuizCandidacyController {
 		return  this.iQuizServiceC.SaveScore(result,idUser,idQuiz);
 	}
 
- */
+
 	@ApiOperation(value = "Delete Quiz")
 	@GetMapping("/DeleteQuiz/{id}")
 	@ResponseBody

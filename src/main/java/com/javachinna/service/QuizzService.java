@@ -94,14 +94,14 @@ public class QuizzService implements IQuizServiceC{
 
         }
 
-/*
+
    @Override
     public Integer SaveScore(ResultQuiz resultQuiz, Long idUser, Integer idQuiz) {
         ResultQuiz saveResult = new ResultQuiz();
 
         User user = this.repoUser.findById(idUser).orElse(null);
         QuizCandidacy quiz = this.repoQuiz.findById(idQuiz).orElse(null);
-        if (repoResultQuiz.findUserQuiz(idUser,idQuiz) == 0)
+        if (repoResultQuiz.findUser(idUser,idQuiz) == 0)
         {
 
             saveResult.setSUser(user);
@@ -119,7 +119,7 @@ public class QuizzService implements IQuizServiceC{
         }
     }
 
- */
+
 
     @Override
     public void DeleteQuiz(Integer idQ) {

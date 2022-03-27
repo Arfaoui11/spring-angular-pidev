@@ -23,7 +23,7 @@ public interface IQuizServiceC {
     List<QuestionCandidacy> getQuestions();
     //int getResult(QuestionCandidacy questionCandidacy);
 
-  //  Integer SaveScore (ResultQuiz result, Long idUser, Integer idQuiz);
+    Integer SaveScore (ResultQuiz result, Long idUser, Integer idQuiz);
     void DeleteQuiz(Integer idQuiz);
   /*
     Integer MaxScoreInCandidacy();
