@@ -32,20 +32,19 @@ public class QuizzService implements IQuizServiceC{
 
     @Override
     public void addQuiz(QuizCandidacy quiz, Integer id) {
+
         Candidacy candidacy = this.repoCandidacy.findById(id).orElse(null);
         quiz.setCandidacy(candidacy);
         quiz.setCreateAt(new Date());
         repoQuiz.save(quiz);
+
     }
 
     @Override
     public void addQuestionAndAsigntoQuiz(QuestionCandidacy question, Integer idQuiz) {
         QuizCandidacy quiz = repoQuiz.findById(idQuiz).orElse(null);
-
         question.setQuiz(quiz);
-
         repoQuestionCandidacy.save(question);
-
     }
 
     @Override

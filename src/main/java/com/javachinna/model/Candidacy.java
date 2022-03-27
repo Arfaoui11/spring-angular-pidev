@@ -36,7 +36,7 @@ public class Candidacy {
     private Offres offers;
 
 
-    @OneToMany(mappedBy = "candidacy" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "candidacy" ,cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<QuizCandidacy> quizCandidacies;
 
