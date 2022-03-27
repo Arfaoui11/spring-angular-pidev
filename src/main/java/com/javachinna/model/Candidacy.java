@@ -15,7 +15,6 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Table( name = "Candidacy")
-///s
 public class Candidacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

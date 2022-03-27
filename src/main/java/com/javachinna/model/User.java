@@ -138,7 +138,6 @@ public class User implements Serializable {
 					CascadeType.MERGE,
 					CascadeType.REMOVE
 			} )
-	//hh
 	@JsonIgnore
 	private  Set<Candidacy> candidacy;
 

@@ -21,7 +21,7 @@ public class QuizCandidacyController {
 
 
 
-	public QuizCandidacyController(QuizzService serviceQuizz) {
+	public QuizCandidacyController(@RequestBody QuizzService serviceQuizz) {
 		super();
 		this.iQuizServiceC = serviceQuizz;
 	}
