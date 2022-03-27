@@ -14,9 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
-@Table( name = "QuizCourses")
-public class QuizCourses  implements Serializable {
+@Table( name = "QuizCandidacy")
+public class QuizCandidacy implements Serializable {
 
 
     @Id
@@ -35,14 +34,13 @@ public class QuizCourses  implements Serializable {
 
     @ManyToOne
     @JsonIgnore
-    private Formation formation;
+    private Offres Offres;
 
     @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
-    private Set<QuestionCourses> question;
+    private Set<QuestionCandidacy> question;
 
     @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
-    private Set<Result> results;
-
+    private Set<ResultQuiz> results;
 }

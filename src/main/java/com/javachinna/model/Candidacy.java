@@ -20,7 +20,7 @@ public class Candidacy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer idCandidacy;
-    private Status Status ;
+    private String Status ;
     @Temporal(TemporalType.DATE)
     private Date dateOfCandidacy;
     private String cv;

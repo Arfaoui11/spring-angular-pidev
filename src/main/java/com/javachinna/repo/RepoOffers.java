@@ -2,6 +2,7 @@ package com.javachinna.repo;
 
 
 import com.javachinna.model.Offres;
+import com.javachinna.model.Profession;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,6 @@ public interface RepoOffers extends CrudRepository<Offres,Integer> {
     @Query("SELECT o FROM Offres o WHERE CONCAT(o.dateEndOffer, o.dateBeginOffer, o.dateInterview , o.priceOffer ,o.profession) LIKE %?1%")
      List<Offres> findAll(String keyword);
 
+   /* @Query('SELECT p from  Offres p join p.users where p.profession=:profession')
+    List<Offres> offerByProfession(@Param("profession") rofession profession);*/
 }

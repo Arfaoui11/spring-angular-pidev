@@ -104,6 +104,21 @@ public class ServicesOffre implements IServices{
 
     @Override
     public Offres getOffresHighRecommended() {
+        return null;
+    }
+
+  /*  @Override
+    public Offres getOffresHighRecommended() {
+        return null;
+    }*/
+
+  /*  @Override
+    public Offres getOffresHighRecommended() {
+        return null;
+    }*/
+
+    /*@Override
+    public Offres getOffresHighRecommended() {
          Integer Max=0;
          Offres offres = new Offres();
         for (Offres o:repoOff.findAll() )
@@ -120,7 +135,7 @@ public class ServicesOffre implements IServices{
             }
         }
         return offres;
-    }
+    }*/
 
     ///////////    new    12:30  Mahdi ///////////////
     @Override
@@ -141,8 +156,13 @@ public class ServicesOffre implements IServices{
 
     @Override
     public List<Candidacy> CandidacyByProfession(Profession profession) {
-        return repoCandidacy.offerByProfession(profession);
-    }
+        return repoCandidacy.offerByProfession(profession);}
 
+
+
+   /* @Override
+    public List<Offres> OffreByProfession(Profession profession){
+        return repoOff.offerByProfession(profession);
+    }*/
 
 }
