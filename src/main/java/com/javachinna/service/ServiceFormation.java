@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -42,9 +44,10 @@ public class ServiceFormation implements IServiceFormation {
     private IDislikesRepo iDislikesRepo;
     @Autowired
     private ICertificatRepo iCertificatRepo;
-
     @Autowired
     private exportPdf export;
+    @Autowired
+    exportExcel exportExcelservice;
 
 
 
@@ -638,15 +641,14 @@ public class ServiceFormation implements IServiceFormation {
         {
             String s = iSearchRepo.keyWord(keyword);
             Search search = new Search();
-
             search.setKeyword(s);
             search.setAtDate(new Date());
-
             iSearchRepo.save(search);
         }
 
-
     }
+
+
     @Override
     public void addComments(PostComments postComments,Integer idF,Long idUser) {
 
@@ -668,16 +670,10 @@ public class ServiceFormation implements IServiceFormation {
     @Override
     public PostComments upDateComment(PostComments postComments,Integer idF,Long idUser) {
 
-
         User user =  iUserRepo.findById(idUser).orElse(null);
         Formation f = iFormationRepo.findById(idF).orElse(null);
-
-
         postComments.setFormation(f);
         postComments.setUserC(user);
-
-
-
         return iCommentsRepo.save(postComments);
     }
 
@@ -708,6 +704,7 @@ public class ServiceFormation implements IServiceFormation {
                 }else if(iUserRepo.nbrCommentsBadByUser(user.getId())>=3 && user.getState()!=State.EXCLUDED) {
 
                     this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create Comment with bad word in this Courses we excluded in all Courses   Mr's  "+user.getLastName() +" " + user.getLastName()+" this web site is for association of women empowerment not to write this type of comment !!!! ");
+
                     for (Formation f : iFormationRepo.listFormationParApprenant(user.getId()))
                     {
                         if(user.getState() == State.EXCLUDED)
@@ -716,7 +713,6 @@ public class ServiceFormation implements IServiceFormation {
                             iFormationRepo.save(f);
                         }
                     }
-
                     for (PostComments p : iCommentsRepo.listeCommentParUser(user.getId()))
                     {
                         iCommentsRepo.deleteById(p.getIdComn());
@@ -725,21 +721,15 @@ public class ServiceFormation implements IServiceFormation {
                     user.setState(State.EXCLUDED);
                     iUserRepo.save(user);
 
-
                 }
             }
         }
-
-
-
-
     }
 
 
     @Override
     @Scheduled(cron = "0 0/1 * * * *")
     public void decisionUserPUNISHED() {
-
 
         Date date = new Date();
 
@@ -758,14 +748,16 @@ public class ServiceFormation implements IServiceFormation {
                 }
             }
             }
-
         }
-
     }
 
     @Override
-    public Map<String,Double> PourcentageCoursesByDomain() {
+    @Scheduled(cron = "0 0/2 * * * *")
+    public Map<String,Double> PourcentageCoursesByDomain() throws IOException {
+
         Map<String,Double> pourcentages=new HashMap<>();
+
+        List<Double> pourcent = new ArrayList<>();
 
         double IT = 0;
         double ART=0;
@@ -802,8 +794,6 @@ public class ServiceFormation implements IServiceFormation {
                 else if (formation.getDomain().equals(Domain.MUSIC)) {
                     MUSIC++;}
             }
-
-
         }
         if (formations.size() !=0) {
 
@@ -828,6 +818,19 @@ public class ServiceFormation implements IServiceFormation {
             MUSIC = ((MUSIC/formations.size()))*100;
 
         }
+
+
+        pourcent.add(IT);
+        pourcent.add(ART);
+        pourcent.add(CINEMA);
+        pourcent.add(DANCE);
+        pourcent.add(PHY);
+        pourcent.add(ECONOMIC);
+        pourcent.add(MARKETING);
+        pourcent.add(MUSIC);
+
+
+
         pourcentages.put("IT",IT);
 
         pourcentages.put("ART",ART);
@@ -846,8 +849,30 @@ public class ServiceFormation implements IServiceFormation {
 
         System.out.println(pourcentages);
 
+        /*
+
+        for(Formation f : iFormationRepo.findAll())
+        {
+
+        }
+        ByteArrayInputStream stream = exportExcelservice.quizexportexcel(r);
+
+        FileOutputStream out = new FileOutputStream("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
+
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = stream.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        this.emailSenderService.sendSimpleEmailWithFils(user.getEmail(),"your courses was finished yours Excel liste of score  " ," finished At : "+ new Date()+"  in Courses of Domain "+form.getDomain()+" "+" And Niveau : " +form.getLevel() +" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
+
+        */
+
+
+
         return pourcentages;
     }
+
 
 
 

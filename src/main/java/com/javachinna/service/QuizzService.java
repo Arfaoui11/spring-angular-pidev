@@ -1,9 +1,10 @@
 package com.javachinna.service;
 
 
+import com.javachinna.model.*;
+import com.javachinna.repo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ import java.util.Random;
 @Service
 @Slf4j
 public class QuizzService implements IQuizServiceC{
-    /*
+
     @Autowired
-    private RepoUser repoUser;
+    private UserRepository repoUser;
     @Autowired
     private RepoCandidacy repoCandidacy;
     @Autowired
@@ -35,14 +36,13 @@ public class QuizzService implements IQuizServiceC{
         quiz.setCandidacy(candidacy);
         quiz.setCreateAt(new Date());
         repoQuiz.save(quiz);
-
     }
 
     @Override
     public void addQuestionAndAsigntoQuiz(QuestionCandidacy question, Integer idQuiz) {
         QuizCandidacy quiz = repoQuiz.findById(idQuiz).orElse(null);
 
-        question.setQuizCandidacy(quiz);
+        question.setQuiz(quiz);
 
         repoQuestionCandidacy.save(question);
 
@@ -85,7 +85,8 @@ public class QuizzService implements IQuizServiceC{
     public int getResult(QuestionCandidacy questionCandidacy) {
         int correct = 0;
 
-        for (QuestionCandidacy q : questionCandidacy.getQuestions())
+        for (QuestionCandidacy q : questionCandidacy.getQuiz().getQuestion())
+
             if (q.getAns() == q.getChose())
                 correct++;
 
@@ -93,18 +94,18 @@ public class QuizzService implements IQuizServiceC{
 
         }
 
-
+/*
    @Override
-    public Integer SaveScore(ResultQuiz resultQuiz, Integer idUser, Integer idQuiz) {
+    public Integer SaveScore(ResultQuiz resultQuiz, Long idUser, Integer idQuiz) {
         ResultQuiz saveResult = new ResultQuiz();
 
         User user = this.repoUser.findById(idUser).orElse(null);
         QuizCandidacy quiz = this.repoQuiz.findById(idQuiz).orElse(null);
-        if (RepoResultQuiz.findUserQuiz(idUser,idQuiz) == 0)
+        if (repoResultQuiz.findUserQuiz(idUser,idQuiz) == 0)
         {
+
             saveResult.setSUser(user);
             saveResult.setQuiz(quiz);
-
             saveResult.setUsername(resultQuiz.getUsername());
             saveResult.setTotalCorrect(resultQuiz.getTotalCorrect());
             saveResult.setCorrectAnswer(resultQuiz.getCorrectAnswer());
@@ -118,9 +119,19 @@ public class QuizzService implements IQuizServiceC{
         }
     }
 
+ */
+
+    @Override
+    public void DeleteQuiz(Integer idQ) {
+        this.repoQuiz.deleteById(idQ);
+
+    }
+
+/*
     @Override
     public Integer MaxScoreInCandidacy() {
-        return this.repoUser.MaxScoreInCandidacy();
+        return null;
+                //this.repoUser.MaxScoreInCandidacy();
     }
 
     @Override
@@ -151,11 +162,7 @@ public class QuizzService implements IQuizServiceC{
         return this.repoQuiz.getQuizByCandidacy(id);
     }
 
-    @Override
-    public void DeleteQuiz(Integer idQ) {
-        this.repoQuiz.deleteById(idQ);
 
-    }
 
     @Override
     public Integer getScoreByUser(Integer idUser) {
@@ -163,36 +170,7 @@ public class QuizzService implements IQuizServiceC{
     }
 
 
-   /* @Override
-    @Scheduled(cron = "0 0/1 * * * *")
-    // @Scheduled(cron = "0 0 20 ? * *") //every day 20:00
-    public void giftsToUserMaxScoreInCourses() {
-        User user = new User();
 
-        Date date = new Date();
-        boolean status=false;
+ */
 
-        for(Candidacy form : repoCandidacy.findAll())
-        {
-            if(repoUser.getApprenantWithScoreForGifts(form.getIdCandidacy()).size()!=0 )
-            {
-                user = repoUser.getApprenantWithScoreForGifts(form.getIdCandidacy()).get(0);
-
-                Date tomorrow = new Date(form.getEnd().getTime() + (1000 * 60 * 60 * 48));
-                log.info("Date : "+tomorrow);
-                if (date.after(form.getEnd()) && date.before(tomorrow) && repoResultQuiz.getNbrQuiz(user.getId()) == 5)
-                {
-                    status=true;
-                }
-
-                if (status)
-                {
-                    this.emailSenderService.sendSimpleEmail(user.getEmail(), " we have max Score in courses   ", "Congratulations Mr's : " + user.getLastName() + "--" + user.getFirstName() + " We have Courses free and access in all domain Formation Id : "+ form.getIdFormation() + " .");
-                    status=false;
-                }
-            }
-
-        }
-
-    }*/
 }

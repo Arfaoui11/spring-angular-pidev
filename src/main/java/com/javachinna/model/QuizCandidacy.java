@@ -34,7 +34,7 @@ public class QuizCandidacy implements Serializable {
 
     @ManyToOne
     @JsonIgnore
-    private Offres Offres;
+    private Candidacy candidacy;
 
     @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore

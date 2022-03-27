@@ -6,19 +6,21 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-//import com.javachinna.model.Result;
 
 @Repository
 public interface RepoResultQuiz extends CrudRepository<ResultQuiz, Integer> {
 
 
 
+/*
+    @Query(value = "select count(r.id) from ResultQuiz r join r.sUser u join r.quiz q where u.id=:idUser and q.idQuiz=:idquiz and r.status=false")
+    Integer findUserQuiz(@Param("idu") Long idUser, @Param("idq") Integer idQuiz);
 
-   /* @Query(value = "select count(r.id) from ResultQuiz r join r.sUser u join r.quiz q where u.idUser=:idUser and q.idQuiz=:idquiz and r.status=false")
-    static Integer findUserQuiz(@Param("idu") Integer idUser, @Param("idq") Integer idQuiz) {
-        return value ;
-    }
 
+ */
+
+
+/*
 
     @Query(value = "select count(r.id) from ResultQuiz r join r.sUser u where u.idUser=:idu")
     Integer getNbrQuiz(@Param("idu") Long idU);

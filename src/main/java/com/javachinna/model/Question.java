@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "Questions")
 public class Question{
+
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

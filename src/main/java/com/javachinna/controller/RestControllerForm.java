@@ -502,8 +502,7 @@ public class RestControllerForm {
     @ApiOperation(value = " get Pourcentage Courses By Domain  ")
     @GetMapping("/PourcentageCoursesByDomain")
     @ResponseBody
-    public Map<String,Double>  PourcentageCoursesByDomain()
-    {
+    public Map<String,Double>  PourcentageCoursesByDomain() throws IOException {
         return iServiceFormation.PourcentageCoursesByDomain();
     }
 

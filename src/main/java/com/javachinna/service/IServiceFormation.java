@@ -6,6 +6,7 @@ import com.javachinna.model.*;
 
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ public interface IServiceFormation {
     List<Formation>  SearchMultiple(String key);
 
 
-    Map<String,Double> PourcentageCoursesByDomain();
+    Map<String,Double> PourcentageCoursesByDomain() throws IOException;
 
 
 

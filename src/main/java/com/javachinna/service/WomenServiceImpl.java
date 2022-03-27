@@ -175,7 +175,7 @@ public class WomenServiceImpl implements IWomenService {
 
   ///////////// modif  11:16 /////////////////////////
     @Override
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/2 * * * *")
     public void DeleteAppointmentAfterfinalDate() {
         LocalDate currentdDate1 =  LocalDate.now();
 
@@ -191,9 +191,10 @@ public class WomenServiceImpl implements IWomenService {
             ar.setRemark(a.getRemark());
             ar.setDateApp(a.getDateApp());
             ar.setDelete_At(new Date());
-            iRendezVousArchiveRepos.save(ar);
-            myRendezVousRepository.delete(a);
 
+            iRendezVousArchiveRepos.save(ar);
+
+            myRendezVousRepository.delete(a);
         }
 
 

@@ -6,6 +6,7 @@ import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,5 +33,11 @@ public class Candidacy {
     @ManyToOne
     @JsonIgnore
     private Offres offers;
+
+
+    @OneToMany(mappedBy = "candidacy" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @JsonIgnore
+    private Set<QuizCandidacy> quizCandidacies;
+
 
 }

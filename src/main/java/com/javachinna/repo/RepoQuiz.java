@@ -11,8 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//import com.javachinna.model.QuestionCourses;
-//import com.javachinna.model.QuizCourses;
+
 
 @Repository
 public interface RepoQuiz extends CrudRepository<QuizCandidacy , Integer> {

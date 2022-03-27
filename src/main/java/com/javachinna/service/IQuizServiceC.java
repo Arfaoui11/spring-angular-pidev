@@ -15,7 +15,7 @@ import java.util.List;
 public interface IQuizServiceC {
 
 
- /*   void addQuiz(QuizCandidacy quiz, Integer idF);
+    void addQuiz(QuizCandidacy quiz, Integer idF);
     void addQuestionAndAsigntoQuiz(QuestionCandidacy question, Integer idQuiz);
    // void addAnswerAndAsigntoQuestion(Answer answer,Integer idQuestion,Integer idQuiz);
 
@@ -23,7 +23,9 @@ public interface IQuizServiceC {
     List<QuestionCandidacy> getQuestions();
     //int getResult(QuestionCandidacy questionCandidacy);
 
-    Integer SaveScore (ResultQuiz result, Integer idUser, Integer idQuiz);
+  //  Integer SaveScore (ResultQuiz result, Long idUser, Integer idQuiz);
+    void DeleteQuiz(Integer idQuiz);
+  /*
     Integer MaxScoreInCandidacy();
 
     List<Object> getCandidacyWithScoreQuiz(@Param("id") Integer id);
@@ -36,10 +38,11 @@ public interface IQuizServiceC {
 
     List<QuizCandidacy> getQuizByCandidacy(Integer idF);
 
-    void DeleteQuiz(Integer idQuiz);
+
 
 
     Integer getScoreByUser(Integer idUser);
-}
-*/
+
+
+ */
 }

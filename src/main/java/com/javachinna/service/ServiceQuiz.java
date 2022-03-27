@@ -128,7 +128,6 @@ public class ServiceQuiz implements IServicesQuiz {
         {
             saveResult.setSUser(user);
             saveResult.setQuiz(quiz);
-
             saveResult.setUsername(result.getUsername());
             saveResult.setTotalCorrect(result.getTotalCorrect());
             saveResult.setCorrectAnswer(result.getCorrectAnswer());
@@ -166,7 +165,6 @@ public class ServiceQuiz implements IServicesQuiz {
                 {
                     status=true;
                 }
-
                 if (status)
                 {
                     this.emailSenderService.sendSimpleEmail(user.getEmail(), " we have max Score in courses   ", "Congratulations Mr's : " + user.getLastName() + "--" + user.getFirstName() + " We have Courses free and access in all domain Formation Id : "+ form.getIdFormation() + " .");
