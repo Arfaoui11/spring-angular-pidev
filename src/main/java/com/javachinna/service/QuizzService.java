@@ -14,7 +14,7 @@ import java.util.Random;
 
 @Service
 @Slf4j
-public class ServiceQuizz implements IQuizServiceC{
+public class QuizzService implements IQuizServiceC{
     /*
     @Autowired
     private RepoUser repoUser;

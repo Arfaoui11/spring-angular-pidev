@@ -1,14 +1,7 @@
 package com.javachinna.controller;
 
 
-import com.javachinna.model.QuestionCandidacy;
-import com.javachinna.model.ResultQuiz;
-import com.javachinna.service.ServiceQuizz;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
