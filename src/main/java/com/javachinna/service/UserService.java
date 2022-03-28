@@ -40,11 +40,8 @@ public interface UserService {
 	LocalUser processUserRegistration(String registrationId, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo);
 	//OMAR
 	public int numStudentWithoutRatings();
-
 	public int numStudentsWithRatingsByUniversity(Integer idUniversity);
-
-
-
 	public List<User>acceptedStudentsByUniversity( Integer idUniversity);
 	public int studentDemands(Long IdStudent,Integer IdUniversity);
+	public Map<String, Double> PercentageStudentsByNationality() ;
 }

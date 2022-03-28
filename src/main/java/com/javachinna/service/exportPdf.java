@@ -144,7 +144,7 @@ public class exportPdf {
             document.add(Chunk.NEWLINE);
             PdfPTable table = new PdfPTable(9);
             //make the columns
-            Stream.of("Id", "Name", "Country", "Area", "Specialty", "Language", "Available", "CapacityReception", "Description").forEach(headerTitle -> {
+            Stream.of("Id", "Name", "Country", "Area", "Specialty", "Language", "Available", "CapacityReception", "email").forEach(headerTitle -> {
                 PdfPCell header = new PdfPCell();
                 Font headfont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
                 header.setBackgroundColor(BaseColor.YELLOW);
@@ -201,14 +201,16 @@ public class exportPdf {
                 AvailableCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 AvailableCell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 table.addCell(AvailableCell);
+                int b = university.getCapacityReception();
+                String a = String.valueOf(b);
 
-                PdfPCell CapacityReceptionCell = new PdfPCell(new Phrase(university.getCapacityReception()));
+                PdfPCell CapacityReceptionCell = new PdfPCell(new Phrase(a));
                 CapacityReceptionCell.setPaddingLeft(1);
                 CapacityReceptionCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 CapacityReceptionCell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 table.addCell(CapacityReceptionCell);
 
-                PdfPCell descriptionCell = new PdfPCell(new Phrase(university.getDescription()));
+                PdfPCell descriptionCell = new PdfPCell(new Phrase(university.getEmail()));
                 descriptionCell.setPaddingLeft(1);
                 descriptionCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 descriptionCell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -225,6 +227,7 @@ public class exportPdf {
         }
         return new ByteArrayInputStream(out.toByteArray());
     }
+
     public  ByteArrayInputStream ComplaintPDFReport(List<Complaint> complaintList)  {
         Document document=new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();

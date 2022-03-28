@@ -1,11 +1,13 @@
 package com.javachinna.service;
 
+import com.javachinna.model.DataPoint;
 import com.javachinna.model.GeographicalArea;
 import com.javachinna.model.PartnerInstitution;
 import com.javachinna.model.specialty;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface IPartnerService {
     public void addPartner (PartnerInstitution partner);
@@ -28,6 +30,13 @@ public interface IPartnerService {
     //Page<PartnerInstitution> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
     public int getRemainingCapacityReception(Integer idUniversity);
     public boolean checkAvailableUniversity(Integer IdUniversity);
+    public  List<PartnerInstitution> SearchMulti(String keyword);
+    public void checkAllCommentsByUniversity(Integer idUniversity);
+    public List<DataPoint> statNumberStudentByUniversity();
+    public List<DataPoint> statNumberCommentsByUniversity();
+    public List<DataPoint> statNumberGoodRatingsByUniversity();
+    public List<DataPoint> statNumberBadRatingsByUniversity();
+    public Map<String,Double> PercentageUniversitiesByArea() ;
 
 
 

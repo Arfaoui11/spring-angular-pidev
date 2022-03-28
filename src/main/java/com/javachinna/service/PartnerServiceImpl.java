@@ -2,17 +2,15 @@ package com.javachinna.service;
 
 
 import com.javachinna.model.*;
-import com.javachinna.repo.DatabaseFileRepository;
-import com.javachinna.repo.ICandidacyRepository;
-import com.javachinna.repo.IPartnerRepository;
-import com.javachinna.repo.UserRepository;
+import com.javachinna.repo.*;
+import com.javachinna.sentimentAnalyzer.Sentiment;
+import com.javachinna.sentimentAnalyzer.SentimentResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -28,6 +26,17 @@ public class PartnerServiceImpl implements IPartnerService{
     ICandidacyRepository candirepo;
     @Autowired
     DatabaseFileRepository filerepo;
+    @Autowired
+    CommentUniversityRepository commentUniversityRepository;
+    @Autowired
+    CommentUniversityServiceImpl commentService;
+    @Autowired
+    Sentiment sentimentService;
+
+    @Autowired
+    SendEmailService emailService;
+
+
 
 
 
@@ -206,6 +215,135 @@ public class PartnerServiceImpl implements IPartnerService{
             return false;
         }
     }
+
+    @Override
+    public List<DataPoint> statNumberStudentByUniversity() {
+        List<DataPoint> list = new ArrayList<DataPoint>();
+        for(Object object:partnerrepo.numberStudentsByUniversity()){
+            DataPoint dataPoint = new DataPoint();
+            dataPoint.setLabel((((Object[]) object)[0]).toString());
+            dataPoint.setY(Float.valueOf((((Object[]) object)[1]).toString()));
+            list.add(dataPoint);
+        }
+        return list;
+    }
+
+    @Override
+    public List<DataPoint> statNumberCommentsByUniversity() {
+        List<DataPoint> list = new ArrayList<DataPoint>();
+        for(Object object:partnerrepo.numberCommentsByUniversity()){
+            DataPoint dataPoint = new DataPoint();
+            dataPoint.setLabel((((Object[]) object)[0]).toString());
+            dataPoint.setY(Float.valueOf((((Object[]) object)[1]).toString()));
+            list.add(dataPoint);
+        }
+        return list;
+    }
+
+    @Override
+    public List<DataPoint> statNumberGoodRatingsByUniversity() {
+        List<DataPoint> list = new ArrayList<DataPoint>();
+        for(Object object:partnerrepo.numberGoodRatingsByUniversity()){
+            DataPoint dataPoint = new DataPoint();
+            dataPoint.setLabel((((Object[]) object)[0]).toString());
+            dataPoint.setY(Float.valueOf((((Object[]) object)[1]).toString()));
+            list.add(dataPoint);
+        }
+        return list;
+    }
+
+    @Override
+    public List<DataPoint> statNumberBadRatingsByUniversity() {
+        List<DataPoint> list = new ArrayList<DataPoint>();
+        for(Object object:partnerrepo.numberBadRatingsByUniversity()){
+            DataPoint dataPoint = new DataPoint();
+            dataPoint.setLabel((((Object[]) object)[0]).toString());
+            dataPoint.setY(Float.valueOf((((Object[]) object)[1]).toString()));
+            list.add(dataPoint);
+        }
+        return list;
+    }
+
+    @Override
+    public Map<String, Double> PercentageUniversitiesByArea() {
+        Map<String,Double> Percentages=new HashMap<>();
+        List<Double> percent = new ArrayList<>();
+        double AFRICA=0;
+        double AMERICA=0;
+        double ASIA=0;
+        double EUROPE=0;
+        double Oceania=0;
+        List<PartnerInstitution> partnerInstitutions=  (List<PartnerInstitution>) partnerrepo.findAll();
+
+        for(PartnerInstitution university : partnerInstitutions){
+
+            if(university.getGeographicalArea().equals(GeographicalArea.AMERICA)){
+                AMERICA++;
+            }
+            else if (university.getGeographicalArea().equals(GeographicalArea.AFRICA)){
+                AFRICA++;
+            }else if (university.getGeographicalArea().equals(GeographicalArea.ASIA)){
+                ASIA++;
+            }else if (university.getGeographicalArea().equals(GeographicalArea.EUROPE)){
+                EUROPE++;
+            }else if(university.getGeographicalArea().equals(GeographicalArea.Oceania)){
+                Oceania++;
+            }
+        }
+        if(partnerInstitutions.size()!=0){
+            System.out.println("Number Universities:"+partnerInstitutions.size());
+            AFRICA =  ((AFRICA/(partnerInstitutions.size()))*100);
+            AMERICA= ((AMERICA/(partnerInstitutions.size()))*100);
+            ASIA=((ASIA/(partnerInstitutions.size()))*100);
+            EUROPE=((EUROPE/(partnerInstitutions.size()))*100);
+            Oceania=((Oceania/(partnerInstitutions.size()))*100);
+        }
+
+        percent.add(AFRICA);
+        percent.add(AMERICA);
+        percent.add(ASIA);
+        percent.add(EUROPE);
+        percent.add(Oceania);
+
+        Percentages.put("AFRICA",AFRICA);
+        Percentages.put("AMERICA",AMERICA);
+        Percentages.put("ASIA",ASIA);
+        Percentages.put("EUROPE",EUROPE);
+        Percentages.put("Oceania",Oceania);
+
+        return Percentages;
+    }
+
+    @Override
+    public void checkAllCommentsByUniversity(Integer idUniversity) {
+        PartnerInstitution university = partnerrepo.findById(idUniversity).orElse(null);
+        List<CommentUniversity>commentUniversities=commentUniversityRepository.findByUniversityId(idUniversity);
+
+        assert university != null;
+        SentimentResult text =sentimentService.analyze(String.valueOf(university.getCommentUniversities()));
+        String text1 = "this added comments :\n"+ text+"\n"+" " +
+                "has Score : "+text.getScore()+"\n"+" "+
+                "and State : "+text.getState()+"\n"+" "+
+                "and Detected words are : \n "+text.getDetectedWords()+"\n";
+        emailService.sendSimpleEmail(university.getEmail(),"Sentiment Analyzer for all comments for this University", text1);
+
+       /* for (CommentUniversity c : commentUniversities){
+            sh=" "+c.getComment();
+            SentimentResult text =sentimentService.analyze(sh);
+            String text1 = "this added comments :\n"+ sh+"\n"+" " +
+                    "has Score : "+text.getScore()+"\n"+" "+
+                    "and State : "+text.getState()+"\n"+" "+
+                    "and Detected words are : \n "+text.getDetectedWords()+"\n";
+            emailService.sendSimpleMessage(university.getEmail(),"Sentiment Analyzer for all comments for this University", text1);
+        }*/
+
+    }
+
+    @Override
+    public List<PartnerInstitution> SearchMulti(String keyword) {
+        return partnerrepo.SearchMulti(keyword);
+    }
+
 
 
 

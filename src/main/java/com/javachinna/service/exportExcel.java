@@ -2,6 +2,7 @@ package com.javachinna.service;
 
 
 import com.javachinna.model.Appointment;
+import com.javachinna.model.CandidacyUniversity;
 import com.javachinna.model.PartnerInstitution;
 import com.javachinna.model.Result;
 import org.apache.poi.ss.usermodel.*;
@@ -105,6 +106,89 @@ public class exportExcel {
            return null;
        }
    }
+
+    public  ByteArrayInputStream studentsExcelFile(List<CandidacyUniversity> candidacyUniversities){
+        try(Workbook workbook = new XSSFWorkbook()){
+            Sheet sheet = workbook.createSheet("Students");
+
+            Row row = sheet.createRow(0);
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            // Creating header
+            Cell cell = row.createCell(0);
+            cell.setCellValue("Id");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(1);
+            cell.setCellValue(" FirstName");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(2);
+            cell.setCellValue("lastName");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(3);
+            cell.setCellValue("phoneNumber");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(4);
+            cell.setCellValue("Nationality");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(5);
+            cell.setCellValue("email");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(6);
+            cell.setCellValue("StatusOfDemand");
+            cell.setCellStyle(headerCellStyle);
+
+            cell = row.createCell(7);
+            cell.setCellValue("idUniversity");
+            cell.setCellStyle(headerCellStyle);
+
+
+
+
+            // Creating data rows for each customer
+            for(int i = 0; i < candidacyUniversities.size(); i++) {
+                Row dataRow = sheet.createRow(i + 1);
+                dataRow.createCell(0).setCellValue(candidacyUniversities.get(i).getUser().getId());
+                dataRow.createCell(1).setCellValue(candidacyUniversities.get(i).getUser().getFirstName());
+                dataRow.createCell(2).setCellValue(candidacyUniversities.get(i).getUser().getLastName());
+                dataRow.createCell(3).setCellValue(candidacyUniversities.get(i).getUser().getPhoneNumber());
+                dataRow.createCell(4).setCellValue(String.valueOf(candidacyUniversities.get(i).getUser().getNationality()));
+                dataRow.createCell(5).setCellValue(candidacyUniversities.get(i).getUser().getEmail());
+                dataRow.createCell(6).setCellValue(String.valueOf(candidacyUniversities.get(i).getStatus()));
+                dataRow.createCell(7).setCellValue(candidacyUniversities.get(i).getPartnerInstitution().getIdPartner());
+
+
+
+            }
+
+            // Making size of column auto resize to fit with data
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
+            sheet.autoSizeColumn(2);
+            sheet.autoSizeColumn(3);
+            sheet.autoSizeColumn(4);
+            sheet.autoSizeColumn(5);
+            sheet.autoSizeColumn(6);
+            sheet.autoSizeColumn(7);
+
+
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            workbook.write(outputStream);
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
 
     public  ByteArrayInputStream Appointmentexportexcel(List<Appointment> appointmentList) {
         try(Workbook workbook = new XSSFWorkbook()){

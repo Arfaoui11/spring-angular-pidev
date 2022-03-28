@@ -45,6 +45,23 @@ public interface IPartnerRepository extends CrudRepository<PartnerInstitution, I
     @Query("select p from PartnerInstitution p order by p.ratings.size DESC ")
     List<PartnerInstitution> getAllUniversityByTopRating();
 
+    @Query(value = "select u from PartnerInstitution u where concat(u.Name,u.Country,u.Language,u.fees,u.geographicalArea,u.special,u.CapacityReception,u.email) like %?1% order by u.Name")
+    List<PartnerInstitution> SearchMulti(String keyword);
+
+    @Query("select u.Name,count(c) from CandidacyUniversity c   join c.partnerInstitution u where c.status='ACCEPTED' group by u.idPartner ")
+    public List<Object> numberStudentsByUniversity();
+
+
+    @Query("select  u.Name,count(c.idComment) from CommentUniversity c join c.partnerInstitution u group by u.idPartner")
+    public List<Object> numberCommentsByUniversity();
+
+    @Query("select  u.Name,count (r.id) from Rating r join r.partnerInstitution u where r.note<=5 and r.note>3 group by u.idPartner ")
+    public List<Object> numberGoodRatingsByUniversity();
+
+    @Query("select  u.Name,count (r.id) from Rating r join r.partnerInstitution u where  r.note<3 group by u.idPartner ")
+    public List<Object> numberBadRatingsByUniversity();
+
+
 
 
 

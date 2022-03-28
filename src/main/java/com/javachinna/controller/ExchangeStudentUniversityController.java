@@ -4,6 +4,7 @@ import com.google.zxing.WriterException;
 import com.javachinna.QrCode.QRCodeGenerator;
 import com.javachinna.model.*;
 import com.javachinna.payLoad.Response;
+import com.javachinna.repo.ICandidacyRepository;
 import com.javachinna.repo.UserRepository;
 import com.javachinna.service.*;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ExchangeStudentUniversity")
@@ -56,6 +58,8 @@ public class ExchangeStudentUniversityController {
     IRateService rateService;
     @Autowired
     IReactService estimationService;
+    @Autowired
+    ICandidacyRepository candidacyRepository;
 
 
 
@@ -152,11 +156,7 @@ public class ExchangeStudentUniversityController {
         return candiService.countDemandByUniversity();
     }
 
-    @GetMapping("/countNumberStudentPerNationalityByYear/{ch}/{startDate}/{endDate}")
-    @ApiOperation(value = "countNumberStudentPerNationalityByYear")
-    List<Object[]> countNumberStudentPerNationalityByYear(@PathVariable("ch") String ch,@PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateDebut, @PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateFin){
-        return candiService.countNumberStudentPerNationalityByYear(ch,dateDebut,dateFin);
-    }
+
 
     @PostMapping( "/uploadFile/{idStudent}")
 
@@ -493,6 +493,114 @@ public class ExchangeStudentUniversityController {
         return  estimationService.countAllByCommentId(idComment);
 
     }
+
+    @GetMapping("/download/students.xlsx")
+    public void downloadCsv1(HttpServletResponse response) throws IOException {
+        List<CandidacyUniversity> candidacyUniversities =(List<CandidacyUniversity>) candidacyRepository.findAllAcceptedDemands() ;
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=AcceptedStudents.xlsx");
+        ByteArrayInputStream stream = exportExcelservice.studentsExcelFile(candidacyUniversities);
+        IOUtils.copy(stream, response.getOutputStream());
+    }
+
+    @GetMapping("/SearchMulti/{sh}")
+    @ResponseBody
+    @ApiOperation(value = "SearchMulti ")
+    public List<PartnerInstitution> SearchMulti(@PathVariable("sh") String keyword){
+        return partnerservice.SearchMulti(keyword);
+    }
+    @GetMapping("/checkAllCommentsByUniversity/{idUniversity}")
+    @ResponseBody
+    @ApiOperation(value = "checkAllCommentsByUniversity")
+    public void checkAllCommentsByUniversity(@PathVariable("idUniversity")Integer idUniversity){
+        partnerservice.checkAllCommentsByUniversity(idUniversity);
+    }
+
+    @GetMapping("/statNumberStudentByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberStudentByUniversity")
+    public List<DataPoint> statNumberStudentByUniversity(){
+        return partnerservice.statNumberStudentByUniversity();
+    }
+    @GetMapping("/statNumberCommentsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberCommentsByUniversity")
+    public List<DataPoint> statNumberCommentsByUniversity(){
+        return partnerservice.statNumberCommentsByUniversity();
+    }
+    @GetMapping("/statNumberGoodRatingsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberGoodRatingsByUniversity")
+    public List<DataPoint> statNumberGoodRatingsByUniversity(){
+        return partnerservice.statNumberGoodRatingsByUniversity();
+    }
+    @GetMapping("/statNumberBadRatingsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberBadRatingsByUniversity")
+    public List<DataPoint> statNumberBadRatingsByUniversity(){
+        return partnerservice.statNumberBadRatingsByUniversity();
+    }
+    @GetMapping("/PercentageUniversitiesByArea")
+    @ResponseBody
+    @ApiOperation(value = "Percentage Universities  ByArea")
+    public Map<String, Double> PercentageUniversitiesByArea(){
+        return partnerservice.PercentageUniversitiesByArea();
+    }
+
+    @GetMapping("/statNumberHappyReactsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberHappyReactsByUniversity ")
+    public List<DataPoint> statNumberHappyReactsByUniversity() {
+        return estimationService.statNumberHappyReactsByUniversity();
+    }
+    @GetMapping("/statNumberAngryReactsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberAngryReactsByUniversity ")
+    public List<DataPoint> statNumberAngryReactsByUniversity(){
+        return estimationService.statNumberAngryReactsByUniversity();
+    }
+    @GetMapping("/statNumberLikeReactsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberLikeReactsByUniversity ")
+    public List<DataPoint> statNumberLikeReactsByUniversity(){
+        return estimationService.statNumberLikeReactsByUniversity();
+    }
+    @GetMapping("/statNumberDislikeReactsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberDislikeReactsByUniversity ")
+    public List<DataPoint> statNumberDislikeReactsByUniversity(){
+        return estimationService.statNumberDislikeReactsByUniversity();
+    }
+
+
+    @GetMapping("/statNumberSadReactsByUniversity")
+    @ResponseBody
+    @ApiOperation(value = "statNumberSadReactsByUniversity")
+    public List<DataPoint> statNumberSadReactsByUniversity(){
+        return estimationService.statNumberSadReactsByUniversity();
+    }
+
+
+    @PostMapping("/addReactForUniversity/{idStudent}/{idUniversity}")
+    @ResponseBody
+    @ApiOperation(value = "addReactForUniversity")
+    public React addReactForUniversity(@PathVariable("idStudent") long id, @RequestBody React react,@PathVariable("idUniversity") Integer idUniversity){
+        return estimationService.addReactForUniversity(id,react,idUniversity);
+    }
+
+    @GetMapping("/PercentageStudentsByNationality")
+    @ResponseBody
+    @ApiOperation(value = "Percentage Students ByNationality")
+    public Map<String, Double> PercentageStudentsByNationality(){
+        return userservice.PercentageStudentsByNationality();
+    }
+
+
+
+
+
+
+
 
 
 
