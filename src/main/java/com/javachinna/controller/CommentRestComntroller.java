@@ -21,7 +21,7 @@ public class CommentRestComntroller {
     @Autowired
     ICommentService iCommentService;
      BadWordConfig badWordConfig  = new BadWordConfig();
-    @Qualifier("IReactCommentService")
+
     @Autowired
     IReactCommentService iReactCommentService;
 
@@ -33,6 +33,7 @@ public class CommentRestComntroller {
         commentt.setDislikeComment(comment.getDislikeComment());
         commentt.setTopic(comment.getTopic());
         commentt.setUser(comment.getUser());
+        commentt.setTimeComment(comment.getTimeComment());
         
         commentt.setContent(badWordConfig.filterText(comment.getContent()));
 
