@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -250,9 +248,9 @@ public class WomenServiceImpl implements IWomenService {
     }
 
     @Override
-    public List<Double> PourcentageReclamationByType() {
+    public Map<String,Double>  PourcentageReclamationByType() {
 
-        List<Double> pourcentages=new ArrayList<Double>();
+        Map<String,Double> pourcentages=new HashMap<>();
 
         double PUBLICATION = 0;
         double TRAINING=0;
@@ -292,12 +290,21 @@ public class WomenServiceImpl implements IWomenService {
 
             CANDIDACY = ((CANDIDACY/(complaints.size()))*100);
         }
+
+        pourcentages.put("PUBLICATION",PUBLICATION);
+        pourcentages.put("TRAINING",TRAINING);
+        pourcentages.put("OFFER",OFFER);
+        pourcentages.put("CANDIDACY",CANDIDACY);
+
+        /*
         pourcentages.add(PUBLICATION);
 
         pourcentages.add(TRAINING);
 
         pourcentages.add(OFFER);
         pourcentages.add(CANDIDACY);
+
+         */
 
         System.out.println(pourcentages);
 

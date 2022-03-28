@@ -5,6 +5,7 @@ import com.javachinna.model.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface IWomenService {
     List<Complaint> RetrieveAllComplaints();
@@ -37,6 +38,6 @@ public interface IWomenService {
 
     int GetIncomeDoctor(long idDoc, Date startDate, Date endDate);
     List<User> ScoreDoctor();
-    public List<Double> PourcentageReclamationByType();
+    Map<String,Double> PourcentageReclamationByType();
 
 }
