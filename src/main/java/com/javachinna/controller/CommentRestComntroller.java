@@ -1,9 +1,7 @@
 package com.javachinna.controller;
 
-import com.javachinna.model.Comment;
-import com.javachinna.model.RatingPartner;
-import com.javachinna.model.ReactComment;
-import com.javachinna.model.TypeRating;
+import com.javachinna.config.BadWordConfig;
+import com.javachinna.model.*;
 import com.javachinna.service.ICommentService;
 import com.javachinna.service.IReactCommentService;
 import io.swagger.annotations.ApiOperation;
@@ -21,13 +19,18 @@ public class CommentRestComntroller {
 
     @Autowired
     ICommentService iCommentService;
+     BadWordConfig badWordConfig  = new BadWordConfig();
     @Autowired
     IReactCommentService iReactCommentService;
 
     @PostMapping("/addComment/{idTopic}/{idUser}")
     public void AddAffectCommentList(@RequestBody Comment comment, @PathVariable("idTopic") Long idTopic, @PathVariable("idUser") Long idUser)
     {
-        iCommentService.AddAffectCommentList(comment,idTopic,idUser);
+        Comment commentt =new Comment();
+        commentt.setContent(badWordConfig.filterText(comment.getContent()));
+
+        System.out.println(commentt.getContent());
+        iCommentService.AddAffectCommentList(commentt,idTopic,idUser);
 
     }
 
