@@ -31,6 +31,8 @@ public class CandidacyServiceImpl implements ICandidacyService{
     SendEmailService emailService;
     @Autowired
     SmsService smsService;
+    @Autowired
+    PartnerServiceImpl partnerService;
 
     @Autowired
     private SimpMessagingTemplate webSocket;
@@ -95,20 +97,34 @@ public class CandidacyServiceImpl implements ICandidacyService{
         int b = student.getProfession().compareTo(Profession.STUDENT);
         int a = userrepo.studentDemands(idUser,idPartner);
 
-        if(b==0 && a <1 && university.isActive()){
+        if(b==0 && a <1 && university.isActive()  ){
+
             candidacy.setUser(student);
             candidacy.setPartnerInstitution(university);
             candidacy.setStatus(StatusOfCandidacy.WAITING);
             candidacyRepo.save(candidacy);
             String text = "Hello , your demand :"+candidacy.getIdCandidacy()+"sent :"+candidacy.getDateOFCandidacy()+"" +
                     "to the University :"+candidacy.getPartnerInstitution().getIdPartner()+"have been added Successfully:"+candidacy.getStatus();
-            emailService.sendSimpleEmail(student.getEmail(),text,"Demand Added Successfully");
+            emailService.sendSimpleEmail(student.getEmail(),"Demand Added Successfully",text);
         }else{
-            String text = "Hello Sorry , your demand have been deleted";
-            emailService.sendSimpleEmail(student.getEmail(),text,"Demand Deleted ");
+            if(partnerService.getRemainingCapacityReception(idPartner)==0 || !university.isActive()){
+                String text = "Hello Sorry , your demand have been deleted";
+                emailService.sendSimpleEmail(student.getEmail(),"Capacity reception completed ",text);
+
+            }if (b!=0) {
+                String text = "Hello Sorry , your demand have been deleted";
+                emailService.sendSimpleEmail(student.getEmail(),"you are not allowed to add demand  ",text);
+
+            }
+            if (a>=1){
+                String text = "Hello Sorry , your demand have been deleted";
+                emailService.sendSimpleEmail(student.getEmail(),"u can not add two demands for the same university twice  ",text);
+            }
+
+
+
 
         }
-
 
     }
 
@@ -175,16 +191,19 @@ public class CandidacyServiceImpl implements ICandidacyService{
     public void AcceptDemand(Integer idDemand) {
         CandidacyUniversity demand = candidacyRepo.findById(idDemand).orElse(null);
         assert demand != null;
+        PartnerInstitution university = partnerrepo.findById(demand.getPartnerInstitution().getIdPartner()).orElse(null);
+        Date date = new Date();
 
+        assert university != null;
 
-           Date date = new Date();
+        if(partnerService.checkAvailableUniversity(university.getIdPartner())==true){
             demand.setStatus(StatusOfCandidacy.ACCEPTED);
             demand.setDateResponse(date);
             candidacyRepo.save(demand);
             String text = "Hello , your demand :"+demand.getIdCandidacy()+"sent :"+demand.getDateOFCandidacy()+"" +
                     "to the University :"+demand.getPartnerInstitution().getIdPartner()+"have been :"+demand.getStatus();
-            emailService.sendSimpleEmail(demand.getUser().getEmail(),text,"Demand Accepted");
-        /*try{
+            emailService.sendSimpleEmail(demand.getUser().getEmail(),"Demand Accepted",text);
+            /*try{
             smsService.send(demand.getUser().getPhoneNumber(),text);
         }
         catch(Exception e){
@@ -193,6 +212,17 @@ public class CandidacyServiceImpl implements ICandidacyService{
             throw e;
         }
         webSocket.convertAndSend(TOPIC_DESTINATION, getTimeStamp() + ": SMS has been sent!: "+demand.getUser().getPhoneNumber());*/
+
+        }
+        else {
+            demand.setStatus(StatusOfCandidacy.REFUSED);
+            demand.setDateResponse(date);
+            candidacyRepo.save(demand);
+            String text = "Hello , your demand :"+demand.getIdCandidacy()+"sent :"+demand.getDateOFCandidacy()+"" +
+                    "to the University :"+demand.getPartnerInstitution().getIdPartner()+"have been :"+demand.getStatus();
+            emailService.sendSimpleEmail(demand.getUser().getEmail(),"Demand Refused Capacity completed",text);
+
+        }
 
     }
     private String getTimeStamp() {
@@ -207,7 +237,7 @@ public class CandidacyServiceImpl implements ICandidacyService{
         assert demand != null;
         demand.setStatus(StatusOfCandidacy.REFUSED);
         Date date = new Date();
-        demand.setDateOFCandidacy(date);
+        demand.setDateResponse(date);
         candidacyRepo.save(demand);
         String text = "\n Hello , your demand :"+demand.getIdCandidacy()+"sent :"+demand.getDateOFCandidacy()+"" +
                 "to the University :"+demand.getPartnerInstitution().getIdPartner()+"have been :"+demand.getStatus()+"\n";
