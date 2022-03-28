@@ -1,6 +1,7 @@
 package com.javachinna.controller;
 
 
+import com.javachinna.model.Complaint;
 import com.javachinna.model.Topic;
 import com.javachinna.service.ITopicService;
 import io.swagger.annotations.ApiOperation;
@@ -70,4 +71,12 @@ public class TopicRestController
         iTopicService.TopicWithRate(idTopic, rate);
     }
 
+
+    @ApiOperation(value = " Search Topic Multiple  ")
+    @GetMapping("/SearchMultiple/{keyword}")
+    @ResponseBody
+    public List<Topic> SearchTopictMultiple(@PathVariable("keyword")  String key){
+        return  iTopicService.SearchTopicMultiple(key);
+
+    }
 }

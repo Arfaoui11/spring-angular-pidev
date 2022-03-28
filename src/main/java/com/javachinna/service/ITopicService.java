@@ -1,6 +1,7 @@
 package com.javachinna.service;
 
 
+import com.javachinna.model.Complaint;
 import com.javachinna.model.Topic;
 import org.apache.poi.ss.formula.functions.T;
 
@@ -21,6 +22,10 @@ public interface ITopicService {
     Integer getNbrCommentTopic(Long idTopic);
 
     void TopicWithRate(Long idTopic ,Double rate);
+
+    public List<Topic> SearchTopicMultiple(String key);
+
+    void DeleteTopicAfterfinalDate();
 
 
 }
