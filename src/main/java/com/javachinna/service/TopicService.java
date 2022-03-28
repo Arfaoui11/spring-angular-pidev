@@ -1,14 +1,17 @@
 package com.javachinna.service;
 
-import com.javachinna.model.Formation;
-import com.javachinna.model.Topic;
-import com.javachinna.model.User;
+import com.javachinna.model.*;
 import com.javachinna.repo.ITopicRepo;
 import com.javachinna.repo.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -86,8 +89,57 @@ public class TopicService implements ITopicService{
 
         iTopicRepo.save(topic);
     }
+////////////////////////SearchMultiple///////////////////
+    @Override
+    public List<Topic> SearchTopicMultiple(String key) {
+
+        if (key.equals(""))
+        {
+            return (List<Topic>) iTopicRepo.findAll();
+        }else
+        {
+            return iTopicRepo.searchmultilpltopic(key);
+        }
+
+    }
+//////////////////////////DeleteAuto/////////////////////////////
+@Override
+@Scheduled(cron = "0 0/2 * * * *")
+public void DeleteTopicAfterfinalDate() {
+    LocalDate currentdDate1 =  LocalDate.now();
+
+    ZoneId defaultZoneId = ZoneId.systemDefault();
+
+    Date dd = Date.from(currentdDate1.atStartOfDay(defaultZoneId).toInstant());
+
+    ///pour définir la date__debut mois fin mois//////
+    Calendar calLast = Calendar.getInstance();
+    Calendar calFirst = Calendar.getInstance();
+    calLast.set(Calendar.DATE, calLast.getActualMaximum(Calendar.DATE));
+    calFirst.set(Calendar.DATE, calFirst.getActualMinimum(Calendar.DATE));
+    Date lastDayOfMonth = calLast.getTime();
+    Date firstDayOfMonth = calFirst.getTime();
 
 
+    for (Topic a :  iTopicRepo.DeleteTopicAfterfinalDate(lastDayOfMonth)
+    )
+    /*
+    {
+        ArchiveAppointment ar = new ArchiveAppointment();
+        ar.setUsers(a.getUsers());
+        ar.setDoctor(a.getDoctor());
+        ar.setIdApp(a.getIdApp());
+        ar.setRemark(a.getRemark());
+        ar.setDateApp(a.getDateApp());
+        ar.setDelete_At(new Date());
+
+        iRendezVousArchiveRepos.save(ar);
+
+     */
+
+        iTopicRepo.delete(a);
+    }
 
 
 }
+

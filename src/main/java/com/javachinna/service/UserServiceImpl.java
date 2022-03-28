@@ -2,7 +2,8 @@ package com.javachinna.service;
 
 import java.util.*;
 
-import com.javachinna.model.State;
+import com.javachinna.model.*;
+import com.javachinna.repo.ICandidacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -16,8 +17,6 @@ import com.javachinna.dto.SignUpRequest;
 import com.javachinna.dto.SocialProvider;
 import com.javachinna.exception.OAuth2AuthenticationProcessingException;
 import com.javachinna.exception.UserAlreadyExistAuthenticationException;
-import com.javachinna.model.Role;
-import com.javachinna.model.User;
 import com.javachinna.repo.RoleRepository;
 import com.javachinna.repo.UserRepository;
 import com.javachinna.security.oauth2.user.OAuth2UserInfo;
@@ -36,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	ICandidacyRepository candidacyRepository;
 	@Override
 	public User addUser(User user) {
 
@@ -224,4 +226,88 @@ public class UserServiceImpl implements UserService {
 	public int studentDemands(Long IdStudent,Integer IdUniversity) {
 		return userRepository.studentDemands(IdStudent,IdUniversity);
 	}
+	@Override
+	public Map<String, Double> PercentageStudentsByNationality( ) {
+		Map<String,Double> Percentages=new HashMap<>();
+		List<Double> percent = new ArrayList<>();
+		double 	Tunisian= 0 ;
+		double  Algerian=0 ;
+		double  Canadian=0 ;
+		double  German=0 ;
+		double  Indian=0 ;
+		double  Italian=0;
+		double  French =0 ;
+		double  English=0 ;
+		double  Chinese =0 ;
+		double  British=0 ;
+		double  other=0;
+		List<CandidacyUniversity>candidacyUniversities=(List<CandidacyUniversity>)candidacyRepository.findAllAcceptedDemands();
+		for (CandidacyUniversity c : candidacyUniversities){
+			if(c.getUser().getNationality().equals(Nationality.Italian)){
+				Italian++;
+			}else if (c.getUser().getNationality().equals(Nationality.Tunisian)){
+				Tunisian++;
+			}else if (c.getUser().getNationality().equals(Nationality.Algerian)){
+				Algerian++;
+			}else if (c.getUser().getNationality().equals(Nationality.German)){
+				German++;
+			}else if (c.getUser().getNationality().equals(Nationality.French)){
+				French++;
+			}else if (c.getUser().getNationality().equals(Nationality.Canadian)){
+				Canadian++;
+			}else if (c.getUser().getNationality().equals(Nationality.Chinese)){
+				Chinese++;
+			}else if (c.getUser().getNationality().equals(Nationality.British)){
+				British++;
+			}else if (c.getUser().getNationality().equals(Nationality.Indian)){
+				Indian++;
+			}else if (c.getUser().getNationality().equals(Nationality.English)){
+				English++;
+			}else if (c.getUser().getNationality().equals(Nationality.other)){
+				other++;
+			}
+		}
+		if(candidacyUniversities.size()!=0){
+			System.out.println("Number students :"+candidacyUniversities.size());
+			Tunisian =  ((Tunisian/(candidacyUniversities.size()))*100);
+			Algerian= ((Algerian/(candidacyUniversities.size()))*100);
+			Canadian=((Canadian/(candidacyUniversities.size()))*100);
+			German=((German/(candidacyUniversities.size()))*100);
+			Indian=((Indian/(candidacyUniversities.size()))*100);
+			Italian=((Italian/(candidacyUniversities.size()))*100);
+			French=((French/(candidacyUniversities.size()))*100);
+			English=((English/(candidacyUniversities.size()))*100);
+			Chinese=((Chinese/(candidacyUniversities.size()))*100);
+			British=((British/(candidacyUniversities.size()))*100);
+			other=((other/(candidacyUniversities.size()))*100);
+		}
+
+		percent.add(Tunisian);
+		percent.add(Algerian);
+		percent.add(Chinese);
+		percent.add(Canadian);
+		percent.add(French);
+		percent.add(English);
+		percent.add(German);
+		percent.add(Italian);
+		percent.add(Indian);
+		percent.add(British);
+		percent.add(other);
+
+		Percentages.put("Tunisian",Tunisian);
+		Percentages.put("Algerian",Algerian);
+		Percentages.put("Chinese",Chinese);
+		Percentages.put("French",French);
+		Percentages.put("English",English);
+		Percentages.put("German",German);
+		Percentages.put("Indian",Indian);
+		Percentages.put("Italian",Italian);
+		Percentages.put("British",British);
+		Percentages.put("Canadian",Canadian);
+		Percentages.put("other",other);
+
+		return Percentages;
+
+	}
+
 }

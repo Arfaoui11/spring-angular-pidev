@@ -77,9 +77,12 @@ public class User implements Serializable {
 	//@Max(value = 150, message = "Age should not be greater than 150")
 	private Integer age;
 
-	private String Nationality;
+
 	@JsonIgnore
 	private int banned;
+	@Enumerated(EnumType.STRING)
+	private Nationality nationality;
+
 
 	private String phoneNumber;
 

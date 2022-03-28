@@ -163,20 +163,20 @@ public class ServicesOffre implements IServices{
         return repoOff.offerByProfession(profession);
     }*/
 /*
-    public List<Double> PourcentageOffreByType() {
+    public List<Double> PourcentageReclamationByType() {
         List<Double> pourcentages=new ArrayList<Double>();
-        double PROFESSOR = 0;
-        double ENGINEER=0;
-        double DOCTOR=0;
-        double PSY=0;
+        double PUBLICATION = 0;
+        double TRAINING=0;
+        double OFFER=0;
+        double CANDIDACY=0;
 
-        List<O> offres=  (List<Offres>) RepoOffer.findAll();
-        System.out.println(offres.toString());
+        List<Complaint> complaints=  (List<Complaint>) myReclamationRepository.findAll();
+        System.out.println(complaints.toString());
 
-        for (Offres offres: offres) {
+        for (Complaint complaint: complaints) {
 
 
-            if (offres.getType().equals(TypeComplaint.PUBLICATION)) {
+            if (complaint.getType().equals(TypeComplaint.PUBLICATION)) {
                 PUBLICATION++;
             }
 

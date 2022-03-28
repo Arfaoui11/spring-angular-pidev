@@ -5,6 +5,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.javachinna.model.Nationality;
 import com.javachinna.model.Profession;
 import com.javachinna.model.State;
 import com.javachinna.validator.PasswordMatches;
@@ -52,13 +53,13 @@ public class SignUpRequest {
 
 	private Integer age;
 
-	private String Nationality;
+	private Nationality Nationality;
 
 	private String phoneNumber;
 
 	private State state;
 
-	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age,String nationality,String phone,State state)
+	public SignUpRequest(String providerUserId, String displayName, String email, String password, SocialProvider socialProvider,Profession profession, String firstName ,String lastName,Integer priceconsultation,Integer score,Integer salary,Integer tarifHoraire,Integer age, Nationality nationality,String phone,State state)
 	{
 		this.providerUserId = providerUserId;
 		this.displayName = displayName;
@@ -99,7 +100,7 @@ public class SignUpRequest {
 
 		private Integer tarifHoraire;
 		private Integer age;
-		private String Nationality;
+		private Nationality Nationality;
 
 		private String phoneNumber;
 
@@ -158,7 +159,7 @@ public class SignUpRequest {
 			return this;
 		}
 
-		public Builder addNationality(final String nationality) {
+		public Builder addNationality(final Nationality nationality) {
 			this.Nationality = nationality;
 			return this;
 		}

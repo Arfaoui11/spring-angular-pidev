@@ -38,7 +38,7 @@ public interface IServiceFormation {
     List<Formation>  SearchMultiple(String key);
 
 
-    Map<String,Double> PourcentageCoursesByDomain() throws IOException;
+    Map<String,Double> PourcentageCoursesByDomain() throws IOException, MessagingException;
 
 
 

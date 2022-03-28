@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/heplpspace")
@@ -280,7 +281,7 @@ public void generatePDF(HttpServletResponse response) throws IOException, Docume
 }
     @GetMapping("/CountReclamationByType")
    // @ResponseBody
-    public List<Double> PourcentageReclamationByType(){
+    public Map<String, Double> PourcentageReclamationByType(){
 
         return womenService.PourcentageReclamationByType();
 
