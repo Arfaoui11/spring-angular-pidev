@@ -124,7 +124,7 @@ import java.util.List;
         }
         @GetMapping("/SearchCandidacy/{keyword}")
         @ResponseBody
-        @ApiOperation(value = "search offer ")
+        @ApiOperation(value = "search candidacy ")
         public List<Candidacy> SearchCandidacy( @PathVariable("keyword") String keyword) {
             List<Candidacy> listCandidacy = iServices.listAllCandidacy(keyword);
             return  listCandidacy;
