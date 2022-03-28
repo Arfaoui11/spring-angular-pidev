@@ -20,7 +20,6 @@ public class Offres {
     @Column(name = "idOffer")
     private Integer idOffer;
     private Integer priceOffer;
-    private String ProfessionTitle;
     @Temporal(TemporalType.DATE)
     private Date dateEndOffer;
     @Temporal(TemporalType.DATE)
@@ -40,8 +39,7 @@ public class Offres {
     @JsonIgnore
     private Set<Candidacy> candidacy;
 
-
-
+//
 
 
 }
