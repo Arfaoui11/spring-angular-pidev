@@ -797,7 +797,6 @@ public class ServiceFormation implements IServiceFormation {
 
         List<Formation> formations=  (List<Formation>) iFormationRepo.findAll();
 
-
         for (Formation formation: iFormationRepo.listformationByDate(firstDayOfMonth,lastDayOfMonth)) {
             if(formation.getEnd().before(new Date()))
             {
@@ -822,15 +821,14 @@ public class ServiceFormation implements IServiceFormation {
                     MUSIC++;}
             }
         }
+
         if (formations.size() !=0) {
 
-            System.out.println("Number Courses:"+formations.size());
+            System.out.println("Number Courses: "+formations.size());
 
             IT =  ((IT/(formations.size()))*100);
 
-
             ART = ((ART/formations.size()))*100;
-
 
             CINEMA = ((CINEMA/formations.size()))*100;
 
@@ -846,7 +844,6 @@ public class ServiceFormation implements IServiceFormation {
 
         }
 
-
         pourcent.add(IT);
         pourcent.add(ART);
         pourcent.add(CINEMA);
@@ -855,8 +852,6 @@ public class ServiceFormation implements IServiceFormation {
         pourcent.add(ECONOMIC);
         pourcent.add(MARKETING);
         pourcent.add(MUSIC);
-
-
 
         pourcentages.put("IT",IT);
 
@@ -899,7 +894,6 @@ public class ServiceFormation implements IServiceFormation {
         }
 
         nbr +=1;
-
 
         ByteArrayInputStream stream = exportExcelservice.percentageExportExcel(pourcent);
 

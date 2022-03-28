@@ -182,9 +182,10 @@ public class WomenServiceImpl implements IWomenService {
         ZoneId defaultZoneId = ZoneId.systemDefault();
 
         Date dd = Date.from(currentdDate1.atStartOfDay(defaultZoneId).toInstant());
-        for (Appointment a :  myRendezVousRepository.DeleteAppointmentAfterfinalDate(dd)
-             ) {
+        for (Appointment a :  myRendezVousRepository.DeleteAppointmentAfterfinalDate(dd)) {
+
             ArchiveAppointment ar = new ArchiveAppointment();
+
             ar.setUsers(a.getUsers());
             ar.setDoctor(a.getDoctor());
             ar.setIdApp(a.getIdApp());
@@ -237,6 +238,7 @@ public class WomenServiceImpl implements IWomenService {
 
     @Override
     public List<User> ScoreDoctor() {
+
         List<User> users = (List<User>) myUserRepository.findAll();
         for (User user :users) {
             int Score =GetNbrAppointmentDoctor(user.getId())*10;
@@ -244,30 +246,31 @@ public class WomenServiceImpl implements IWomenService {
             user.setScore(Score);
         }
         return myUserRepository.classementDoctor();
+
     }
 
     @Override
     public List<Double> PourcentageReclamationByType() {
+
         List<Double> pourcentages=new ArrayList<Double>();
+
         double PUBLICATION = 0;
         double TRAINING=0;
         double OFFER=0;
         double CANDIDACY=0;
 
         List<Complaint> complaints=  (List<Complaint>) myReclamationRepository.findAll();
-        System.out.println(complaints.toString());
+
+        System.out.println(complaints);
 
         for (Complaint complaint: complaints) {
-
 
             if (complaint.getType().equals(TypeComplaint.PUBLICATION)) {
                 PUBLICATION++;
             }
 
-
             else if (complaint.getType().equals(TypeComplaint.TRAINING)) {
                 TRAINING++;}
-
 
             else if (complaint.getType().equals(TypeComplaint.OFFER)) {
                 OFFER++;}

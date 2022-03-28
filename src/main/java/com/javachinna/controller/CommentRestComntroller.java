@@ -6,6 +6,7 @@ import com.javachinna.service.ICommentService;
 import com.javachinna.service.IReactCommentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,6 +21,7 @@ public class CommentRestComntroller {
     @Autowired
     ICommentService iCommentService;
      BadWordConfig badWordConfig  = new BadWordConfig();
+    @Qualifier("IReactCommentService")
     @Autowired
     IReactCommentService iReactCommentService;
 
@@ -27,6 +29,11 @@ public class CommentRestComntroller {
     public void AddAffectCommentList(@RequestBody Comment comment, @PathVariable("idTopic") Long idTopic, @PathVariable("idUser") Long idUser)
     {
         Comment commentt =new Comment();
+        commentt.setLikeComment(comment.getLikeComment());
+        commentt.setDislikeComment(comment.getDislikeComment());
+        commentt.setTopic(comment.getTopic());
+        commentt.setUser(comment.getUser());
+        
         commentt.setContent(badWordConfig.filterText(comment.getContent()));
 
         System.out.println(commentt.getContent());

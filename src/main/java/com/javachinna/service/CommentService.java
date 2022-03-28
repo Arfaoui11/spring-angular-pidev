@@ -32,10 +32,8 @@ public class CommentService implements ICommentService{
         Topic topic =  iTopicRepo.findById(idTopic).orElse(null);
         User user =  userRepository.findById(idUser).orElse(null);
 
-
             comment.setTopic(topic);
             comment.setUser(user);
-
             iCommentRepo.save(comment);
 
     }
