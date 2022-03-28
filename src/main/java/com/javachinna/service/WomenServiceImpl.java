@@ -234,6 +234,7 @@ public class WomenServiceImpl implements IWomenService {
         return myRendezVousRepository.GetIncomeDoctor(idDoc,startDate,endDate);
     }
 
+
     @Override
     public List<User> ScoreDoctor() {
 
