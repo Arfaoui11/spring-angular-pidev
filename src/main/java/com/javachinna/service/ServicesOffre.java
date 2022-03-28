@@ -162,7 +162,7 @@ public class ServicesOffre implements IServices{
     public List<Offres> OffreByProfession(Profession profession){
         return repoOff.offerByProfession(profession);
     }*/
-/*
+    /*
     public List<Double> PourcentageReclamationByType() {
         List<Double> pourcentages=new ArrayList<Double>();
         double PUBLICATION = 0;

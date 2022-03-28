@@ -49,6 +49,8 @@ public class ServiceFormation implements IServiceFormation {
     @Autowired
     exportExcel exportExcelservice;
 
+    private Domain d;
+
 
 
 
@@ -56,8 +58,7 @@ public class ServiceFormation implements IServiceFormation {
     private SendEmailService emailSenderService;
 
     private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
-
-
+    private static  Integer nbr = 0 ;
 
 
 
@@ -366,10 +367,26 @@ public class ServiceFormation implements IServiceFormation {
 
             if (this.iFormationRepo.nbrCoursesParFormateur(idFormateur,dd,df) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
             {
-                this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"Congratulations Mr's : NAME : "+formateur.getLastName() +" "+formateur.getFirstName() +" ." ," We accepted you to teach with usthis courses of "+formation.getDomain()+" this courses start at : "+formation.getStart()+" and finish "+formation.getEnd()+" .");
+                this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"Congratulations Mr's : NAME : "+formateur.getLastName() +" "+formateur.getFirstName() +" ." ," We accepted you to teach with us this courses of "+formation.getDomain()+" this courses start at : "+formation.getStart()+" and finish "+formation.getEnd()+" .");
                 formation.setRating(0.0);
-                formation.setFormateur(formateur);
-                iFormationRepo.save(formation);
+
+                if(formation.getNbrMaxParticipant()>20 && !formation.getDomain().equals(d))
+                {
+                    formation.setNbrMaxParticipant(20);
+                    formation.setFormateur(formateur);
+                    iFormationRepo.save(formation);
+                    this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"Max number of leaner in this domain "+formation.getDomain()+" " ,"we have 20 (Max number of leaner ) Mr's  : "+formateur.getLastName() +" "+formateur.getFirstName() +" .");
+
+                }else if (formation.getNbrMaxParticipant()<=30 && formation.getDomain().equals(d)){
+                    formation.setFormateur(formateur);
+                    iFormationRepo.save(formation);
+                    this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"in this domain We access 30 leaner "+formation.getDomain()+" " ,"we have 30 (Max number of leaner ) Mr's  : "+formateur.getLastName() +" "+formateur.getFirstName() +" .");
+                }else {
+                    formation.setFormateur(formateur);
+                    iFormationRepo.save(formation);
+                }
+
+
             }else
             {
                 this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"we don't have acces to have two coursus in same semester " ,"we have 2 (MAX formation in this semester) NAME : "+formateur.getLastName() +" "+formateur.getFirstName() +" .");
@@ -752,12 +769,22 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    @Scheduled(cron = "0 0/2 * * * *")
-    public Map<String,Double> PourcentageCoursesByDomain() throws IOException {
+   // @Scheduled(cron = "0 0/2 * * * *")
+    @Scheduled(cron = "0 0 9 28 * ?")
+    public Map<String,Double> PourcentageCoursesByDomain() throws IOException, MessagingException {
 
         Map<String,Double> pourcentages=new HashMap<>();
 
         List<Double> pourcent = new ArrayList<>();
+
+        Calendar calLast = Calendar.getInstance();
+        Calendar calFirst = Calendar.getInstance();
+        calLast.set(Calendar.DATE, calLast.getActualMaximum(Calendar.DATE));
+        calFirst.set(Calendar.DATE, calFirst.getActualMinimum(Calendar.DATE));
+
+        Date lastDayOfMonth = calLast.getTime();
+        Date firstDayOfMonth = calFirst.getTime();
+
 
         double IT = 0;
         double ART=0;
@@ -771,7 +798,7 @@ public class ServiceFormation implements IServiceFormation {
         List<Formation> formations=  (List<Formation>) iFormationRepo.findAll();
 
 
-        for (Formation formation: formations) {
+        for (Formation formation: iFormationRepo.listformationByDate(firstDayOfMonth,lastDayOfMonth)) {
             if(formation.getEnd().before(new Date()))
             {
                 if (formation.getDomain().equals(Domain.IT)) {
@@ -849,30 +876,54 @@ public class ServiceFormation implements IServiceFormation {
 
         System.out.println(pourcentages);
 
+        Random r = new Random();
+        Integer RandNbr = r.nextInt(100);
 
-/*
-        for(Formation f : iFormationRepo.findAll())
+
+        Double max = Collections.max(pourcent,null);
+
+
+
+        System.out.println(max(pourcentages));
+
+        String domain = max(pourcentages);
+
+        d = Domain.valueOf(domain);
+
+
+
+        for (Formation fr : iFormationRepo.listFormationByDomain(Domain.valueOf(domain)))
         {
-
+            fr.setNbrMaxParticipant(30);
+            iFormationRepo.save(fr);
         }
-        ByteArrayInputStream stream = exportExcelservice.quizexportexcel(r);
 
-        FileOutputStream out = new FileOutputStream("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
+        nbr +=1;
+
+
+        ByteArrayInputStream stream = exportExcelservice.percentageExportExcel(pourcent);
+
+        FileOutputStream out = new FileOutputStream("/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Result"+nbr+".xlsx");
 
         byte[] buf = new byte[1024];
         int len;
         while ((len = stream.read(buf)) > 0) {
             out.write(buf, 0, len);
         }
-        this.emailSenderService.sendSimpleEmailWithFils(user.getEmail(),"your courses was finished yours Excel liste of score  " ," finished At : "+ new Date()+"  in Courses of Domain "+form.getDomain()+" "+" And Niveau : " +form.getLevel() +" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/ResultQuiz"+r.get(0).getQuiz().getFormation().getIdFormation()+".xlsx");
-
-
- */
-
-
-
+        this.emailSenderService.sendSimpleEmailWithFils("mahdijr2015@gmail.com","You have pourcentage of max domain Courses " ," you have in this month "+max+" % of leaner pick courses with domain : "+max(pourcentages)+" then we  access to augment  number max of leaner in all courses with domain "+max(pourcentages)+" .","/Users/macos/IdeaProjects/springPidev/src/main/resources/static/Result"+nbr+".xlsx");
 
         return pourcentages;
+    }
+
+
+    public <String, Double extends Comparable<Double>> String max(Map<String, Double> map) {
+        Optional<Map.Entry<String, Double>> maxEntry = map.entrySet()
+                .stream()
+                .max((Map.Entry<String, Double> e1, Map.Entry<String, Double> e2) -> e1.getValue()
+                        .compareTo(e2.getValue())
+                );
+
+        return  maxEntry.get().getKey();
     }
 
 
