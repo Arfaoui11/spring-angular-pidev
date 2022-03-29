@@ -12,9 +12,12 @@ import com.javachinna.model.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+
 
 
 	User findByEmail(String email);

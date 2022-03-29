@@ -156,7 +156,10 @@ public class ServicesOffre implements IServices{
     public List<Candidacy> CandidacyByProfession(Profession profession) {
         return repoCandidacy.offerByProfession(profession);}
 
-
+    @Override
+    public List<Object>  nbrOffer() {
+        return repoOff.nbrOffer ();
+    }
 
    /* @Override
     public List<Offres> OffreByProfession(Profession profession){

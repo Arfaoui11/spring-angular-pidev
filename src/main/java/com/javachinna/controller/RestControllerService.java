@@ -137,4 +137,12 @@ import java.util.List;
             return iServices.CandidacyByProfession(profession);
         }
 
+        @ApiOperation(value = "nbroffer")
+        @GetMapping("/nbroffer")
+        @ResponseBody
+        public List<Object> nbrOffer()
+        {
+            return iServices.nbrOffer();
+        }
+
 }

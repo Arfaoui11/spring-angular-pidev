@@ -24,6 +24,11 @@ public interface RepoOffers extends CrudRepository<Offres,Integer> {
     @Query("SELECT o FROM Offres o WHERE CONCAT(o.dateEndOffer, o.dateBeginOffer, o.dateInterview , o.priceOffer ,o.profession) LIKE %?1%")
      List<Offres> findAll(String keyword);
 
+    @Query("select count(o) from Offres o  ")
+    List<Object> nbrOffer();
+
+
+
    /* @Query('SELECT p from  Offres p join p.users where p.profession=:profession')
     List<Offres> offerByProfession(@Param("profession") rofession profession);*/
 }
