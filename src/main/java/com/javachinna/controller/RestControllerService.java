@@ -124,7 +124,7 @@ import java.util.List;
         }
         @GetMapping("/SearchCandidacy/{keyword}")
         @ResponseBody
-        @ApiOperation(value = "search offer ")
+        @ApiOperation(value = "search candidacy ")
         public List<Candidacy> SearchCandidacy( @PathVariable("keyword") String keyword) {
             List<Candidacy> listCandidacy = iServices.listAllCandidacy(keyword);
             return  listCandidacy;
@@ -135,6 +135,14 @@ import java.util.List;
         public List<Candidacy> CandidacyByProfession(@PathVariable("pro")  Profession profession)
         {
             return iServices.CandidacyByProfession(profession);
+        }
+
+        @ApiOperation(value = "nbroffer")
+        @GetMapping("/nbroffer")
+        @ResponseBody
+        public List<Object> nbrOffer()
+        {
+            return iServices.nbrOffer();
         }
 
 }

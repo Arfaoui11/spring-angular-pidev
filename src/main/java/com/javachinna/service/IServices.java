@@ -31,6 +31,8 @@ public interface IServices {
     List<Candidacy> listAllCandidacy(String keyword);
     List<Candidacy> CandidacyByProfession(Profession profession);
 
+    List<Object>  nbrOffer();
+
     //List<Offres> OffreByProf(Profession profession);
 
    // List<Offres> OffreByProfession(Profession profession);

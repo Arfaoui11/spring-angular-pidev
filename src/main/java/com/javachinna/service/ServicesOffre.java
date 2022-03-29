@@ -156,13 +156,16 @@ public class ServicesOffre implements IServices{
     public List<Candidacy> CandidacyByProfession(Profession profession) {
         return repoCandidacy.offerByProfession(profession);}
 
-
+    @Override
+    public List<Object>  nbrOffer() {
+        return repoOff.nbrOffer ();
+    }
 
    /* @Override
     public List<Offres> OffreByProfession(Profession profession){
         return repoOff.offerByProfession(profession);
     }*/
-    /*
+/*
     public List<Double> PourcentageReclamationByType() {
         List<Double> pourcentages=new ArrayList<Double>();
         double PUBLICATION = 0;

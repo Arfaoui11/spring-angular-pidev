@@ -29,14 +29,17 @@ public class QuizzService implements IQuizServiceC{
     private RepoResultQuiz repoResultQuiz;
 
 
-
+    @Autowired
+    private SendEmailService sendEmailService;
     @Override
     public void addQuiz(QuizCandidacy quiz, Integer id) {
 
         Candidacy candidacy = this.repoCandidacy.findById(id).orElse(null);
         quiz.setCandidacy(candidacy);
         quiz.setCreateAt(new Date());
+       // sendEmailService.sendSimpleEmail(Candidacy.getEmail(),"Your Appointment is taken care of At: " +re.getDateApp()+  "  UserName: "+re.getUsers().getFirstName() +" "+re.getUsers().getLastName() +" And UserName Doctor : " +d.getFirstName()+ " " +d.getLastName()+"","Appointment Response");
         repoQuiz.save(quiz);
+
 
     }
 
