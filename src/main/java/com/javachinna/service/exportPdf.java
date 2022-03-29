@@ -236,12 +236,12 @@ public class exportPdf {
             document.open();
             //add text to pdf file
             Font font= FontFactory.getFont(FontFactory.COURIER,12,BaseColor.LIGHT_GRAY);
-            Paragraph para = new Paragraph("Formation List ",font);
+            Paragraph para = new Paragraph("Complaints List ",font);
             para.setAlignment(Element.ALIGN_CENTER);
             document.add(para);
             document.add(Chunk.NEWLINE);
 
-            PdfPTable table=new PdfPTable(9);
+            PdfPTable table=new PdfPTable(4);
             //make the columns
             Stream.of("Id","Date Compalint","Description","Type").forEach(headerTitle -> {
                 PdfPCell header = new PdfPCell();

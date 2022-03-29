@@ -116,7 +116,12 @@ public class User implements Serializable {
 	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Complaint> complaints;
-	@OneToMany(mappedBy ="users",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy ="users",fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.REMOVE
+			})
 	@JsonIgnore
 	private Set<ComplaintResponse> complaintResponses;
 	@OneToMany(cascade =  CascadeType.ALL, mappedBy = "doctor")

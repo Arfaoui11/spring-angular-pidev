@@ -5,6 +5,7 @@ import com.javachinna.model.*;
 import com.javachinna.repo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -48,12 +49,14 @@ public class WomenServiceImpl implements IWomenService {
         User user=myUserRepository.findById(idUser).orElse(null);
         c.setUsers(user);
         myReclamationRepository.save(c);
-        sendEmailService.sendSimpleEmail("farouk.hajjej@esprit.tn","your complaint is taken care of!","Complaint Response");
+        sendEmailService.sendSimpleEmail(user.getEmail(),"your complaint is taken care of!","Complaint Response");
     }
 
 
     @Override
     public void DeleteComplaint(Long idCom) {
+        log.info("In methode deleteComment");
+        log.warn("Are you sure you want to delete Comment");
     myReclamationRepository.deleteById(idCom);
     }
 
@@ -70,6 +73,10 @@ public class WomenServiceImpl implements IWomenService {
         Complaint c=myReclamationRepository.findById(idCom).orElse(null);
 
         return c;
+    }
+    @Override
+    public  List<Object> nbrComplaintByType( TypeComplaint type) {
+        return myReclamationRepository.nbrComplaintByType (type);
     }
 
     @Override

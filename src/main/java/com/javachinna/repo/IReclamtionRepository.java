@@ -1,9 +1,11 @@
 package com.javachinna.repo;
 
 import com.javachinna.model.Complaint;
-import com.javachinna.model.Formation;
+
+import com.javachinna.model.TypeComplaint;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +19,8 @@ public interface IReclamtionRepository extends CrudRepository<Complaint, Long> {
 
    @Query(value = "select c from Complaint c where concat(c.idCom,c.dateCom,c.description,c.type) like %?1% group by c ")
    List<Complaint> searchmultilplcomplaint(String keyword);
+
+
+   @Query("select c.type, count(c) from Complaint c where c.type=:type")
+   List<Object> nbrComplaintByType(@Param("type") TypeComplaint type);
 }

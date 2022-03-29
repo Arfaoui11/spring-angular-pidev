@@ -34,7 +34,8 @@ public class Complaint implements Serializable {
     @JsonIgnore
     private User users;
 
-    @OneToMany(mappedBy ="complaints",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="complaints",cascade={CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch=FetchType.EAGER)
     @JsonIgnore
     private Set<ComplaintResponse> complaintResponseSet;
 

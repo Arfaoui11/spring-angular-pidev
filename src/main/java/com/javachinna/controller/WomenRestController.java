@@ -9,7 +9,12 @@ import com.javachinna.service.*;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +39,7 @@ public class WomenRestController {
     exportExcel exportExcelservice;
     @Autowired
     exportPdf exportPdfservice;
+
 
 
 
@@ -109,12 +115,34 @@ public class WomenRestController {
         return womenService.RetrieveComplaint(idCom);
     }
 
+
+    @ApiOperation(value = "nbrComplaintByType")
+    @GetMapping("/nbrComplaintByType/{type}")
+    @ResponseBody
+    public   List<Object> nbrComplaintByType(@PathVariable("type") TypeComplaint type)
+    {
+        return womenService.nbrComplaintByType (type);
+    }
+
     @ApiOperation(value = " Search Complaint Multiple  ")
     @GetMapping("/SearchMultiple/{keyword}")
     @ResponseBody
     public List<Complaint> SearchComplaintMultiple(@PathVariable("keyword")  String key){
         return  womenService.SearchComplaintMultiple(key);
 
+    }
+
+
+    @GetMapping(value = "/exportpdfComplaint", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> exportTermsPDF(){
+        List<Complaint> complaints = womenService.RetrieveAllComplaints ();
+        ByteArrayInputStream bais =exportPdfservice.ComplaintPDFReport (complaints);
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Content-Disposition", "attachment;filename=complaintList.pdf");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bais));
     }
 
 
