@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -75,8 +76,16 @@ public class TopicRestController
     @ApiOperation(value = " Search Topic Multiple  ")
     @GetMapping("/SearchMultiple/{keyword}")
     @ResponseBody
-    public List<Topic> SearchTopictMultiple(@PathVariable("keyword")  String key){
+    public List<Topic> SearchTopicMultiple(@PathVariable("keyword")  String key){
         return  iTopicService.SearchTopicMultiple(key);
+
+    }
+
+    @GetMapping("/CountTopicByType")
+    // @ResponseBody
+    public Map<String, Double> PourcentageTopicByType(){
+
+        return iTopicService.PourcentageTopicByType();
 
     }
 }

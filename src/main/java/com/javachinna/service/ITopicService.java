@@ -6,6 +6,7 @@ import com.javachinna.model.Topic;
 import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ITopicService {
 
@@ -26,6 +27,8 @@ public interface ITopicService {
     public List<Topic> SearchTopicMultiple(String key);
 
     void DeleteTopicAfterfinalDate();
+
+    Map<String,Double> PourcentageTopicByType();
 
 
 }

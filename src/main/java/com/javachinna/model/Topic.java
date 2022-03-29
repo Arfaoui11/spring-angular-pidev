@@ -28,6 +28,7 @@ public class Topic implements Serializable {
     private String category;
     private Date createdDate;
     private String media;
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     @Max(5)

@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
+@Transactional
 public class TopicService implements ITopicService{
 
 
@@ -23,6 +23,7 @@ public class TopicService implements ITopicService{
     @Autowired
     ITopicRepo iTopicRepo;
     @Autowired
+
     UserRepository userRepository;
 
 
@@ -140,7 +141,89 @@ public void DeleteTopicAfterfinalDate() {
      */
         iTopicRepo.delete(a);
     }
+///////////////////////////////////
+@Override
+public Map<String,Double> PourcentageTopicByType() {
 
+    Map<String,Double> pourcentages=new HashMap<>();
+
+    double SKILLS = 0;
+    double  STUDIES= 0;
+    double  WORK= 0;
+    double  RIGHTS= 0;
+    double  MARKETING= 0;
+    double  CHAMPION= 0;
+    double  HEALTH= 0;
+    double  DISCRIMINATION= 0;
+    double  CULTURAL_EMPOWERMENT= 0;
+
+
+    List<Topic> topics=  (List<Topic>) iTopicRepo.findAll();
+
+    System.out.println(topics);
+
+    for (Topic topic: topics) {
+
+        if (topic.getType().equals(Type.SKILLS)) {
+            SKILLS++;
+        }
+
+        else if (topic.getType().equals(Type.STUDIES)) {
+            STUDIES++;}
+
+        else if (topic.getType().equals(Type.WORK)) {
+            WORK++;}
+
+        else if (topic.getType().equals(Type.RIGHTS)) {
+            RIGHTS ++;}
+        else if (topic.getType().equals(Type.MARKETING)) {
+            MARKETING ++;}
+        else if (topic.getType().equals(Type.CHAMPION)) {
+            CHAMPION++;}
+        else if (topic.getType().equals(Type.HEALTH)) {
+            HEALTH ++;}
+        else if (topic.getType().equals(Type.DISCRIMINATION)) {
+            DISCRIMINATION ++;}
+        else if (topic.getType().equals(Type.CULTURAL_EMPOWERMENT)) {
+            CULTURAL_EMPOWERMENT ++;}
+    }
+    if (topics.size() !=0) {
+
+        System.out.println("topic_number:"+topics.size());
+
+        SKILLS = ((SKILLS/(topics.size()))*100);
+        STUDIES =  ((STUDIES/(topics.size()))*100);
+        WORK=  ((WORK/(topics.size()))*100);
+        RIGHTS =  ((RIGHTS/(topics.size()))*100);
+        MARKETING =  ((MARKETING/(topics.size()))*100);
+        CHAMPION =  ((CHAMPION/(topics.size()))*100);
+        HEALTH =  ((HEALTH/(topics.size()))*100);
+        DISCRIMINATION =  ((DISCRIMINATION/(topics.size()))*100);
+        CULTURAL_EMPOWERMENT = ((CULTURAL_EMPOWERMENT/(topics.size()))*100);
+
+    }
+
+    pourcentages.put("SKILLS",SKILLS);
+    pourcentages.put("STUDIES",STUDIES);
+    pourcentages.put("WORK",WORK);
+    pourcentages.put("RIGHTS",RIGHTS);
+    pourcentages.put("MARKETING",MARKETING);
+    pourcentages.put("CHAMPION",CHAMPION);
+    pourcentages.put("HEALTH",HEALTH);
+    pourcentages.put("DISCRIMINATION",DISCRIMINATION);
+    pourcentages.put("CULTURAL_EMPOWERMENT",CULTURAL_EMPOWERMENT);
+
+
+        /*
+        pourcentages.add(SKILLS);
+
+
+         */
+
+    System.out.println(pourcentages);
+
+    return pourcentages;
+}
 
 }
 
