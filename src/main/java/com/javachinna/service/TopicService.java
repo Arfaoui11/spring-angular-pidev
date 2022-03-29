@@ -115,8 +115,10 @@ public void DeleteTopicAfterfinalDate() {
     ///pour définir la date__debut mois fin mois//////
     Calendar calLast = Calendar.getInstance();
     Calendar calFirst = Calendar.getInstance();
+
     calLast.set(Calendar.DATE, calLast.getActualMaximum(Calendar.DATE));
     calFirst.set(Calendar.DATE, calFirst.getActualMinimum(Calendar.DATE));
+
     Date lastDayOfMonth = calLast.getTime();
     Date firstDayOfMonth = calFirst.getTime();
 
@@ -136,7 +138,6 @@ public void DeleteTopicAfterfinalDate() {
         iRendezVousArchiveRepos.save(ar);
 
      */
-
         iTopicRepo.delete(a);
     }
 

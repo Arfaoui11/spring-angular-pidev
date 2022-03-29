@@ -22,7 +22,10 @@ public class BadWordConfig {
 
             //  mte3ek path dict.txt
             //  File f = new File("C:\\Users\\Farouk Hajjej\\IdeaProjects\\spring-angular-pidev-4se5\\src\\main\\resources\\Dict.txt");
-            File f = new File("/Users/macos/IdeaProjects/springPidev/src/main/resources/Dict.txt");
+              File f = new File("C:\\Users\\pc\\IdeaProjects\\spring-angular-pidev1\\src\\main\\resources\\Dict.txt");
+
+
+            //File f = new File("/Users/macos/IdeaProjects/springPidev/src/main/resources/Dict.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
             String line = "";
             int counter = 0;

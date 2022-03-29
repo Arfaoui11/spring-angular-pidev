@@ -26,6 +26,7 @@ public interface ITopicRepo extends CrudRepository<Topic, Long> {
     @Query(value = "select c from Topic c where concat(c.idTopic,c.category,c.content,c.createdDate,c.media,c.Rating,c.title,c.type) like %?1% group by c ")
     List<Topic> searchmultilpltopic(String keyword);
 
+    ////////////////////////////
     @Query(value ="select a from Topic a where a.createdDate =: date and a.Rating=1 ")
     List<Topic> DeleteTopicAfterfinalDate(@Param("date") Date date);
 }
