@@ -17,7 +17,7 @@ public interface IServices {
     void deleteOffer(Integer idOffer);
     List<Offres> GetOffer();
 
-    void add(Candidacy candidacy, Integer idO, Long idU);
+    void add(Candidacy candidacy, int idO, Long idU);
     void  updateCandidacy (Candidacy candidacy);
     void  deleteCandidacy(Integer idCandidacy);
     List<Candidacy> GetCandidacy();
@@ -32,6 +32,9 @@ public interface IServices {
     List<Candidacy> CandidacyByProfession(Profession profession);
 
     List<Object>  nbrOffer();
+
+
+
 
     //List<Offres> OffreByProf(Profession profession);
 

@@ -21,6 +21,8 @@ public class ServicesOffre implements IServices{
     private RepoOffers repoOff;
     @Autowired
     private UserRepository repoUser;
+    @Autowired
+    private SendEmailService sendEmailService;
 
     @Override
     public void updateOffer(Offres offer, Long idUser) {
@@ -47,20 +49,22 @@ public class ServicesOffre implements IServices{
     List<Offres> offres =(List<Offres>) repoOff.findAll();
     return  offres ;
    }
-    @Override
-    public void add(Candidacy candidacy,Integer idO, Long idU) {
-
-        User user = repoUser.findById(idU).orElse(null);
-        Offres offres = repoOff.findById(idO).orElse(null);
-
-        candidacy.setOffers(offres);
-        candidacy.setUsersW(user);
-
-        repoCandidacy.save(candidacy);
-    }
 
     @Override
-    public void updateCandidacy (Candidacy candidacy){
+    public void add(Candidacy candidacy, int idO, Long idU) {
+            User user = repoUser.findById(idU).orElse(null);
+            Offres offres = repoOff.findById(idO).orElse(null);
+
+            candidacy.setOffers(offres);
+            candidacy.setUsersW(user);
+            sendEmailService.sendSimpleEmail(user.getEmail(), "your interview will take place on April 3: ", " Interview Response");
+            repoCandidacy.save(candidacy);
+        }
+
+
+
+    @Override
+    public void updateCandidacy(Candidacy candidacy){
         repoCandidacy.save(candidacy);
     }
 
@@ -160,6 +164,8 @@ public class ServicesOffre implements IServices{
     public List<Object>  nbrOffer() {
         return repoOff.nbrOffer ();
     }
+
+
 
    /* @Override
     public List<Offres> OffreByProfession(Profession profession){
