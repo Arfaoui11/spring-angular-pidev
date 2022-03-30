@@ -36,6 +36,7 @@ public class UserController {
 
 	@ApiOperation(value = "retrieve All Users ")
 	@GetMapping("/retrieve-All-Users")
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseBody
 	public List<User> RetrieveAllUsers()
 	{
