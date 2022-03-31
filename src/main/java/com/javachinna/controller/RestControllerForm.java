@@ -87,13 +87,7 @@ public class RestControllerForm {
 
 
 
-    @PostMapping("/addFomateur")
-    @ApiOperation(value = " ajouter Formateur ")
-    public void ajouterFormateur(@RequestBody User formateur,HttpServletResponse response) {
 
-        iServiceFormation.ajouterFormateur(formateur);
-
-    }
 
     @RequestMapping(value = {"/ajouterFormation"}, method = RequestMethod.POST)
     @ResponseBody
@@ -110,9 +104,25 @@ public class RestControllerForm {
         iServiceFormation.updateFormation(formation,idFormateur);
     }
 
+    @ApiOperation(value = "update Result")
+    @PutMapping("/upDateResult/{idQ}/{idU}")
+    @ResponseBody
+    public Result upDateResult(@RequestBody Result result,@PathVariable(name = "idQ") Integer idQ,@PathVariable(name = "idU") Long idUser)
+    {
+        return  iServiceFormation.upDateResult(result, idQ, idUser);
+    }
+
+    @ApiOperation(value = "upDate Comment")
+    @PutMapping("/upDateComment/{idf}/{idU}")
+    @ResponseBody
+    public PostComments upDateComment(@RequestBody PostComments postComments,@PathVariable(name = "idf") Integer idF,@PathVariable(name = "idU") Long idUser)
+    {
+        return iServiceFormation.upDateComment(postComments, idF, idUser);
+    }
+
 
     @ApiOperation(value = "Delete Formation")
-    @GetMapping("/deleteFormation/{id}")
+    @DeleteMapping("/deleteFormation/{id}")
     @ResponseBody
     public void deleteFormation(@PathVariable(name = "id") Integer idForm){
         iServiceFormation.deleteFormation(idForm);
@@ -154,14 +164,6 @@ public class RestControllerForm {
     }
 
 
-    @RequestMapping(value = {"/ajouterApprenant"}, method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = " ajouter Apprenant ")
-    public void ajouterApprenant(@RequestBody User apprenant)
-    {
-        iServiceFormation.ajouterApprenant(apprenant);
-    }
-
 
     @RequestMapping(value = {"/ajouterEtAffecterFormationAFormateur/{id}"}, method = RequestMethod.POST)
     @ResponseBody
@@ -172,13 +174,7 @@ public class RestControllerForm {
     }
 
 
-    @RequestMapping(value = {"/affecterApprenantFormation/{idA}/{idF}"}, method = RequestMethod.POST)
-    @ResponseBody
-    @ApiOperation(value = "ajouter Et Affecter Formation A Formateur  ")
-    public void affecterApprenantFormation(@PathVariable(name = "idA") Long idApprenant,@PathVariable(name = "idF") Integer idFormation)
-    {
-        iServiceFormation.affecterApprenantFormation(idApprenant, idFormation);
-    }
+
 
 
 
@@ -197,6 +193,7 @@ public class RestControllerForm {
     }
 
     @PostMapping("/uploadMultipleFiles/{idF}")
+    @ResponseBody
     public List<Response> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files,@PathVariable(name = "idF") Integer idFormation) {
         return Arrays.asList(files)
                 .stream()
@@ -456,7 +453,7 @@ public class RestControllerForm {
     }
 
     @ApiOperation(value = "Delete Comments")
-    @GetMapping("/deleteComments/{id}")
+    @DeleteMapping("/deleteComments/{id}")
     @ResponseBody
     public void deleteComments(@PathVariable(name = "id") Integer idC)
     {
@@ -511,6 +508,9 @@ public class RestControllerForm {
 
 
 
+
+
+
     @ApiOperation(value = " Search Multiple  ")
     @GetMapping("/SearchMultiple/{keyword}")
     @ResponseBody
@@ -528,13 +528,21 @@ public class RestControllerForm {
     }
 
     @ApiOperation(value = "Delete Quiz")
-    @GetMapping("/DeleteQuiz/{id}")
+    @DeleteMapping("/DeleteQuiz/{id}")
     @ResponseBody
     public void DeleteQuiz(@PathVariable("id") Integer idQ)
     {
         this.iServicesQuiz.DeleteQuiz(idQ);
     }
 
+
+    @ApiOperation(value = "Delete Question")
+    @DeleteMapping("/DeleteQuestion/{id}")
+    @ResponseBody
+    public void DeleteQuestion(@PathVariable("id") Integer idQ)
+    {
+        this.iServicesQuiz.DeleteQuestion(idQ);
+    }
 
     @ApiOperation(value = " Search Historique ")
     @PostMapping("/SearchHistorique/{keyword}")

@@ -1,10 +1,7 @@
 package com.javachinna.service;
 
 import com.javachinna.model.*;
-import com.javachinna.repo.IDislikesRepo;
-import com.javachinna.repo.ILikesRepo;
-import com.javachinna.repo.SubscriptionRepo;
-import com.javachinna.repo.UserRepository;
+import com.javachinna.repo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +24,9 @@ public class SubscriptionService implements ISubscriptionService {
     @Autowired
     SendEmailService emailService;
     @Autowired
-    ILikesRepo iLikesRepo;
+    ILRepo iLikesRepo;
     @Autowired
-    IDislikesRepo iDislikesRepo;
+    IDRepo iDislikesRepo;
 
 
     @Override
@@ -112,7 +109,7 @@ public class SubscriptionService implements ISubscriptionService {
     public void likeSub(Long idS ){
         Subscription s = subscRepo.findById(Math.toIntExact(idS)).orElse(null);
         //  User user = iUserRepo.findById(idU).orElse(null);
-        Likes likes = new Likes();
+        LikesC likes = new LikesC();
 
 
         if(s.getLikes().size() == 0)
@@ -123,8 +120,8 @@ public class SubscriptionService implements ISubscriptionService {
             iLikesRepo.save(likes);
         }
         else{
-            Likes l = iLikesRepo.findById(s.getLikes().stream().findFirst().get().getId()).orElse(null);
-            l.setNbrSubsLikes(l.getNbrLikes()+1);
+            LikesC l = iLikesRepo.findById(s.getLikes().stream().findFirst().get().getId()).orElse(null);
+            l.setNbrSubsLikes(l.getNbrSubsLikes()+1);
             iLikesRepo.save(l);
         }
 
@@ -133,7 +130,7 @@ public class SubscriptionService implements ISubscriptionService {
     public void dislikeSubs (Long idS ) {
         Subscription s = subscRepo.findById(Math.toIntExact(idS)).orElse(null);
         //  User user = iUserRepo.findById(idU).orElse(null);
-        Dislikes dislikes = new Dislikes();
+        DislikesC dislikes = new DislikesC();
 
         if(s.getDislikes().size() == 0)
         {
@@ -145,7 +142,7 @@ public class SubscriptionService implements ISubscriptionService {
             iDislikesRepo.save(dislikes);
         }
         else{
-            Dislikes d = iDislikesRepo.findById(s.getDislikes().stream().findFirst().get().getId()).orElse(null);
+            DislikesC d = iDislikesRepo.findById(s.getDislikes().stream().findFirst().get().getId()).orElse(null);
             d.setNbrSubsDislikes(d.getNbrSubsDislikes()+1);
 
             iDislikesRepo.save(d);

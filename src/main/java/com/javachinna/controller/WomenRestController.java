@@ -34,7 +34,8 @@ public class WomenRestController {
     IWomenService womenService;
     @Autowired
     ISendEmailService iSendEmailService;
-            BadWordConfig badWordConfig  = new BadWordConfig();
+
+    BadWordConfig badWordConfig  = new BadWordConfig();
     @Autowired
     exportExcel exportExcelservice;
     @Autowired

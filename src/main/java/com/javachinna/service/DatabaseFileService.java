@@ -20,7 +20,7 @@ public class DatabaseFileService {
     @Autowired
     private IFormationRepo iFormationRepo;
 
-    public DatabaseFile storeFile(MultipartFile file, Integer idFormation) {
+    public DatabaseFile storeFile(MultipartFile file, Integer idFormation ) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -33,6 +33,7 @@ public class DatabaseFileService {
             }
 
             DatabaseFile dbFile = new DatabaseFile(fileName, file.getContentType(), file.getBytes());
+            dbFile.setUser(formation.getFormateur());
             dbFile.setFormation(formation);
             return dbFileRepository.save(dbFile);
         } catch (IOException ex) {

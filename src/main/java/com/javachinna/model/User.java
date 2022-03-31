@@ -153,19 +153,27 @@ public class User implements Serializable {
 
 
 
-	@OneToMany(mappedBy = "formateur")
+	@OneToMany(mappedBy = "formateur",fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.REMOVE
+			})
 	@JsonIgnore
 	private Set<Formation> formationF;
 
 
-	@ManyToMany(mappedBy = "apprenant", fetch = FetchType.LAZY
-			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@ManyToMany(mappedBy = "apprenant",fetch = FetchType.LAZY,
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE,
+					CascadeType.REMOVE
+			})
 	@JsonIgnore
 	private Set<Formation> formationA;
 
 
-	@OneToMany(mappedBy = "sUser"
-			,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+	@OneToMany(mappedBy = "sUser",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Result> results;
 

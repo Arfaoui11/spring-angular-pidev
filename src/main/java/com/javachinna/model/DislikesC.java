@@ -2,11 +2,10 @@ package com.javachinna.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
+
 
 @Entity
 @Getter
@@ -14,22 +13,20 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Dislikes implements Serializable {
+public class DislikesC {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer nbrDislikes;
+    private Integer nbrSubsDislikes;
 
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
-    @ManyToOne
-    @JsonIgnore
-    private PostComments postComments;
 
 
-
-
+     @ManyToOne
+     @JsonIgnore
+     private Subscription subscss;
 }

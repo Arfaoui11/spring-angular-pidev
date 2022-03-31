@@ -21,7 +21,6 @@ public class Likes implements Serializable {
     private Integer id;
 
     private Integer nbrLikes;
-    private Integer nbrSubsLikes;
     @Temporal(TemporalType.DATE)
     private Date createAt;
 
@@ -29,16 +28,7 @@ public class Likes implements Serializable {
     @ManyToOne
     @JsonIgnore
     private PostComments postComments;
-    @ManyToOne
-    @JsonIgnore
-    private Subscription subscs;
 
-   /* @ManyToOne
-    @JsonIgnore
-    private User user;
-
-
-    */
 
 
 

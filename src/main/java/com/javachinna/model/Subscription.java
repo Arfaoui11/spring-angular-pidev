@@ -48,9 +48,9 @@ public class Subscription implements Serializable {
 
 	@OneToMany (mappedBy = "subscs",cascade = {CascadeType.REMOVE})
 	@JsonIgnore
-	private Set<Likes> likes;
+	private Set<LikesC> likes;
 
 	@OneToMany (mappedBy = "subscss",cascade = {CascadeType.REMOVE})
 	@JsonIgnore
-	private Set<Dislikes> Dislikes;
+	private Set<DislikesC> Dislikes;
 }

@@ -52,23 +52,23 @@ public class Formation implements Serializable {
     @JsonIgnore
     private Set<User> apprenant ;
 
-    @OneToMany(mappedBy = "formation" ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<QuizCourses> quizzes;
 
 
-    @OneToMany(mappedBy = "formation",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<DatabaseFile> databaseFiles;
 
 
 
-    @OneToMany(mappedBy = "formation",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<PostComments> postComments;
 
 
-    @OneToMany(mappedBy = "formation")
+    @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<Certificat> certificat;
 

@@ -40,6 +40,8 @@ public interface IServicesQuiz {
 
     void DeleteQuiz(Integer idQ);
 
+    void DeleteQuestion(Integer idQ);
+
 
 
 

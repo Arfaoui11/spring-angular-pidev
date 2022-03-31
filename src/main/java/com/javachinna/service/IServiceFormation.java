@@ -52,12 +52,13 @@ public interface IServiceFormation {
 
     void affecterApprenantFormation(Long idApprenant,Integer idFormation);
 
+    Result upDateResult(Result result,Integer idQ,Long idUser);
 
 
-
-    Integer nbrCoursesParFormateur(Long idF,Date dateDebut, Date dateFin);
+    Integer nbrCoursesParFormateur(Long idF,Date dateDebut, Date dateFin,Domain domain);
 
     Integer getNbrApprenantByFormation(String title);
+
     void getNbrApprenantByFormationn();
 
     Integer getNbrFormationByApprenant(Long idApp,Domain domain ,Date dateDebut, Date dateFin);
@@ -88,9 +89,10 @@ public interface IServiceFormation {
 
 
     void addComments(PostComments postComments ,Integer idF,Long idUser);
+
     void deleteComments(Integer idC);
 
-    PostComments upDateComment (PostComments postComments,Integer idF,Long idUser);
+    PostComments upDateComment(PostComments postComments,Integer idF,Long idUser);
 
     List<PostComments> getAllComments();
 

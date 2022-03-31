@@ -48,6 +48,8 @@ public class ServiceFormation implements IServiceFormation {
     private exportPdf export;
     @Autowired
     exportExcel exportExcelservice;
+    @Autowired
+    private IQuizRepo iQuizRepo;
 
     private Domain d;
 
@@ -84,7 +86,6 @@ public class ServiceFormation implements IServiceFormation {
         f.setNbrHeures(formation.getNbrHeures());
         f.setNbrMaxParticipant(formation.getNbrMaxParticipant());
 
-        //  formation.setFormateur(formateur);
         iFormationRepo.save(f);
     }
 
@@ -122,8 +123,8 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-   // @Scheduled(cron = "0 0/1 * * * *")
-    @Scheduled(cron = "0 0 9 28 * ?")
+    @Scheduled(cron = "0 0/5 * * * *")
+   // @Scheduled(cron = "0 0 9 28 * ?")
     public User getFormateurRemunerationMaxSalaire() throws MessagingException {
 
 
@@ -227,7 +228,6 @@ public class ServiceFormation implements IServiceFormation {
             if (f.getStart().after(dd) && f.getEnd().before(df) )
             {
                 map.put(this.iFormationRepo.getFormateurRemunerationByDate(f.getFormateur().getId(),dd,df),f.getFormateur());
-
             }
 
         }
@@ -255,12 +255,10 @@ public class ServiceFormation implements IServiceFormation {
 
         boolean status = false;
         boolean fin;
-
         String Path="";
 
 
         try {
-
 
             for (Formation f : iFormationRepo.findAll())
             {
@@ -365,7 +363,7 @@ public class ServiceFormation implements IServiceFormation {
         Date dd =Date.from(currentdDate1.minusMonths(3).atStartOfDay(defaultZoneId).toInstant());
         Date df =Date.from(currentdDate1.plusMonths(3).atStartOfDay(defaultZoneId).toInstant());
 
-            if (this.iFormationRepo.nbrCoursesParFormateur(idFormateur,dd,df) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
+            if (this.iFormationRepo.nbrCoursesParFormateur(idFormateur,dd,df,formation.getDomain()) <2 && formateur.getProfession() == Profession.FORMER.FORMER)
             {
                 this.emailSenderService.sendSimpleEmail(formateur.getEmail(),"Congratulations Mr's : NAME : "+formateur.getLastName() +" "+formateur.getFirstName() +" ." ," We accepted you to teach with us this courses of "+formation.getDomain()+" this courses start at : "+formation.getStart()+" and finish "+formation.getEnd()+" .");
                 formation.setRating(0.0);
@@ -526,8 +524,8 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-    public Integer nbrCoursesParFormateur(Long idF,Date dateDebut, Date dateFin) {
-        return this.iFormationRepo.nbrCoursesParFormateur(idF, dateDebut, dateFin);
+    public Integer nbrCoursesParFormateur(Long idF,Date dateDebut, Date dateFin ,Domain domain) {
+        return this.iFormationRepo.nbrCoursesParFormateur(idF, dateDebut, dateFin,domain);
     }
 
     @Override
@@ -656,11 +654,16 @@ public class ServiceFormation implements IServiceFormation {
 
         if(keyword!=null)
         {
-            String s = iSearchRepo.keyWord(keyword);
+           List<String> s = iSearchRepo.keyWord(keyword);
             Search search = new Search();
-            search.setKeyword(s);
-            search.setAtDate(new Date());
-            iSearchRepo.save(search);
+
+            for (String t : s)
+            {
+                search.setKeyword(t);
+                search.setAtDate(new Date());
+                iSearchRepo.save(search);
+            }
+
         }
 
     }
@@ -669,11 +672,17 @@ public class ServiceFormation implements IServiceFormation {
     @Override
     public void addComments(PostComments postComments,Integer idF,Long idUser) {
 
+
         Formation formation = iFormationRepo.findById(idF).orElse(null);
         User user = iUserRepo.findById(idUser).orElse(null);
-        postComments.setUserC(user);
-        postComments.setFormation(formation);
-        iCommentsRepo.save(postComments);
+
+        if(user.getState()==State.DISCIPLINED || user.getState()==State.WARNED || user.getState()==State.PUNISHED) {
+            postComments.setUserC(user);
+            postComments.setFormation(formation);
+            iCommentsRepo.save(postComments);
+        }else {
+            this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create Comment with bad word in this Courses we excluded in all Courses   Mr's  "+user.getLastName() +" " + user.getLastName()+" this web site is for association of women empowerment not to write this type of comment !!!! ");
+        }
     }
 
     @Override
@@ -689,9 +698,25 @@ public class ServiceFormation implements IServiceFormation {
 
         User user =  iUserRepo.findById(idUser).orElse(null);
         Formation f = iFormationRepo.findById(idF).orElse(null);
-        postComments.setFormation(f);
-        postComments.setUserC(user);
-        return iCommentsRepo.save(postComments);
+
+        if(user.getState()==State.DISCIPLINED || user.getState()==State.WARNED || user.getState()==State.PUNISHED ) {
+            postComments.setUserC(user);
+            postComments.setFormation(f);
+          return   iCommentsRepo.save(postComments);
+        }else {
+            this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create Comment with bad word in this Courses we excluded in all Courses   Mr's  "+user.getLastName() +" " + user.getLastName()+" this web site is for association of women empowerment not to write this type of comment !!!! ");
+        }
+        return null;
+    }
+
+    @Override
+    public Result upDateResult(Result result,Integer idQ,Long idUser) {
+
+        User user =  iUserRepo.findById(idUser).orElse(null);
+        QuizCourses c = iQuizRepo.findById(idQ).orElse(null);
+        result.setQuiz(c);
+        result.setSUser(user);
+        return iResultRepo.save(result);
     }
 
     @Override
@@ -701,7 +726,7 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-    @Scheduled(cron = "0 0/2 * * * *")
+    @Scheduled(cron = "0 0/1 * * * *")
     @Transactional
     public void LeanerStatus() {
 
@@ -722,6 +747,14 @@ public class ServiceFormation implements IServiceFormation {
 
                     this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create Comment with bad word in this Courses we excluded in all Courses   Mr's  "+user.getLastName() +" " + user.getLastName()+" this web site is for association of women empowerment not to write this type of comment !!!! ");
 
+                    user.setState(State.EXCLUDED);
+                    iUserRepo.save(user);
+
+                    for (PostComments p : iCommentsRepo.listeCommentParUser(user.getId()))
+                    {
+                        iCommentsRepo.deleteById(p.getIdComn());
+                    }
+
                     for (Formation f : iFormationRepo.listFormationParApprenant(user.getId()))
                     {
                         if(user.getState() == State.EXCLUDED)
@@ -730,13 +763,8 @@ public class ServiceFormation implements IServiceFormation {
                             iFormationRepo.save(f);
                         }
                     }
-                    for (PostComments p : iCommentsRepo.listeCommentParUser(user.getId()))
-                    {
-                        iCommentsRepo.deleteById(p.getIdComn());
-                    }
 
-                    user.setState(State.EXCLUDED);
-                    iUserRepo.save(user);
+
 
                 }
             }
@@ -745,7 +773,7 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/2 * * * *")
     public void decisionUserPUNISHED() {
 
         Date date = new Date();

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -146,7 +147,7 @@ public class ServiceQuiz implements IServicesQuiz {
 
     @Override
    // @Scheduled(cron = "0 0/1 * * * *")
-   // @Scheduled(cron = "0 0 20 ? * *") //every day 20:00
+   // @Scheduled(cron = "0 0 20 ? * *") //every day 20:00 hethi s7i7a
     public void giftsToUserMaxScoreInCourses() {
         User user = new User();
 
@@ -177,7 +178,8 @@ public class ServiceQuiz implements IServicesQuiz {
     }
 
     @Override
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/3 * * * *")
+    //@Scheduled(cron = "0 0 20 ? * *") //every day 20:00
     public void  ResultQuiz() throws IOException, MessagingException {
 
         List<Result> r = new ArrayList<>();
@@ -201,7 +203,7 @@ public class ServiceQuiz implements IServicesQuiz {
               //  }
 
         }
-        Date tomorow = new Date(form.getEnd().getTime() + (1000 * 60 * 60 * 24));
+        Date tomorow = new Date(form.getEnd().getTime() + (1000 * 60 * 60 * 48));
         Date now = new Date();
        if(now.after(form.getEnd()) && now.before(tomorow))
         {
@@ -280,10 +282,16 @@ public class ServiceQuiz implements IServicesQuiz {
         return this.iQuizRepo.getQuizByCourses(idF);
     }
 
-    @Override
 
+    @Override
     public void DeleteQuiz(Integer idQ) {
         this.iQuizRepo.deleteById(idQ);
+    }
+
+    @Transactional
+    @Override
+    public void DeleteQuestion(Integer idQ) {
+        this.iQuestionRepo.deleteById(idQ);
     }
 
 

@@ -53,9 +53,7 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
     List<Formation> listFormationParApprenant(@Param("id") Long idApp);
 
 
-
-
-    @Query(value = "select count(f.idFormation) from Formation f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id")
-    Integer nbrCoursesParFormateur(@Param("id") Long idF, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
+    @Query(value = "select count(f.idFormation) from Formation f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id and f.domain=:domain")
+    Integer nbrCoursesParFormateur(@Param("id") Long idF, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin ,@Param("domain") Domain domain);
 
 }

@@ -37,11 +37,11 @@ public class QuizCourses  implements Serializable {
     @JsonIgnore
     private Formation formation;
 
-    @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "quiz",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<QuestionCourses> question;
 
-    @OneToMany(mappedBy = "quiz",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "quiz",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
     private Set<Result> results;
 
