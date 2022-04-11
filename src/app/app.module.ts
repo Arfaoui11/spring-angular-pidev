@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {GoogleChartsModule} from "angular-google-charts";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from "ngx-pagination";
 import {MatButtonModule} from "@angular/material/button";
@@ -33,6 +33,19 @@ import { NavbarComponent } from './Back-End/navbar/navbar.component';
 import { LayoutComponent } from './Back-End/layout/layout.component';
 import { SidbarComponent } from './Back-End/sidbar/sidbar.component';
 import {WelcomeComponent} from "./CoursesSpace/welcome/welcome.component";
+import {ListOfPartnersComponent} from "./ExchangeStudents/list-of-partners/list-of-partners.component";
+import {
+  AddPartnerInstitutionComponent
+} from "./ExchangeStudents/add-partner-institution/add-partner-institution.component";
+import {RouterModule, Routes} from "@angular/router";
+import {PartnerInstitutionService} from "./ExchangeStudents/services/partner-institution.service";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+import {StatUniversityComponent} from "./ExchangeStudents/stat-university/stat-university.component";
+import {ChartsModule} from "ng2-charts";
+
+
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -56,6 +69,10 @@ FullCalendarModule.registerPlugins([
     LayoutComponent,
     SidbarComponent,
     WelcomeComponent,
+    ListOfPartnersComponent,
+    AddPartnerInstitutionComponent,
+    StatUniversityComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -72,6 +89,10 @@ FullCalendarModule.registerPlugins([
     TreeViewModule,
     NgbModule,
     DayPilotModule,
+    ToastrModule.forRoot(),
+    ChartsModule,
+
+
 
   ],
   providers: [],

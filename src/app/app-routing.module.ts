@@ -8,6 +8,12 @@ import {HomeComponent} from "./Back-End/home/home.component";
 import {AddFomateurComponent} from "./CoursesSpace/add-fomateur/add-fomateur.component";
 import {WelcomeComponent} from "./CoursesSpace/welcome/welcome.component";
 
+import {
+  AddPartnerInstitutionComponent
+} from "./ExchangeStudents/add-partner-institution/add-partner-institution.component";
+import {ListOfPartnersComponent} from "./ExchangeStudents/list-of-partners/list-of-partners.component";
+import {StatUniversityComponent} from "./ExchangeStudents/stat-university/stat-university.component";
+
 
 const routes: Routes =
 
@@ -30,6 +36,18 @@ const routes: Routes =
 
         ]
       },
+      {
+        path:'Exchange-Student-Management',
+        children: [
+          { path: 'addUniversity', component: AddPartnerInstitutionComponent },
+          { path: 'ListUniversities', component: ListOfPartnersComponent },
+          { path :  'statUniversities', component: StatUniversityComponent}
+
+        ]
+
+      }
+
+
   ]
   }
 ];
