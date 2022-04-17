@@ -3,7 +3,7 @@ export class User {
   id !: number;
   firstName ! : string;
   lastName ! : string;
-  telephone !:number
+  telephone !:number;
   email !:string;
   tarifHoraire !:number;
   salary : number;
