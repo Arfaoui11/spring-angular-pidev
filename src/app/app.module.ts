@@ -44,9 +44,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import {StatUniversityComponent} from "./ExchangeStudents/stat-university/stat-university.component";
 import {ChartsModule} from "ng2-charts";
-import { AppointmentComponent } from './appointment/appointment.component';
-import { AddAppointmentComponent } from './appointment/add-appointment/add-appointment.component';
-import { UpdateAppointmentComponent } from './appointment/update-appointment/update-appointment.component';
+
+import {LoginComponent} from "./Back-End/login/login.component";
 
 
 
@@ -67,6 +66,7 @@ FullCalendarModule.registerPlugins([
     QuizComponent,
     ChangeBgDirective,
     HomeComponent,
+    LoginComponent,
     FooterComponent,
     NavbarComponent,
     LayoutComponent,
@@ -74,10 +74,7 @@ FullCalendarModule.registerPlugins([
     WelcomeComponent,
     ListOfPartnersComponent,
     AddPartnerInstitutionComponent,
-    StatUniversityComponent,
-    AppointmentComponent,
-    AddAppointmentComponent,
-    UpdateAppointmentComponent,
+    StatUniversityComponent
 
   ],
   imports: [

@@ -13,11 +13,13 @@ import {
 } from "./ExchangeStudents/add-partner-institution/add-partner-institution.component";
 import {ListOfPartnersComponent} from "./ExchangeStudents/list-of-partners/list-of-partners.component";
 import {StatUniversityComponent} from "./ExchangeStudents/stat-university/stat-university.component";
+import {LoginComponent} from "./Back-End/login/login.component";
 
 
 const routes: Routes =
 
-   [ { path: '', redirectTo: 'home', pathMatch: 'full' },
+   [
+     {path:'',component: LoginComponent },
   {
     path: 'home',
     component: HomeComponent,
