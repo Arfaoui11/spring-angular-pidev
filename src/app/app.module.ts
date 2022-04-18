@@ -46,6 +46,7 @@ import {StatUniversityComponent} from "./ExchangeStudents/stat-university/stat-u
 import {ChartsModule} from "ng2-charts";
 
 import {LoginComponent} from "./Back-End/login/login.component";
+import { ComplaintListComponent } from './complaint-list/complaint-list.component';
 
 
 
@@ -74,7 +75,8 @@ FullCalendarModule.registerPlugins([
     WelcomeComponent,
     ListOfPartnersComponent,
     AddPartnerInstitutionComponent,
-    StatUniversityComponent
+    StatUniversityComponent,
+    ComplaintListComponent
 
   ],
   imports: [
