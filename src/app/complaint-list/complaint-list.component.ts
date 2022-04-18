@@ -18,5 +18,24 @@ export class ComplaintListComponent implements OnInit {
       this.comlpaints = data;
     });
   }
+  deleteComplaintById(c: Complaint)
+  {
+    console.log("supp supprimé"+c);
+    let conf = confirm("Etes-vous sûr ?");
+    if (conf)
+      this.complaintservices.DeleteComplaint(c.idCom).subscribe(() => {
+        console.log("appointment supprimé");
+        this.SuprimerComplaintDuTableau(c);
+      });
+  }
+
+  SuprimerComplaintDuTableau(c :Complaint) {
+    this.comlpaints.forEach((cur, index) => {
+      if(c.idCom=== cur.idCom) {
+        this.comlpaints.splice(index, 1);
+      }
+    });
+  }
+
 
 }

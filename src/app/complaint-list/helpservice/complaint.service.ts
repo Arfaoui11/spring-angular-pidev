@@ -8,9 +8,14 @@ import {Complaint} from "../../core/model/Complaint";
 })
 export class ComplaintService {
  private apiURL = "http://localhost:8090/heplpspace/retrieve-All-Complaints";
+  supUrl = "http://localhost:8090/heplpspace/deleteComplaintById";
 
   constructor(private http:HttpClient) { }
   RetrieveComplaint(): Observable<Complaint[]>{
     return this.http.get<Complaint[]>(this.apiURL);
+  }
+  DeleteComplaint(id : number) {
+
+    return this.http.delete<Complaint>(this.supUrl+"/"+id);
   }
 }

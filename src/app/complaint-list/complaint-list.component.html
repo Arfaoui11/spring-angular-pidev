@@ -7,6 +7,8 @@
     <th>Date of Complaint</th>
     <th>Description</th>
     <th>Complaint Type</th>
+    <th>Delete</th>
+    <th>Update</th>
   </tr>
   </thead>
   <tbody>
@@ -15,6 +17,7 @@
     <td>{{complaint.dateCom}}</td>
     <td>{{complaint.description}}</td>
     <td>{{complaint.type}}</td>
+    <td><button class="btn btn-danger" title="Delete" (click)=" deleteComplaintById(complaint)" ><i class="fas fa-trash"></i></button></td>
 
   </tr>
   </tbody>
