@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Complaint} from "../core/model/Complaint";
+import {ComplaintService} from "./helpservice/complaint.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-complaint-list',
@@ -8,9 +10,13 @@ import {Complaint} from "../core/model/Complaint";
 })
 export class ComplaintListComponent implements OnInit {
   comlpaints: Complaint[];
-  constructor() { }
+  constructor(private complaintservices:ComplaintService , private router :Router) { }
 
   ngOnInit(): void {
+    this.complaintservices.RetrieveComplaint().subscribe(data => {
+      console.log(data);
+      this.comlpaints = data;
+    });
   }
 
 }

@@ -50,6 +50,7 @@ import { ComplaintListComponent } from './complaint-list/complaint-list.componen
 
 
 
+
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
   interactionPlugin
@@ -76,7 +77,8 @@ FullCalendarModule.registerPlugins([
     ListOfPartnersComponent,
     AddPartnerInstitutionComponent,
     StatUniversityComponent,
-    ComplaintListComponent
+    ComplaintListComponent,
+
 
   ],
   imports: [
