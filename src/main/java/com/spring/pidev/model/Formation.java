@@ -42,7 +42,7 @@ public class Formation implements Serializable {
 
     @Max(5)
     @Min(0)
-    private Double Rating;
+    private Double rating;
 
     @ManyToOne
     @JsonIgnore

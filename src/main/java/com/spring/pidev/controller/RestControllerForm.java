@@ -4,6 +4,7 @@ package com.spring.pidev.controller;
 import com.spring.pidev.config.BadWordConfig;
 import com.spring.pidev.model.*;
 import com.spring.pidev.model.*;
+import com.spring.pidev.repo.DatabaseFileRepository;
 import com.spring.pidev.repo.IResultRepo;
 import com.spring.pidev.service.*;
 import com.spring.pidev.payLoad.Response;
@@ -11,7 +12,16 @@ import com.itextpdf.text.DocumentException;
 import com.spring.pidev.service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.util.IOUtils;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.io.IOUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
@@ -25,16 +35,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Slf4j
 @RestController
@@ -52,6 +59,8 @@ public class RestControllerForm {
     @Autowired
     exportExcel exportExcelservice;
     @Autowired
+    DatabaseFileRepository databaseFileRepository;
+    @Autowired
     private DatabaseFileService fileStorageService;
 
     private final PDFGeneratorService pdfGeneratorService;
@@ -65,6 +74,13 @@ public class RestControllerForm {
 
     public RestControllerForm(PDFGeneratorService pdfGeneratorService) {
         this.pdfGeneratorService = pdfGeneratorService;
+    }
+
+
+    @ApiOperation(value = "Add Formateur")
+    @PostMapping("/addFormateur")
+    public void addFormateur(@RequestBody User formateur) {
+        iServiceFormation.ajouterFormateur(formateur);
     }
 
     @GetMapping("/pdf/generate")
@@ -120,7 +136,7 @@ public class RestControllerForm {
 
 
     @ApiOperation(value = "Delete Formation")
-    @DeleteMapping("/deleteFormation/{id}")
+    @GetMapping("/deleteFormation/{id}")
     @ResponseBody
     public void deleteFormation(@PathVariable(name = "id") Integer idForm){
         iServiceFormation.deleteFormation(idForm);
@@ -173,17 +189,63 @@ public class RestControllerForm {
 
 
 
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public String handleUpload(HttpServletRequest request) {
+        System.out.println(System.getProperty("java.io.tmpdir"));
+        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+        // Create a factory for disk-based file items
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+        factory.setSizeThreshold(DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD);
+        factory.setFileCleaningTracker(null);
+        // Configure a repository (to ensure a secure temp location is used)
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        try {
+            // Parse the request
+            List<FileItem> items = upload.parseRequest(request);
+            // Process the uploaded items
+            Iterator<FileItem> iter = items.iterator();
+            while (iter.hasNext()) {
+                FileItem item = iter.next();
 
+                if (!item.isFormField()) {
+                    try (InputStream uploadedStream = item.getInputStream();
+                         OutputStream out = new FileOutputStream("file.mov");) {
+                        IOUtils.copy(uploadedStream, out);
 
+                        out.close();
+                    }
+                }
+            }
+            // Parse the request with Streaming API
+            upload = new ServletFileUpload();
+            FileItemIterator iterStream = upload.getItemIterator(request);
+            while (iterStream.hasNext()) {
+                FileItemStream item = iterStream.next();
+                String name = item.getFieldName();
+                InputStream stream = item.openStream();
+                if (!item.isFormField()) {
+                    //Process the InputStream
+                } else {
+                    //process form fields
+                    String formFieldValue = Streams.asString(stream);
+                }
+            }
+            return "success!";
+        } catch (IOException | FileUploadException ex) {
+            return "failed: " + ex.getMessage();
+        }
+    }
 
     @PostMapping("/uploadFile/{idF}")
     @ResponseBody
     public Response uploadFile(@RequestParam("file") MultipartFile file, @PathVariable(name = "idF") Integer idFormation) {
         DatabaseFile fileName = fileStorageService.storeFile(file,idFormation);
 
+
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
-                .path(fileName.getFileName())
+                .path(fileName.getId())
                 .toUriString();
 
         return new Response(fileName.getFileName(), fileDownloadUri,
@@ -205,10 +267,34 @@ public class RestControllerForm {
         // Load file as Resource
         DatabaseFile databaseFile = fileStorageService.getFile(fileName);
 
+
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(databaseFile.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + databaseFile.getFileName() + "\"")
                 .body(new ByteArrayResource(databaseFile.getData()));
+    }
+
+
+
+
+
+    @GetMapping(path = { "/get/{imageid}" })
+    public DatabaseFile getImage(@PathVariable("imageid") String imageName) {
+
+        final Optional<DatabaseFile> retrievedImage = databaseFileRepository.findById(imageName);
+        DatabaseFile img = new DatabaseFile(retrievedImage.get().getFileName(), retrievedImage.get().getFileType(),
+                retrievedImage.get().getData());
+        return img;
+    }
+
+
+
+    @ApiOperation(value = "Récupérer filesName Formation")
+    @GetMapping("/getFiles/{idF}")
+    @ResponseBody
+    public List<DatabaseFile> getfileFormation(@PathVariable(name = "idF") Integer idF)
+    {
+     return iServiceFormation.getfileFormation(idF);
     }
 
 
@@ -258,6 +344,15 @@ public class RestControllerForm {
     }
 
 
+    //get formateur from Formation by id
+    @ApiOperation(value = "get Formateur from Formation by id")
+    @GetMapping("/getFormateurFromFormation/{idF}")
+    @ResponseBody
+    public User getFormateurFromFormation(@PathVariable(name = "idF") Integer idFormation)
+    {
+        return iServiceFormation.getFormateurFromFormation(idFormation);
+    }
+
 
     @ApiOperation(value = " get Formateur Max Salaire trier ")
     @GetMapping("/getFormateurMaxSalaireTrie")
@@ -299,7 +394,7 @@ public class RestControllerForm {
         return iServiceFormation.getApprenantByFormation(idF);
     }
 
-    @ApiOperation(value = "Formateur with Max tarif")
+    @ApiOperation(value = "Formateur with Max Tarif")
     @GetMapping("/FormateurwithMaxHo")
     public User FormateurwithMaxHo()
     {
@@ -384,7 +479,13 @@ public class RestControllerForm {
         iServiceFormation.dislikeComments(idC);
     }
 
-
+//get formation by id
+    @ApiOperation(value = "get formation by id")
+    @GetMapping("/getFormationById/{id}")
+    public Formation getFormationById(@PathVariable(name = "id") Integer id)
+    {
+        return iServiceFormation.getFormationById(id);
+    }
 
 
     @PostMapping("/likeFormationWithRate/{idF}/{nbr}")
@@ -451,7 +552,7 @@ public class RestControllerForm {
     }
 
     @ApiOperation(value = "Delete Comments")
-    @DeleteMapping("/deleteComments/{id}")
+    @GetMapping("/deleteComments/{id}")
     @ResponseBody
     public void deleteComments(@PathVariable(name = "id") Integer idC)
     {
@@ -526,7 +627,7 @@ public class RestControllerForm {
     }
 
     @ApiOperation(value = "Delete Quiz")
-    @DeleteMapping("/DeleteQuiz/{id}")
+    @GetMapping("/DeleteQuiz/{id}")
     @ResponseBody
     public void DeleteQuiz(@PathVariable("id") Integer idQ)
     {
@@ -535,7 +636,7 @@ public class RestControllerForm {
 
 
     @ApiOperation(value = "Delete Question")
-    @DeleteMapping("/DeleteQuestion/{id}")
+    @GetMapping("/DeleteQuestion/{id}")
     @ResponseBody
     public void DeleteQuestion(@PathVariable("id") Integer idQ)
     {

@@ -1,8 +1,10 @@
 package com.spring.pidev.repo;
 
 
+import com.spring.pidev.model.DatabaseFile;
 import com.spring.pidev.model.Domain;
 import com.spring.pidev.model.Formation;
+import com.spring.pidev.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -39,7 +41,7 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
 
 
   //  @Query(value = "select f from Formation f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by sum(f.likes-f.dislikes) desc")
-    @Query(value = "select f from Formation f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by f.Rating desc")
+    @Query(value = "select f from Formation f where concat(f.title,f.level,f.domain,f.frais,f.nbrHeures,f.nbrMaxParticipant) like %?1% group by f order by f.rating desc")
     List<Formation> rech(String keyword);
 
 
@@ -55,5 +57,12 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
 
     @Query(value = "select count(f.idFormation) from Formation f join f.formateur fr where f.start>=:dateD and f.end<=:dateF and fr.id=:id and f.domain=:domain")
     Integer nbrCoursesParFormateur(@Param("id") Long idF, @Param("dateD") Date dateDebut, @Param("dateF") Date dateFin ,@Param("domain") Domain domain);
+
+    @Query(value = "select d from DatabaseFile d join d.formation f where f.idFormation=:id")
+    List<DatabaseFile> getfileFormation(@Param("id") Integer idF);
+
+    @Query(value = "select u from Formation f join f.formateur u where f.idFormation=:id")
+    User getFormateurFromFormation(@Param("id") Integer idFormateur);
+
 
 }

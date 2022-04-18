@@ -96,7 +96,7 @@ public interface IServiceFormation {
 
     List<PostComments> getAllComments();
 
-
+    Formation getFormationById(int id);
 
     void decisionUserPUNISHED();
 
@@ -105,9 +105,10 @@ public interface IServiceFormation {
     void ListComplete();
 
 
+    List<DatabaseFile> getfileFormation(Integer idF);
 
 
-
+   User getFormateurFromFormation(Integer idFormateur);
 
 
 }

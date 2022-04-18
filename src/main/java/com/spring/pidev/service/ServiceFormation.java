@@ -123,7 +123,7 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-    @Scheduled(cron = "0 0/5 * * * *")
+   // @Scheduled(cron = "0 0/5 * * * *")
    // @Scheduled(cron = "0 0 9 28 * ?")
     public User getFormateurRemunerationMaxSalaire() throws MessagingException {
 
@@ -486,6 +486,9 @@ public class ServiceFormation implements IServiceFormation {
     }
 
 
+
+
+
    // @Scheduled(cron = "0 0/1 * * * *")
     public void ListComplete()
     {
@@ -501,6 +504,23 @@ public class ServiceFormation implements IServiceFormation {
             }
         }
     }
+
+        // get formation by id
+    public Formation getFormationById(int id) {
+        return iFormationRepo.findById(id).get();
+    }
+
+    @Override
+    public List<DatabaseFile> getfileFormation(Integer idF) {
+        return iFormationRepo.getfileFormation(idF);
+    }
+
+    @Override
+    public User getFormateurFromFormation(Integer idFormateur) {
+        return iFormationRepo.getFormateurFromFormation(idFormateur);
+    }
+
+
 
 /*
     @EventListener(ApplicationReadyEvent.class)

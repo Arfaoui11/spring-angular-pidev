@@ -204,6 +204,8 @@ public class ServiceQuiz implements IServicesQuiz {
         }
         Date tomorow = new Date(form.getEnd().getTime() + (1000 * 60 * 60 * 48));
         Date now = new Date();
+        System.out.println(now);
+        System.out.println(tomorow);
        if(now.after(form.getEnd()) && now.before(tomorow))
         {
             ByteArrayInputStream stream = exportExcelservice.quizexportexcel(r);
