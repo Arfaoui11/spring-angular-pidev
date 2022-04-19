@@ -16,6 +16,7 @@ export class AppointmentService {
   addUrl = "http://localhost:8090/heplpspace/addRdvAndAssignMedAndPatient";
   supUrl = "http://localhost:8090/heplpspace/deleteAppointmentById";
   updateUrl = "http://localhost:8090/heplpspace/updateApppointmentById";
+  private getUrlexcel = 'http://localhost:8090/heplpspace/download/appointments.xlsx';
 
   constructor(private http:HttpClient) { }
   retrieveappointment(): Observable<Appointment[]>{
@@ -36,5 +37,7 @@ export class AppointmentService {
   updateAppointment(appoin :Appointment) : Observable<Appointment>{
     return this.http.put<Appointment>(this.updateUrl+"/"+appoin.idApp, appoin, httpOptions);
   }
-
+  exportExcelAppointment(): Observable<Blob>{
+    return this.http.get(`${this.getUrlexcel}`, {responseType: 'blob'});
+  }
 }

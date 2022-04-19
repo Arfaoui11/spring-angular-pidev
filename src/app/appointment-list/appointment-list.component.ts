@@ -11,9 +11,9 @@ import {Observable} from "rxjs";
 })
 export class AppointmentListComponent implements OnInit {
 
-  appointments:Appointment[];
+  appointments: Appointment[];
 
-  constructor(private services:AppointmentService , private router :Router) {
+  constructor(private services: AppointmentService, private router: Router) {
 
   }
 
@@ -23,9 +23,9 @@ export class AppointmentListComponent implements OnInit {
       this.appointments = data;
     });
   }
-  deleteAppointmentById(a: Appointment)
-  {
-    console.log("supp supprimé"+a);
+
+  deleteAppointmentById(a: Appointment) {
+    console.log("supp supprimé" + a);
     let conf = confirm("Etes-vous sûr ?");
     if (conf)
       this.services.DeleteAppointment(a.idApp).subscribe(() => {
@@ -34,12 +34,34 @@ export class AppointmentListComponent implements OnInit {
       });
   }
 
-  SuprimerAppointmentDuTableau(appoin : Appointment) {
+  SuprimerAppointmentDuTableau(appoin: Appointment) {
     this.appointments.forEach((cur, index) => {
       if (appoin.idApp === cur.idApp) {
         this.appointments.splice(index, 1);
       }
     });
+  }
+
+  public exportExcel() {
+    this.services.exportExcelAppointment().subscribe(
+      x => {
+        const blob = new Blob([x], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,'});
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(blob);
+          return;
+        }
+        const data = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = data;
+        link.download = 'appointments.xlsx';
+        link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+        // tslint:disable-next-line:only-arrow-functions
+        setTimeout(function () {
+          window.URL.revokeObjectURL(data);
+          link.remove();
+        }, 100);
+      });
+
   }
 
 
