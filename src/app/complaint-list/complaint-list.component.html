@@ -18,6 +18,7 @@
     <td>{{complaint.description}}</td>
     <td>{{complaint.type}}</td>
     <td><button class="btn btn-danger" title="Delete" (click)=" deleteComplaintById(complaint)" ><i class="fas fa-trash"></i></button></td>
+    <td><button class="btn btn-primary" title="Edit" [routerLink]="['/updateComplaint',complaint.idCom] "><i class="fa fa-edit"></i></button></td>
 
   </tr>
   </tbody>

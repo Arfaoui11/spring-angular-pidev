@@ -48,6 +48,7 @@ import {ChartsModule} from "ng2-charts";
 import {LoginComponent} from "./Back-End/login/login.component";
 import { ComplaintListComponent } from './complaint-list/complaint-list.component';
 import { AddComplaintComponent } from './add-complaint/add-complaint.component';
+import { UpdateComplaintComponent } from './update-complaint/update-complaint.component';
 
 
 
@@ -80,6 +81,7 @@ FullCalendarModule.registerPlugins([
     StatUniversityComponent,
     ComplaintListComponent,
     AddComplaintComponent,
+    UpdateComplaintComponent,
 
 
   ],

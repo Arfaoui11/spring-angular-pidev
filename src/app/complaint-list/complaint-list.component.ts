@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Complaint} from "../core/model/Complaint";
-import {ComplaintService} from "./helpservice/complaint.service";
+import {ComplaintService} from "../helpservice/complaint.service";
 import {Router} from "@angular/router";
 
 @Component({
