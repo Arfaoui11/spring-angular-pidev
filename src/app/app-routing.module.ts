@@ -14,12 +14,16 @@ import {
 import {ListOfPartnersComponent} from "./ExchangeStudents/list-of-partners/list-of-partners.component";
 import {StatUniversityComponent} from "./ExchangeStudents/stat-university/stat-university.component";
 import {LoginComponent} from "./Back-End/login/login.component";
+import {AppointmentListComponent} from "./appointment-list/appointment-list.component";
+import {AddAppointmentComponent} from "./add-appointment/add-appointment.component";
+import {ComplaintListComponent} from "./complaint-list/complaint-list.component";
+import {AddComplaintComponent} from "./add-complaint/add-complaint.component";
 
 
 const routes: Routes =
 
    [
-     {path:'',component: LoginComponent },
+     {path:'',component: HomeComponent },
   {
     path: 'home',
     component: HomeComponent,
@@ -44,6 +48,18 @@ const routes: Routes =
           { path: 'addUniversity', component: AddPartnerInstitutionComponent },
           { path: 'ListUniversities', component: ListOfPartnersComponent },
           { path :  'statUniversities', component: StatUniversityComponent}
+
+        ]
+
+      },
+      {
+        path: 'helpSpace-Management',
+        children: [
+
+          { path: 'addAppointment', component: AddAppointmentComponent },
+          { path: 'LisAppointment', component: AppointmentListComponent },
+          { path: 'addComplaint', component: AddComplaintComponent },
+          { path: 'ListComplaint', component: ComplaintListComponent } ,
 
         ]
 
