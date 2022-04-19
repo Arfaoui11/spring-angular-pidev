@@ -14,6 +14,7 @@ export class ComplaintService {
   supUrl = "http://localhost:8090/heplpspace/deleteComplaintById";
   addUrl = "http://localhost:8090/heplpspace/AddComplaintAndAssignToUser";
   updateUrl = "http://localhost:8090/heplpspace/updateComplaintById";
+  private getUrl4 = 'http://localhost:8090/heplpspace/exportpdfComplaint';
 
   constructor(private http:HttpClient) { }
   RetrieveComplaint(): Observable<Complaint[]>{
@@ -28,5 +29,8 @@ export class ComplaintService {
   }
   updateComplaint(complaint :Complaint) : Observable<Complaint>{
     return this.http.put<Complaint>(this.updateUrl+"/"+complaint.idCom, complaint, httpOptions);
+  }
+  exportPdfComplaint(): Observable<Blob>{
+    return this.http.get(`${this.getUrl4}`, {responseType: 'blob'});
   }
 }

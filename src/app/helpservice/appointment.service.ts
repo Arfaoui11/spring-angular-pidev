@@ -16,6 +16,7 @@ export class AppointmentService {
   addUrl = "http://localhost:8090/heplpspace/addRdvAndAssignMedAndPatient";
   supUrl = "http://localhost:8090/heplpspace/deleteAppointmentById";
   updateUrl = "http://localhost:8090/heplpspace/updateApppointmentById";
+
   constructor(private http:HttpClient) { }
   retrieveappointment(): Observable<Appointment[]>{
     return this.http.get<Appointment[]>(this.apiURL);
@@ -35,4 +36,5 @@ export class AppointmentService {
   updateAppointment(appoin :Appointment) : Observable<Appointment>{
     return this.http.put<Appointment>(this.updateUrl+"/"+appoin.idApp, appoin, httpOptions);
   }
+
 }

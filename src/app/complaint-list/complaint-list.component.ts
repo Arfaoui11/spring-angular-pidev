@@ -36,6 +36,27 @@ export class ComplaintListComponent implements OnInit {
       }
     });
   }
+  ExportPDF() {
+    this.complaintservices.exportPdfComplaint().subscribe(
+      x => {
+        const blob = new Blob([x], {type: 'application/pdf'});
+        if (window.navigator && window.navigator.msSaveOrOpenBlob){
+          window.navigator.msSaveOrOpenBlob(blob);
+          return;
+        }
+        const data = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = data;
+        link.download = 'complaints.pdf';
+        link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true , view: window}));
+        // tslint:disable-next-line:only-arrow-functions
+        setTimeout(function() {
+          window.URL.revokeObjectURL(data);
+          link.remove();
+        }, 100);
+      });
+
+  }
 
 
 }

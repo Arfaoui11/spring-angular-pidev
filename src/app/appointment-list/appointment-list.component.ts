@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Appointment} from "../core/model/Appointment";
 import {AppointmentService} from "../helpservice/appointment.service";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-appointment-list',
@@ -40,5 +41,6 @@ export class AppointmentListComponent implements OnInit {
       }
     });
   }
+
 
 }
