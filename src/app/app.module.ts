@@ -50,6 +50,8 @@ import { ComplaintListComponent } from './complaint-list/complaint-list.componen
 import { AddComplaintComponent } from './add-complaint/add-complaint.component';
 import { UpdateComplaintComponent } from './update-complaint/update-complaint.component';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
+import { AddAppointmentComponent } from './add-appointment/add-appointment.component';
+import { UpdateAppointmentComponent } from './update-appointment/update-appointment.component';
 
 
 
@@ -84,6 +86,8 @@ FullCalendarModule.registerPlugins([
     AddComplaintComponent,
     UpdateComplaintComponent,
     AppointmentListComponent,
+    AddAppointmentComponent,
+    UpdateAppointmentComponent,
 
 
   ],
