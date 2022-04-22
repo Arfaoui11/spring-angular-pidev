@@ -139,7 +139,7 @@ public class ServicesOffre implements IServices{
         return offres;
     }*/
 
-    ///////////    new    12:30  Mahdi ///////////////
+    //////////////    new    12:30  Mahdi ///////////////
     @Override
     public List<Offres> listAllOffres(String keyword) {
         if (keyword != null) {
