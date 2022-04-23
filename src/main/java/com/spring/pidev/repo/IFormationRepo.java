@@ -27,6 +27,10 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
     List<Object> getFormateurRemunerationByDateTrie(@Param("dateD") Date dateDebut, @Param("dateF") Date dateFin);
 
 
+    @Query(value = "select c.message,c.createAt,l.nbrLikes,d.nbrDislikes from PostComments c join c.likes l join c.Dislikes d where c.formation.idFormation=:id")
+    List<Object[]> getCommentBylikesEtDislikes(@Param("id") Integer id);
+
+
     @Query(value= "select SUM(f.nbrHeures*f.formateur.tarifHoraire) from Formation f where f.formateur.id=:id and f.formateur.profession='FORMER'")
     Integer getFormateurRemuneration(@Param("id") Long idFormateur);
 
@@ -63,6 +67,17 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
 
     @Query(value = "select u from Formation f join f.formateur u where f.idFormation=:id")
     User getFormateurFromFormation(@Param("id") Integer idFormateur);
+
+
+    //get nbr likes by comments
+    @Query(value = "select l.nbrLikes from PostComments c join c.likes l where c.idComn=:id")
+    Integer getNbrLikesByComment(@Param("id") Integer id);
+
+    //get nbr dislikes by comments
+    @Query(value = "select d.nbrDislikes from PostComments c join c.Dislikes d where c.idComn=:id")
+    Integer getNbrDislikesByComment(@Param("id") Integer id);
+
+
 
 
 }

@@ -455,6 +455,17 @@ public class RestControllerForm {
 
 
  */
+
+    //get Comment By likes Et Dislikes
+    @ApiOperation(value = "get Comment By likes Et Dislikes")
+    @GetMapping("/getCommentByLikes/{id}")
+    @ResponseBody
+    public List<Object[]> getCommentByLikes(@PathVariable(name = "id") Integer id){
+        return iServiceFormation.getCommentBylikesEtDislikes(id);
+    }
+
+
+
     @ApiOperation(value = " Max Score In Formation")
     @GetMapping("/MaxScoreInFormation")
     @ResponseBody
@@ -463,6 +474,24 @@ public class RestControllerForm {
         return this.iServicesQuiz.MaxScoreInFormation();
     }
 
+
+    //get nbr of likes by comments
+    @ApiOperation(value = "get nbr of likes by comments")
+    @GetMapping("/getNbrLikesByComment/{id}")
+    @ResponseBody
+    public Integer getNbrLikesByComment(@PathVariable(name = "id") Integer id)
+    {
+        return this.iServiceFormation.getNbrLikesByComments(id);
+    }
+
+    // get nbr of dislikes by comments
+    @ApiOperation(value = "get nbr of dislikes by comments")
+    @GetMapping("/getNbrDislikesByComment/{id}")
+    @ResponseBody
+    public Integer getNbrDislikesByComment(@PathVariable(name = "id") Integer id)
+    {
+        return this.iServiceFormation.getNbrDislikesByComments(id);
+    }
 
 
     @PutMapping("/addLikes/{idC}")
@@ -515,6 +544,14 @@ public class RestControllerForm {
         p.setCreateAt(postComments.getCreateAt());
         iServiceFormation.addComments(p,idF,idUser);
 
+    }
+
+    //get all comments
+    @ApiOperation(value = "get all comments")
+    @GetMapping("/getAllComments")
+    public List<PostComments> getAllComments()
+    {
+        return iServiceFormation.getAllComments();
     }
 
 
@@ -666,6 +703,26 @@ public class RestControllerForm {
     public Integer getScore(@PathVariable("id") Long idU)
     {
         return iServicesQuiz.getScore(idU);
+    }
+
+
+
+    //get formation by formateur
+    @ApiOperation(value = " get Formation By Formateur ")
+    @GetMapping("/getFormationByFormateur/{id}")
+    @ResponseBody
+    public List<Formation> getFormationByFormateur(@PathVariable("id") Long id)
+    {
+        return iServiceFormation.getFormationByFormateur(id);
+    }
+
+    //get formation by apprenant
+    @ApiOperation(value = " get Formation By Apprenant ")
+    @GetMapping("/getFormationByApprenant/{id}")
+    @ResponseBody
+    public List<Formation> getFormationByApprenant(@PathVariable("id") Long id)
+    {
+        return iServiceFormation.getFormationByApprenant(id);
     }
 
 }

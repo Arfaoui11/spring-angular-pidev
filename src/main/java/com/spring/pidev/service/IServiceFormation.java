@@ -3,6 +3,7 @@ package com.spring.pidev.service;
 
 
 import com.spring.pidev.model.*;
+import org.springframework.data.repository.query.Param;
 
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
@@ -65,6 +66,8 @@ public interface IServiceFormation {
 
     List<Object[]> getNbrApprenantByFormation();
 
+    List<Object[]> getCommentBylikesEtDislikes(Integer id);
+
 
 
 
@@ -105,10 +108,21 @@ public interface IServiceFormation {
     void ListComplete();
 
 
+
     List<DatabaseFile> getfileFormation(Integer idF);
 
 
    User getFormateurFromFormation(Integer idFormateur);
+
+   //get Formation by formateur
+   List<Formation> getFormationByFormateur(Long idFormateur);
+
+   //get Formation by apprenant
+   List<Formation> getFormationByApprenant(Long idApprenant);
+
+    Integer getNbrLikesByComments(Integer idC);
+
+    Integer getNbrDislikesByComments(Integer idC);
 
 
 }

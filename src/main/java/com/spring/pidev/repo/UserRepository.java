@@ -1,5 +1,6 @@
 package com.spring.pidev.repo;
 
+import com.spring.pidev.model.Formation;
 import com.spring.pidev.model.PostComments;
 import com.spring.pidev.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -106,6 +107,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query("select count(d.idCandidacy) from CandidacyUniversity d where d.user.id=:idStudent and d.partnerInstitution.idPartner=:IdUniversity")
 	int studentDemands(@Param("idStudent") Long IdStudent ,@Param("IdUniversity") Integer IdUniversity);
+
+
+	//get Formation by formateur
+	@Query("select f from Formation f join f.formateur u where u.id=:idFormateur")
+	List<Formation> getFormationByFormateur(@Param("idFormateur") Long idFormateur);
+
+
+	//get Formation by apprenant
+	@Query("select f from Formation f join f.apprenant u where u.id=:idApprenant")
+	List<Formation> getFormationByApprenant(@Param("idApprenant") Long idApprenant);
+
 
 
 
