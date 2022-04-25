@@ -52,6 +52,7 @@ import { UpdateComplaintComponent } from './update-complaint/update-complaint.co
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { AddAppointmentComponent } from './add-appointment/add-appointment.component';
 import { UpdateAppointmentComponent } from './update-appointment/update-appointment.component';
+import {HomeFComponent} from "./FontEnd/home-f/home-f.component";
 
 
 
@@ -71,6 +72,7 @@ FullCalendarModule.registerPlugins([
     FormationComponent,
     ListeFormationComponent,
     QuizComponent,
+    HomeFComponent,
     ChangeBgDirective,
     HomeComponent,
     LoginComponent,

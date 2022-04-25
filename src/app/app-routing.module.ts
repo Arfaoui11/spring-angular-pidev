@@ -18,12 +18,14 @@ import {AppointmentListComponent} from "./appointment-list/appointment-list.comp
 import {AddAppointmentComponent} from "./add-appointment/add-appointment.component";
 import {ComplaintListComponent} from "./complaint-list/complaint-list.component";
 import {AddComplaintComponent} from "./add-complaint/add-complaint.component";
+import {HomeFComponent} from "./FontEnd/home-f/home-f.component";
 
 
 const routes: Routes =
 
    [
-     {path:'',component: HomeComponent },
+     {path:'back',component: HomeComponent },
+     {path:'',component: HomeFComponent },
   {
     path: 'home',
     component: HomeComponent,
