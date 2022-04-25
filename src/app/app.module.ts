@@ -94,10 +94,7 @@ FullCalendarModule.registerPlugins([
     AppointmentListComponent,
     AddAppointmentComponent,
     UpdateAppointmentComponent,
-    FooterFComponent,
-    LayoutFComponent,
-    NavbarFComponent,
-    BlogFormationComponent,
+
   ],
   imports: [
     BrowserModule,
