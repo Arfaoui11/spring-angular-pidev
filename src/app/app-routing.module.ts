@@ -19,13 +19,33 @@ import {AddAppointmentComponent} from "./add-appointment/add-appointment.compone
 import {ComplaintListComponent} from "./complaint-list/complaint-list.component";
 import {AddComplaintComponent} from "./add-complaint/add-complaint.component";
 import {HomeFComponent} from "./FontEnd/home-f/home-f.component";
+import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
+import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
 
 
 const routes: Routes =
 
    [
      {path:'back',component: HomeComponent },
-     {path:'',component: HomeFComponent },
+     {path:'login',component: LoginComponent },
+     {path:'',component: LayoutFComponent },
+
+     {
+       path: 'front',
+       component: LayoutFComponent,
+       children: [
+         {
+           path: 'frontEnd',
+           children: [
+
+             { path: 'blogF', component: BlogFormationComponent },
+             { path: 'homeF', component: HomeFComponent },
+
+
+           ]
+         },
+       ]
+     },
   {
     path: 'home',
     component: HomeComponent,

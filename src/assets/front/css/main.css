@@ -1552,7 +1552,7 @@ select {
   --clr-body-text2: #878787;
   --clr-body-text3: #787878;
   --clr-theme-1: #EF0454;
-  --clr-bg-gray: #ffdeea;
+  --clr-bg-gray: #F9F9F9;
   --clr-bg-gray2: #EFEFEF;
   --clr-border-1: #474747;
   --clr-border-2: #757575;
@@ -1678,8 +1678,8 @@ select {
 
 @media (max-width: 767px) {
   .theme-btn,
-.theme-btn-border,
-.theme-btn-black {
+  .theme-btn-border,
+  .theme-btn-black {
     height: 50px;
     line-height: 50px;
     padding: 0px 30px;
@@ -1749,7 +1749,7 @@ select {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  border: 3px solid #ffdeea;
+  border: 3px solid #c6c9cb;
   display: inline-block;
   outline: none;
   cursor: pointer;
@@ -4222,8 +4222,8 @@ input.main-search-input:-ms-input-placeholder {
 }
 @media (max-width: 575px) {
   .bd-portfolio-active-two.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
-.bd-testimonial-four-active.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
-.bd-team-active.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+  .bd-testimonial-four-active.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+  .bd-team-active.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
     margin: 0px 4px;
   }
 }
@@ -5461,19 +5461,19 @@ input.main-search-input:-ms-input-placeholder {
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .bd-fact-title,
-.bd-fact-title .odometer {
+  .bd-fact-title .odometer {
     font-size: 50px;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .bd-fact-title,
-.bd-fact-title .odometer {
+  .bd-fact-title .odometer {
     font-size: 46px;
   }
 }
 @media (max-width: 767px) {
   .bd-fact-title,
-.bd-fact-title .odometer {
+  .bd-fact-title .odometer {
     font-size: 36px;
   }
 }
@@ -5521,7 +5521,7 @@ input.main-search-input:-ms-input-placeholder {
 }
 @media (max-width: 575px) {
   .bd-slider-facts .bd-slider-fact-title,
-.bd-slider-facts .bd-slider-fact-title .odometer-value {
+  .bd-slider-facts .bd-slider-fact-title .odometer-value {
     font-size: 24px;
   }
 }
