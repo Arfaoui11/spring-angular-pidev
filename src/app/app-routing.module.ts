@@ -26,9 +26,9 @@ import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formati
 const routes: Routes =
 
    [
-     {path:'back',component: HomeComponent },
+     {path:'',component: HomeComponent },
      {path:'login',component: LoginComponent },
-     {path:'',component: LayoutFComponent },
+     {path:'oo',component: LayoutFComponent },
 
      {
        path: 'front',
