@@ -28,8 +28,8 @@ public class Subscription implements Serializable {
 	private String Description;
 	private Float price;
 
-	private Integer likeSubscription;
-	private Integer dislikeSubscroption;
+//	private Integer likeSubscription;
+//	private Integer dislikeSubscroption;
 
 	@Max(5)
 	@Min(0)
@@ -38,7 +38,7 @@ public class Subscription implements Serializable {
 	private Date start;
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date end;
-	private Integer nbrParticipant;
+	//private Integer nbrParticipant;
 
 
 
