@@ -57,6 +57,7 @@ import {FooterFComponent} from "./FontEnd/footer-f/footer-f.component";
 import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
 import {NavbarFComponent} from "./FontEnd/navbar-f/navbar-f.component";
 import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 
 
@@ -98,6 +99,7 @@ FullCalendarModule.registerPlugins([
     LayoutFComponent,
     NavbarFComponent,
     BlogFormationComponent,
+    SubscriptionComponent,
   ],
   imports: [
     BrowserModule,
