@@ -17,13 +17,13 @@ export class UpdateAppointmentComponent implements OnInit {
               private services: AppointmentService) { }
   ngOnInit(): void {
     this.services.consulterAppointment(this.activatedRoute.snapshot.params.id).
-    subscribe( appoin =>{ this.currentAppointment = appoin; });
+    subscribe( app =>{ this.currentAppointment = app; });
   }
 
 
   updateAppointment() {
     this.services.updateAppointment(this.currentAppointment).subscribe(() => {
-        this.router.navigate(['appointment']);
+        this.router.navigate(['/home/helpSpace-Management/ListAppointment']);
       },(error) => { alert("Problème lors de la modification !"); }
     );
   }

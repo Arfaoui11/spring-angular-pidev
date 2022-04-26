@@ -18,12 +18,37 @@ import {AppointmentListComponent} from "./appointment-list/appointment-list.comp
 import {AddAppointmentComponent} from "./add-appointment/add-appointment.component";
 import {ComplaintListComponent} from "./complaint-list/complaint-list.component";
 import {AddComplaintComponent} from "./add-complaint/add-complaint.component";
+import {HomeFComponent} from "./FontEnd/home-f/home-f.component";
+import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
+import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
+import {UpdateComplaintComponent} from "./update-complaint/update-complaint.component";
+import {UpdateAppointmentComponent} from "./update-appointment/update-appointment.component";
+import {SubscriptionComponent} from "./subscription/subscription.component";
 
 
 const routes: Routes =
 
    [
      {path:'',component: HomeComponent },
+     {path:'login',component: LoginComponent },
+     {path:'oo',component: LayoutFComponent },
+
+     {
+       path: 'front',
+       component: LayoutFComponent,
+       children: [
+         {
+           path: 'frontEnd',
+           children: [
+
+             { path: 'blogF', component: BlogFormationComponent },
+             { path: 'homeF', component: HomeFComponent },
+
+
+           ]
+         },
+       ]
+     },
   {
     path: 'home',
     component: HomeComponent,
@@ -57,9 +82,21 @@ const routes: Routes =
         children: [
 
           { path: 'addAppointment', component: AddAppointmentComponent },
-          { path: 'LisAppointment', component: AppointmentListComponent },
+          { path: 'ListAppointment', component: AppointmentListComponent },
           { path: 'addComplaint', component: AddComplaintComponent },
           { path: 'ListComplaint', component: ComplaintListComponent } ,
+          { path: 'updateComplaint/:id', component: UpdateComplaintComponent },
+          { path: 'updateAppointment/:id', component: UpdateAppointmentComponent },
+
+        ]
+
+      },
+      {
+        path: 'Subscription',
+        children: [
+
+            { path: 'addSubscription', component: SubscriptionComponent },
+
 
         ]
 

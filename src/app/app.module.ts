@@ -52,6 +52,12 @@ import { UpdateComplaintComponent } from './update-complaint/update-complaint.co
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { AddAppointmentComponent } from './add-appointment/add-appointment.component';
 import { UpdateAppointmentComponent } from './update-appointment/update-appointment.component';
+import {HomeFComponent} from "./FontEnd/home-f/home-f.component";
+import {FooterFComponent} from "./FontEnd/footer-f/footer-f.component";
+import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
+import {NavbarFComponent} from "./FontEnd/navbar-f/navbar-f.component";
+import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 
 
@@ -71,6 +77,7 @@ FullCalendarModule.registerPlugins([
     FormationComponent,
     ListeFormationComponent,
     QuizComponent,
+    HomeFComponent,
     ChangeBgDirective,
     HomeComponent,
     LoginComponent,
@@ -88,8 +95,11 @@ FullCalendarModule.registerPlugins([
     AppointmentListComponent,
     AddAppointmentComponent,
     UpdateAppointmentComponent,
-
-
+    FooterFComponent,
+    LayoutFComponent,
+    NavbarFComponent,
+    BlogFormationComponent,
+    SubscriptionComponent,
   ],
   imports: [
     BrowserModule,

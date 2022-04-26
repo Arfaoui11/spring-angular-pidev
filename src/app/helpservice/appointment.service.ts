@@ -13,9 +13,9 @@ export class AppointmentService {
 
   apiURL = "http://localhost:8090/heplpspace/retrieve-All-Appointment";
   getSingleSub = "http://localhost:8090/heplpspace/retrieve-Appointment-by-ID";
-  addUrl = "http://localhost:8090/heplpspace/addRdvAndAssignMedAndPatient";
+  addUrl = "http://localhost:8090/heplpspace/addRdv";
   supUrl = "http://localhost:8090/heplpspace/deleteAppointmentById";
-  updateUrl = "http://localhost:8090/heplpspace/updateApppointmentById";
+  updateUrl = "http://localhost:8090/heplpspace/updaterdv";
   private getUrlexcel = 'http://localhost:8090/heplpspace/download/appointments.xlsx';
 
   constructor(private http:HttpClient) { }
@@ -29,15 +29,20 @@ export class AppointmentService {
   AddAppointment(appoin: Appointment):Observable<Appointment>{
     return this.http.post<Appointment>(this.addUrl, appoin, httpOptions);
   }
-  consulterAppointment(id: number): Observable<Appointment> {
-    return this.http.get<Appointment>(this.getSingleSub+"/"+id);
-  }
+
 
 
   updateAppointment(appoin :Appointment) : Observable<Appointment>{
     return this.http.put<Appointment>(this.updateUrl+"/"+appoin.idApp, appoin, httpOptions);
+
   }
   exportExcelAppointment(): Observable<Blob>{
     return this.http.get(`${this.getUrlexcel}`, {responseType: 'blob'});
+  }
+
+  consulterAppointment(id: number): Observable<Appointment> {
+    return this.http.get<Appointment>(this.getSingleSub+"/"+id);
+
+
   }
 }
