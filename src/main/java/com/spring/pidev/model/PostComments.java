@@ -37,11 +37,11 @@ public class PostComments {
 
 
     @OneToMany (mappedBy = "postComments",cascade = {CascadeType.REMOVE})
-    @JsonIgnore
+
     private Set<Likes> likes;
 
     @OneToMany (mappedBy = "postComments",cascade = {CascadeType.REMOVE})
-    @JsonIgnore
+
     private Set<Dislikes> Dislikes;
 
 

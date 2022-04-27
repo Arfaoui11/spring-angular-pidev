@@ -38,7 +38,7 @@ public class UserController {
 
 	@ApiOperation(value = "retrieve All Users ")
 	@GetMapping("/retrieve-All-Users")
-	@PreAuthorize("hasRole('ADMIN')")
+	//@PreAuthorize("hasRole('ADMIN')")
 	@ResponseBody
 	public List<User> RetrieveAllUsers()
 	{
@@ -58,9 +58,9 @@ public class UserController {
 
 
 	@ApiOperation(value = "delete User By Id ")
-	@DeleteMapping("/deleteUserById/{idCom}")
+	@GetMapping("/deleteUserById/{idCom}")
 	@ResponseBody
-	public void DeleteUser(@PathVariable("idU") Long idU)
+	public void DeleteUser(@PathVariable("idCom") Long idU)
 	{
 		userService.deleteUser(idU);
 

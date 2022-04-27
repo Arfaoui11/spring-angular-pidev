@@ -91,13 +91,15 @@ public interface IServiceFormation {
 
 
 
-    void addComments(PostComments postComments , Integer idF, Long idUser);
+    Integer addComments(PostComments postComments , Integer idF, Long idUser);
 
     void deleteComments(Integer idC);
 
     PostComments upDateComment(PostComments postComments,Integer idF,Long idUser);
 
     List<PostComments> getAllComments();
+
+    List<PostComments> getCommentsByFormation(Integer idF);
 
     Formation getFormationById(int id);
 

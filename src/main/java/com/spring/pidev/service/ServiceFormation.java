@@ -684,7 +684,7 @@ public class ServiceFormation implements IServiceFormation {
     public void FormationWithRate(Integer idF, Double rate) {
         Formation formation = iFormationRepo.findById(idF).orElse(null);
 
-        if(formation.getRating()==0)
+        if(formation.getRating() == 0)
         {
             formation.setRating(rate);
         }else {
@@ -720,7 +720,7 @@ public class ServiceFormation implements IServiceFormation {
 
 
     @Override
-    public void addComments(PostComments postComments,Integer idF,Long idUser) {
+    public Integer addComments(PostComments postComments,Integer idF,Long idUser) {
 
 
         Formation formation = iFormationRepo.findById(idF).orElse(null);
@@ -729,9 +729,12 @@ public class ServiceFormation implements IServiceFormation {
         if(user.getState()==State.DISCIPLINED || user.getState()==State.WARNED || user.getState()==State.PUNISHED) {
             postComments.setUserC(user);
             postComments.setFormation(formation);
+            postComments.setCreateAt(new Date());
             iCommentsRepo.save(postComments);
+            return 1;
         }else {
             this.emailSenderService.sendSimpleEmail(user.getEmail(), " You Are create bad Comment in this Courses ", " You Are create Comment with bad word in this Courses we excluded in all Courses   Mr's  "+user.getLastName() +" " + user.getLastName()+" this web site is for association of women empowerment not to write this type of comment !!!! ");
+            return 0;
         }
     }
 
@@ -773,6 +776,11 @@ public class ServiceFormation implements IServiceFormation {
     @Override
     public List<PostComments> getAllComments() {
         return (List<PostComments>) iCommentsRepo.findAll();
+    }
+
+    @Override
+    public List<PostComments> getCommentsByFormation(Integer idF) {
+        return iFormationRepo.getCommentsByFormation(idF);
     }
 
 

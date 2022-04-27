@@ -1,10 +1,7 @@
 package com.spring.pidev.repo;
 
 
-import com.spring.pidev.model.DatabaseFile;
-import com.spring.pidev.model.Domain;
-import com.spring.pidev.model.Formation;
-import com.spring.pidev.model.User;
+import com.spring.pidev.model.*;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -76,6 +73,9 @@ public interface IFormationRepo extends CrudRepository<Formation,Integer> {
     //get nbr dislikes by comments
     @Query(value = "select d.nbrDislikes from PostComments c join c.Dislikes d where c.idComn=:id")
     Integer getNbrDislikesByComment(@Param("id") Integer id);
+
+    @Query(value ="select c from Formation f join f.postComments c where f.idFormation=:id")
+    List<PostComments> getCommentsByFormation(@Param("id") Integer idF);
 
 
 

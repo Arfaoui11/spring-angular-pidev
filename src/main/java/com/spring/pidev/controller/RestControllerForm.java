@@ -494,6 +494,14 @@ public class RestControllerForm {
         return this.iServiceFormation.getNbrDislikesByComments(id);
     }
 
+    @ApiOperation(value = "get Comments By Formation")
+    @GetMapping("/getCommentsByFormation/{id}")
+    @ResponseBody
+    public List<PostComments> getCommentsByFormation(@PathVariable(name = "id") Integer idF)
+    {
+        return this.iServiceFormation.getCommentsByFormation(idF);
+    }
+
 
     @PutMapping("/addLikes/{idC}")
     @ApiOperation(value = " add Likes ")
@@ -518,12 +526,12 @@ public class RestControllerForm {
     }
 
 
-    @PostMapping("/likeFormationWithRate/{idF}/{nbr}")
+   /* @PostMapping("/likeFormationWithRate/{idF}/{nbr}")
     @ApiOperation(value = " add Rate ")
     public void likeFormationWithRate(@PathVariable(name = "idF") Integer idF,@PathVariable(name = "nbr") Integer rate)
     {
      //   iServiceFormation.dislikeFormationWIthRate(idF, rate);
-    }
+    }*/
 
     @PutMapping("/FormationWIthRate/{idF}/{nbr}")
     @ApiOperation(value = " add Rating ")
@@ -536,14 +544,14 @@ public class RestControllerForm {
     @ApiOperation(value = " ajouter Comments ")
    // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseBody
-    public void addComments(@RequestBody PostComments postComments,@PathVariable(name = "idF") Integer idF,@PathVariable(name = "idU") Long idUser)
+    public Integer addComments(@RequestBody PostComments postComments,@PathVariable(name = "idF") Integer idF,@PathVariable(name = "idU") Long idUser)
     {
         PostComments p = new PostComments();
         p.setMessage(badWordConfig.filterText(postComments.getMessage()));
         p.setLikes(postComments.getLikes());
         p.setDislikes(postComments.getDislikes());
         p.setCreateAt(postComments.getCreateAt());
-        iServiceFormation.addComments(p,idF,idUser);
+       return  iServiceFormation.addComments(p,idF,idUser);
 
     }
 

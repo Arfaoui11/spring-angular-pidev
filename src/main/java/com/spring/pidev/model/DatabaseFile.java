@@ -27,6 +27,7 @@ public class DatabaseFile {
     private byte[] data;
 
     @ManyToOne
+    @JsonIgnore
     private Formation formation;
     @ManyToOne
     @JsonIgnore

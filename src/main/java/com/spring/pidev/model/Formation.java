@@ -45,11 +45,11 @@ public class Formation implements Serializable {
     private Double rating;
 
     @ManyToOne
-    @JsonIgnore
+
     private User formateur;
 
     @ManyToMany
-    @JsonIgnore
+
     private Set<User> apprenant ;
 
     @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
@@ -58,13 +58,13 @@ public class Formation implements Serializable {
 
 
     @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    @JsonIgnore
+
     private Set<DatabaseFile> databaseFiles;
 
 
 
     @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    @JsonIgnore
+
     private Set<PostComments> postComments;
 
 

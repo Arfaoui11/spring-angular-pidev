@@ -21,8 +21,9 @@ public class BadWordConfig {
         try {			//change this path according to your pc project file's path - so you don't get errors
 
             //  mte3ek path dict.txt
-            //  File f = new File("C:\\Users\\Farouk Hajjej\\IdeaProjects\\spring-angular-pidev-4se5\\src\\main\\resources\\Dict.txt");
-              File f = new File("/Users/macos/IdeaProjects/springPidev/src/main/resources/Dict.txt");
+             // File f = new File("C:\\Users\\Farouk Hajjej\\IdeaProjects\\spring-angular-pidev-4se5\\src\\main\\resources\\Dict.txt");
+            File f = new File("C:\\Users\\LEGION-5\\IdeaProjects\\spring-angular-pidev\\src\\main\\resources\\Dict.txt");
+             // File f = new File("/Users/macos/IdeaProjects/springPidev/src/main/resources/Dict.txt");
 
 
             //File f = new File("/Users/macos/IdeaProjects/springPidev/src/main/resources/Dict.txt");
