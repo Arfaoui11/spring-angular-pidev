@@ -21,6 +21,8 @@ import {AddComplaintComponent} from "./add-complaint/add-complaint.component";
 import {HomeFComponent} from "./FontEnd/home-f/home-f.component";
 import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
 import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
+import {UpdateComplaintComponent} from "./update-complaint/update-complaint.component";
+import {UpdateAppointmentComponent} from "./update-appointment/update-appointment.component";
 
 
 const routes: Routes =
@@ -79,9 +81,11 @@ const routes: Routes =
         children: [
 
           { path: 'addAppointment', component: AddAppointmentComponent },
-          { path: 'LisAppointment', component: AppointmentListComponent },
+          { path: 'ListAppointment', component: AppointmentListComponent },
           { path: 'addComplaint', component: AddComplaintComponent },
           { path: 'ListComplaint', component: ComplaintListComponent } ,
+          { path: 'updateComplaint/:id', component: UpdateComplaintComponent },
+          { path: 'updateAppointment/:id', component: UpdateAppointmentComponent },
 
         ]
 

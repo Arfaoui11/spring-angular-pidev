@@ -14,7 +14,7 @@
           <td>{{appoin.dateApp}}</td>
           <td>{{appoin.remark}}</td>
           <td><button class="btn btn-danger" title="Delete" (click)="deleteAppointmentById(appoin)" ><i class="fas fa-trash"></i></button></td>
-          <td><button class="btn btn-primary" title="Edit" [routerLink]="['/updateAppointment',appoin.idApp] "><i class="fa fa-edit"></i></button></td>
+          <td><button class="btn btn-primary" title="Edit" [routerLink]="['/home/helpSpace-Management/updateAppointment',appoin.idApp] "><i class="fa fa-edit"></i></button></td>
 
         </tr>
         </tbody>
