@@ -66,6 +66,16 @@ public class UserController {
 
 	}
 
+	@ApiOperation(value = "add User  ")
+	@PostMapping("/addUser")
+	@ResponseBody
+	public void AddUser(User user)
+	{
+		userService.addUser(user);
+
+	}
+
+
 
 	@ApiOperation(value = "Retrieve User by ID ")
 	@GetMapping("/retrieve-User-by-ID/{idU}")
