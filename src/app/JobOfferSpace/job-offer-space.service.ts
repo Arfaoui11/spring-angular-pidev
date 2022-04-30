@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {Observable, observable} from 'rxjs';
-import {Offer} from "./core/model/Offres";
+import {Offer} from "../core/model/Offres";
 
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -36,8 +36,8 @@ export class JobOfferSpaceService{
   }
 
 
-  updateOffres(offer :Offer) : Observable<Offer>{
-    return this._http.put<Offer>(this.updateUrl+"/"+Offer.idOffer, offer, httpOptions);
+  updateOffres(offer: Offer, id: number) : Observable<Offer>{
+    return this._http.put<Offer>(this.updateUrl+"/"+offer.idOffer, offer, httpOptions);
   }
 
 
@@ -46,6 +46,27 @@ export class JobOfferSpaceService{
 
     return this._http.get<number>(this.getNbrOffer);
   }
+
+
+  getOffer() {
+
+  }
+
+  deleteOffer(i: number) {
+
+  }
+
+  uploadFile(file: FormData, i: number): Observable<any>
+  {
+    return this._http.post<any>('http://localhost:8090/Courses/uploadMultipleFiles/'+i,file);
+  }
+
+
+  exportPDF():Observable<Blob>
+  {
+    return this._http.get('http://localhost:8090/Courses/exportPDF',{responseType:'blob'} );
+  }
+
 
 
 }
