@@ -1,6 +1,6 @@
 export  class Candidacy {
   idCandidacy :number;
-  Status:boolean;
+  Status:String;
   dateOfCandidacy: Date ;
   cv:string;
 }

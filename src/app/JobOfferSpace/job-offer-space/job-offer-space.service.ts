@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {Observable, observable} from 'rxjs';
-import {Offer} from "../core/model/Offres";
+import {Offer} from "../../core/model/Offres";
+import {Candidacy} from "../../core/model/Candidacy";
 
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -68,5 +69,12 @@ export class JobOfferSpaceService{
   }
 
 
+  addCandidacy(candidacy: Candidacy, i: number) :Observable<Candidacy>{
+    return this._http.post<Candidacy>(this.addUrl, candidacy, httpOptions)
+  }
+
+  updateCandidacy(c: Candidacy, id: number) : Observable<Candidacy> {
+    return this._http.put<Candidacy>(this.updateUrl,Candidacy, httpOptions);
+  }
 
 }

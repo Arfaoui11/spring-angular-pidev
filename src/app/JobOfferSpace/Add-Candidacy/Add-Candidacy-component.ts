@@ -2,48 +2,48 @@
 import {User} from "../../core/model/User";
 import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from "ngx-qrcode2";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Offer} from "../../core/model/Offres";
 import {JobOfferSpaceService} from "../job-offer-space/job-offer-space.service";
+import {Candidacy} from "../../core/model/Candidacy";
 
 @Component({
-  selector: 'app-Add-Offer',
-  templateUrl: './Add-Offer-compnent.html',
-  styleUrls: ['./Add-Offer-component.css']
+  selector: 'app-Add-Candidacy',
+  templateUrl: './Add-Candidacy-component.html',
+  styleUrls: ['./Add-Candidacy-component.css']
 })
-export class AddOfferComponent implements OnInit {
+export class AddCandidacyComponent implements OnInit {
 
-  listOffer : Offer[];
-  @Input() offer:Offer=new Offer();
-  idOffer : number;
+  listCandidacy : Candidacy[];
+  @Input() candidacy:Candidacy=new Candidacy();
+  idCandidacy : number;
 
   elementType= NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
-  formateur : User;
+  Candidacy : User;
   imgURL: any;
   public imagePath :FileList;
   show : boolean = false;
 
   constructor(private services : JobOfferSpaceService,private snackbar:MatSnackBar) {
 
-    this.getOffer()
+    this.getCandidacy()
   }
 
   ngOnInit(): void {
-    this.formateur = new User();
+    this.Candidacy = new User();
   }
 
 
-  getOffer(){
+  getCandidacy(){
     this.services.getOffer().subscribe(
-      (data:Offer[])=>{this.listOffer = data});
+      (data:Candidacy[])=>{this.listCandidacy = data});
 
-    return this.listOffer;
+    return this.listCandidacy;
   }
 
   dataId(i:number)
   {
     console.log(i);
-    this.idOffer = i;
+    this.idCandidacy = i;
   }
 
   onFileSelected(event : any) {
@@ -61,13 +61,15 @@ export class AddOfferComponent implements OnInit {
     }
   }
 
-  UpdateOffer(f: Offer,id : number)
+  UpdateCandidacy(c: Candidacy,id : number)
   {
 
-    this.services.updateOffres(f,id).subscribe(
-      data=>{
-        this.getOffer();
-      });
+
+
+      this.services.updateCandidacy(c,id).subscribe(
+        data=>{
+          this.getCandidacy();
+        });
 
   }
 
@@ -76,12 +78,12 @@ export class AddOfferComponent implements OnInit {
     this.show = ! this.show;
   }
 
-  addOffer(i:number)
+  addCandidacy(i:number)
   {
 
-    this.services.addOffres(this.offer,i).subscribe(
+    this.services.addCandidacy(this.candidacy,i).subscribe(
       data=>{
-        this.getOffer();
+        this.getCandidacy();
       });
 
     const formData = new FormData();
@@ -102,39 +104,20 @@ export class AddOfferComponent implements OnInit {
     });
   }
 
-  deleteOffer(i :number)
+  deleteCandidacy(i :number)
   {
     this.services.deleteOffer(i).subscribe(() => {
-        this.listOffer = this.listOffer.filter(item => item.idOffer !== i);
+        this.listCandidacy = this.listCandidacy.filter(item => item.idCandidacy !== i);
       });
   }
 
-  ExportPDF() {
-    this.services.exportPDF().subscribe(
-      x=>
-      {
-        const blob = new Blob([x],{type : 'application/pdf'})
 
-        if(window.navigator && window.navigator.msSaveOrOpenBlob)
-        {
-          window.navigator.msSaveOrOpenBlob(blob);
-          return;
-        }
-
-        const data = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = data;
-        link.download = 'Offer.pdf';
-        link.dispatchEvent( new MouseEvent('click',{bubbles:true,cancelable:true,view:window}))
-
-        setTimeout(function () {
-          window.URL.revokeObjectURL(data);
-          link.remove();
-        },1000)
-
-      }
-    )
-
-  }
 }
+
+
+
+
+
+
+
 */
