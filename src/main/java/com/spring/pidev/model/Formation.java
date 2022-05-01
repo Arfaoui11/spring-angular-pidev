@@ -44,6 +44,8 @@ public class Formation implements Serializable {
     @Min(0)
     private Double rating;
 
+    private String lieu;
+
     @ManyToOne
 
     private User formateur;
@@ -53,7 +55,7 @@ public class Formation implements Serializable {
     private Set<User> apprenant ;
 
     @OneToMany(mappedBy = "formation",fetch = FetchType.LAZY ,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    @JsonIgnore
+
     private Set<QuizCourses> quizzes;
 
 

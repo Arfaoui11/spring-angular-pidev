@@ -41,7 +41,7 @@ public interface IServicesQuiz {
     void DeleteQuestion(Integer idQ);
 
 
-
+     List<QuestionCourses> getQuestionByQuiz(Integer idQuiz);
 
     void giftsToUserMaxScoreInCourses();
 

@@ -48,7 +48,7 @@ public class Result implements Serializable {
 
 
     @ManyToOne
-    @JsonIgnore
+
     private User sUser;
 
 }

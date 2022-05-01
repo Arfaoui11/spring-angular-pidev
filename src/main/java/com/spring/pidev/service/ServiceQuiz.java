@@ -52,7 +52,7 @@ public class ServiceQuiz implements IServicesQuiz {
     public void addQuiz(QuizCourses quiz, Integer idF) {
         Formation formation = this.iFormationRepo.findById(idF).orElse(null);
         quiz.setFormation(formation);
-        quiz.setCreateAt(new Date());
+     //   quiz.setCreateAt(new Date());
         iQuizRepo.save(quiz);
     }
 
@@ -87,7 +87,11 @@ public class ServiceQuiz implements IServicesQuiz {
         return qList;
 
     }
-
+    @Override
+    public List<QuestionCourses> getQuestionByQuiz(Integer idQuiz) {
+        List<QuestionCourses> allQues =  iQuizRepo.getQuizQuestion(idQuiz);
+        return allQues;
+    }
 
 
     public List<QuestionCourses> getQuestions() {
@@ -102,7 +106,7 @@ public class ServiceQuiz implements IServicesQuiz {
             allQues.remove(rand);
         }
 
-        return qList;
+        return allQues;
     }
 
 

@@ -106,8 +106,9 @@ public class RestControllerForm {
     @RequestMapping(value = {"/ajouterFormation"}, method = RequestMethod.POST)
     @ResponseBody
     @ApiOperation(value = " ajouter Formation ")
-    public void addFormation(@RequestBody Formation formation){
-        iServiceFormation.addFormation(formation);
+    public Formation addFormation(@RequestBody Formation formation){
+
+       return iServiceFormation.addFormation(formation);
     }
 
 
@@ -427,6 +428,15 @@ public class RestControllerForm {
     {
         return iServicesQuiz.getQuizQuestion(idQ);
     }
+
+    @ApiOperation(value = "get Question by quiz")
+    @GetMapping("/getQuestionByQuiz/{id}")
+    public List<QuestionCourses> getQuestionByQuiz(@PathVariable("id") Integer idQuiz)
+    {
+        return iServicesQuiz.getQuestionByQuiz(idQuiz);
+    }
+
+
 
 
 

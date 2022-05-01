@@ -18,7 +18,7 @@ public interface IServiceFormation {
     void ajouterFormateur(User formateur);
 
 
-    void addFormation(Formation formation);
+    Formation addFormation(Formation formation);
     void updateFormation(Formation formation, Integer idFormateur);
     void deleteFormation(Integer idFormation);
     List<Formation> afficherFormation();

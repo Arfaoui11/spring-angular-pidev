@@ -2,10 +2,12 @@ package com.spring.pidev.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,7 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
 @Table( name = "QuizCourses")
 public class QuizCourses  implements Serializable {
 
@@ -39,10 +40,24 @@ public class QuizCourses  implements Serializable {
 
     @OneToMany(mappedBy = "quiz",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
+    @ToString.Exclude
     private Set<QuestionCourses> question;
 
     @OneToMany(mappedBy = "quiz",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    @JsonIgnore
+
+    @ToString.Exclude
     private Set<Result> results;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        QuizCourses that = (QuizCourses) o;
+        return idQuiz != null && Objects.equals(idQuiz, that.idQuiz);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

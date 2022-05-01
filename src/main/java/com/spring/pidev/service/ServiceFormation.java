@@ -70,8 +70,9 @@ public class ServiceFormation implements IServiceFormation {
     }
 
     @Override
-    public void addFormation(Formation formation) {
-        iFormationRepo.save(formation);
+    public Formation addFormation(Formation formation) {
+
+       return iFormationRepo.save(formation);
     }
 
     @Override

@@ -16,18 +16,18 @@ import java.util.Date;
 public class Certificat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
+    private Long id;
+    private String name;
     @Temporal(TemporalType.TIMESTAMP)
-    Date date ;
+    private Date date ;
 
-    String path;
-
-    @ManyToOne
-    User user;
+    private String path;
 
     @ManyToOne
-    Formation formation;
+    private User user;
+
+    @ManyToOne
+    private Formation formation;
 
     public Certificat(String fileName, String contentType, byte[] bytes) {
     }
