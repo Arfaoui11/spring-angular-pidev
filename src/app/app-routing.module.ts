@@ -27,9 +27,9 @@ const routes: Routes =
 
    [
 
-     {path:'sd',component: HomeComponent },
+     {path:'',component: HomeComponent },
      {path:'login',component: LoginComponent },
-     { path: '',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
+     { path: 'sss',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
 
      {
        path: 'front',
