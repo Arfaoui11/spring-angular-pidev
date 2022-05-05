@@ -1,4 +1,4 @@
-import {Quiz} from "./Quiz";
+
 
 export class Question {
 

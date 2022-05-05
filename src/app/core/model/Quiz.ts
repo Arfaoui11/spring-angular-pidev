@@ -1,5 +1,6 @@
-import {Question} from "./Question";
-/*import {QuestionCandidacy} from "./QuestionCandidacy" :*/
+import {Result} from "./Result";
+
+
 export class Quiz {
 
   idQuiz! : number;
@@ -7,7 +8,6 @@ export class Quiz {
   score !: number;
   createAt !:Date;
   content !: string ;
-
-
+  results:Result[]
 
 }

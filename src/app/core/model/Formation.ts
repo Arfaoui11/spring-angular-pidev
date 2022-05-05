@@ -1,3 +1,8 @@
+import {PostComment} from "./PostComment";
+import {User} from "./User";
+import {Files} from "./files";
+import {Quiz} from "./Quiz";
+
 export class Formation {
 
   idFormation!:number;
@@ -10,6 +15,15 @@ export class Formation {
   nbrMaxParticipant!:number;
   frais!:number;
   rating!:number;
+  lieu!: string;
+  formateur!:User;
+  databaseFiles!:Files[];
+  postComments!:PostComment[];
+  apprenant!:User[];
+  quizzes!:Quiz[];
+
+
+
 
 
 }
