@@ -27,9 +27,9 @@ const routes: Routes =
 
    [
 
-     {path:'',component: HomeComponent },
+     {path:'sd',component: HomeComponent },
      {path:'login',component: LoginComponent },
-     { path: 'aaa',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
+     { path: '',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
 
      {
        path: 'front',
@@ -41,8 +41,6 @@ const routes: Routes =
 
              { path: 'blogF', component: BlogFormationComponent },
              { path: 'homeF', component: HomeFComponent },
-
-
            ]
          },
        ]

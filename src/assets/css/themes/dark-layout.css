@@ -2,7 +2,7 @@
         DARK LAYOUT
 =========================================================*/
 body.dark-layout {
-  background-color : #ffdeea;
+  background-color : rgba(67, 101, 250, 0.56);
   /********* UI ELEMENTS *********/
   /********* COMPONENTS *********/
   /********** FORMS **********/
@@ -15,7 +15,7 @@ body.dark-layout {
   /********** HORIZONTAL LAYOUT **********/
 }
 body.dark-layout h1, body.dark-layout h2, body.dark-layout h3, body.dark-layout h4, body.dark-layout h5, body.dark-layout h6 {
-  color : #ffdeea;
+  color : #EBEEFD;
 }
 body.dark-layout [class*='border'] {
   border-color : #414561 !important;
@@ -24,7 +24,7 @@ body.dark-layout a:hover {
   color : #4365fa;
 }
 body.dark-layout p, body.dark-layout small, body.dark-layout span, body.dark-layout label {
-  color : #ffdeea;
+  color : #C2C6DC;
 }
 body.dark-layout hr {
   border-color : #414561;
@@ -56,7 +56,7 @@ body.dark-layout .header-navbar-shadow {
 }
 
 body.dark-layout .header-navbar {
-  background-color : #ffdeea;
+  background-color : #fab9f6;
 }
 body.dark-layout .header-navbar .navbar-container .nav .nav-item .nav-link {
   color : #C2C6DC;
@@ -156,41 +156,41 @@ body.dark-layout.blank-page .card.bg-transparent p {
   color : #262C49;
 }
 body.dark-layout .main-menu {
-  background-color : #ffdeea;
+  background-color : #fdd1ff;
 }
 body.dark-layout .main-menu .shadow-bottom {
   background : -webkit-linear-gradient(top, #0F1642 44%, rgba(15, 22, 66, 0.51) 73%, rgba(44, 48, 60, 0));
   background :         linear-gradient(180deg, #0F1642 44%, rgba(15, 22, 66, 0.51) 73%, rgba(44, 48, 60, 0));
 }
 body.dark-layout .main-menu:not(.expanded) .navigation .sidebar-group-active > a {
-  background-color : #ffdeea;
+  background-color : #fdd1ff;
 }
 body.dark-layout .main-menu-content .navigation-main {
-  background-color : #ffdeea;
+  background-color : #fac9e9;
 }
 body.dark-layout .main-menu-content .navigation-main .nav-item i {
-  color : #ffdeea;
+  color : #C2C6DC;
 }
 body.dark-layout .main-menu-content .navigation-main .nav-item.open a {
-  background-color : #ffdeea;
+  background-color : #fac9e9;
 }
 body.dark-layout .main-menu-content .navigation-main .nav-item a:after {
   color : #C2C6DC;
 }
 body.dark-layout .main-menu-content .navigation-main .nav-item .menu-content {
-  background-color : #ffdeea;
+  background-color : #fac9e9;
 }
 body.dark-layout .main-menu-content .navigation-main .nav-item .menu-content .active .menu-item {
   color : #FFFFFF;
 }
 body.dark-layout .main-menu-content .navigation-main .nav-item .menu-content li:not(.active) a {
-  background-color : #ffdeea;
+  background-color : #fac9e9;
 }
 body.dark-layout .main-menu-content .navigation-main .active .menu-title, body.dark-layout .main-menu-content .navigation-main .active i {
   color : #FFFFFF;
 }
 body.dark-layout .main-menu-content .navigation-main .sidebar-group-active a {
-  background : #ffdeea;
+  background : #fac9e9;
   border-radius : 4px;
 }
 body.dark-layout .main-menu-content .navigation-main .sidebar-group-active .menu-content {
@@ -314,6 +314,7 @@ body.dark-layout #component-breadcrumbs .breadcrumb .breadcrumb-item.active {
 body.dark-layout .collapse-bordered .collapse-header {
   border-color : rgba(255, 255, 255, 0.04);
 }
+
 body.dark-layout .collapse-bordered.accordion-shadow {
   box-shadow : 0 0 8px 0 rgba(255, 255, 255, 0.1);
 }
