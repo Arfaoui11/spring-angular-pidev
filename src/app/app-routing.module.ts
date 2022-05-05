@@ -29,7 +29,7 @@ const routes: Routes =
 
      {path:'ll',component: HomeComponent },
      {path:'login',component: LoginComponent },
-     { path: '',  redirectTo: '/front/End/homeF', pathMatch: 'full' },
+     { path: '',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
 
      {
        path: 'front',

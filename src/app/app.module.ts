@@ -7,7 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {GoogleChartsModule} from "angular-google-charts";
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from "ngx-pagination";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
@@ -57,6 +57,7 @@ import {FooterFComponent} from "./FontEnd/footer-f/footer-f.component";
 import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
 import {NavbarFComponent} from "./FontEnd/navbar-f/navbar-f.component";
 import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
+import {CommonModule} from "@angular/common";
 
 
 
@@ -115,7 +116,10 @@ FullCalendarModule.registerPlugins([
     NgbModule,
     DayPilotModule,
     ToastrModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    CommonModule,
+    NgbModalModule,
+
 
 
 
