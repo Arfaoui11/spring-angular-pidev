@@ -4,10 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {GoogleChartsModule} from "angular-google-charts";
 
-import {NgbModalModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCollapseModule, NgbModalModule, NgbModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from "ngx-pagination";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
@@ -18,7 +18,7 @@ import {AddFomateurComponent} from "./CoursesSpace/add-fomateur/add-fomateur.com
 import { ListeFormationComponent } from './CoursesSpace/liste-formation/liste-formation.component';
 import {DayPilotModule} from "daypilot-pro-angular";
 
-
+import {environment} from "../environments/environment";
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -58,6 +58,13 @@ import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
 import {NavbarFComponent} from "./FontEnd/navbar-f/navbar-f.component";
 import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
 import {CommonModule} from "@angular/common";
+import {VgCoreModule} from "@videogular/ngx-videogular/core";
+import {VgControlsModule} from "@videogular/ngx-videogular/controls";
+import {VgOverlayPlayModule} from "@videogular/ngx-videogular/overlay-play";
+import {VgBufferingModule} from "@videogular/ngx-videogular/buffering";
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import {NgxWebstorageModule} from "ngx-webstorage";
+import {Angulartics2Module} from "angulartics2";
 
 
 
@@ -104,6 +111,7 @@ FullCalendarModule.registerPlugins([
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     NgxPaginationModule,
@@ -114,12 +122,22 @@ FullCalendarModule.registerPlugins([
     BrowserAnimationsModule,
     TreeViewModule,
     NgbModule,
+    NgbCollapseModule,
+    NgbTooltipModule,
+    ClipboardModule,
+    NgxWebstorageModule.forRoot(),
     DayPilotModule,
     ToastrModule.forRoot(),
+    Angulartics2Module.forRoot({
+      developerMode: !environment.production,
+    }),
     ChartsModule,
     CommonModule,
     NgbModalModule,
-
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
 
 
 
