@@ -23,6 +23,7 @@ export class TopicService {
   //private getUrlexcel = 'http://localhost:8090/heplpspace/download/appointments.xlsx';
 
   constructor(private http:HttpClient) { }
+
   retrievetopic(): Observable<Topic[]>{
     return this.http.get<Topic[]>(this.apiURL);
   }
