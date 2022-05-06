@@ -96,7 +96,7 @@ export class FormationComponent implements OnInit {
       formData.append('files',element);
     }
 
-
+    console.log(this.formation.idFormation);
 
 
     this.serviceForm.uploadFile(formData,this.formation.idFormation).subscribe(res => {

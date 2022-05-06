@@ -89,13 +89,13 @@ export class FormationService {
 
 
 
-  SearchMultiple(key:string) :Observable<Formation[]>
+  SerachMultiple(key:string) :Observable<Formation[]>
   {
     return this.http.get<Formation[]>('http://localhost:8099/Courses/SearchMultiple/'+key);
   }
 
 
-  SearchRepi(key : string):Observable<any>
+  SerachRepi(key : string):Observable<any>
   {
     return this.http.post<string>("http://localhost:8099/Courses/SearchHistorique/"+key,1)
   }

@@ -25,7 +25,6 @@ export class AddComplaintComponent implements OnInit {
   AddComplaint(){
     this.complaintService.AddComplaint(this.newComplaint).subscribe(complaint => {
       console.log(complaint);
-
     });
 
 
