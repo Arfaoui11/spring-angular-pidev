@@ -22,6 +22,8 @@ import {HomeFComponent} from "./FontEnd/home-f/home-f.component";
 import {LayoutFComponent} from "./FontEnd/layout-f/layout-f.component";
 import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formation.component";
 
+import {ListTopicComponent} from "./Forum/list-topic/list-topic.component";
+
 
 const routes: Routes =
 
@@ -84,15 +86,21 @@ const routes: Routes =
 
         ]
 
-      }
+      },
+
+      {
+        path: 'Forum-management',
+        children: [
+
+          { path: 'ListTopic', component: ListTopicComponent },
+
+        ]
+      },
 
 
   ]
   }
 ];
-
-
-
 
 
 @NgModule({
