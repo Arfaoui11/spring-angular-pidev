@@ -28,12 +28,11 @@ import {UpdateAppointmentComponent} from "./update-appointment/update-appointmen
 
 
 const routes: Routes =
-
    [
 
-     {path:'',component: HomeComponent },
+     {path:'ppp',component: HomeComponent },
      {path:'login',component: LoginComponent },
-     { path: 'sss',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
+     { path: '',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
 
      {
        path: 'front',
