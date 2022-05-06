@@ -30,9 +30,9 @@ import {UpdateAppointmentComponent} from "./update-appointment/update-appointmen
 const routes: Routes =
    [
 
-     {path:'ppp',component: HomeComponent },
+     {path:'',component: HomeComponent },
      {path:'login',component: LoginComponent },
-     { path: '',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
+     { path: 'qwe',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
 
      {
        path: 'front',
