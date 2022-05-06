@@ -66,6 +66,7 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import {NgxWebstorageModule} from "ngx-webstorage";
 import {Angulartics2Module} from "angulartics2";
 import { ListTopicComponent } from './Forum/list-topic/list-topic.component';
+import { CommentComponent } from './Forum/comment/comment.component';
 
 
 
@@ -108,6 +109,7 @@ FullCalendarModule.registerPlugins([
     NavbarFComponent,
     BlogFormationComponent,
     ListTopicComponent,
+    CommentComponent,
   ],
   imports: [
     BrowserModule,
