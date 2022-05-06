@@ -19,6 +19,17 @@
 <!--        </div>-->
       </div>
       <div class="form-group">
+        <label for="profession" > Profession</label>
+        <select  #profession="ngModel" [(ngModel)]="form.profession" name="profession" id="profession" class="form-control"  required >
+          <option  value="FORMER">FORMER</option>
+          <option value="LEARNER">LEARNER</option>
+          <option value="IT">IT</option>
+          <option value="DOCTOR">DOCTOR</option>
+          <option value="Cardiologist">Cardiologist</option>
+          <option value="STUDENT">STUDENT</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label for="password">Password</label> <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6"
                                                       #password="ngModel" />
 <!--        <div class="alert-danger" *ngIf="f.submitted && password.invalid">-->

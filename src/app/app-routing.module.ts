@@ -25,14 +25,17 @@ import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formati
 import {ListTopicComponent} from "./Forum/list-topic/list-topic.component";
 import {UpdateComplaintComponent} from "./update-complaint/update-complaint.component";
 import {UpdateAppointmentComponent} from "./update-appointment/update-appointment.component";
+import {RegisterComponent} from "./loginn/register/register.component";
 
 
 const routes: Routes =
    [
 
-     {path:'',component: HomeComponent },
+     {path:'asd',component: HomeComponent },
      {path:'login',component: LoginComponent },
-     { path: 'qwe',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
+     {path:'register',component: RegisterComponent },
+
+     { path: '',  redirectTo: '/front/frontEnd/homeF', pathMatch: 'full' },
 
      {
        path: 'front',
