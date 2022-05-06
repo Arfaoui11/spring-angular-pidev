@@ -4,8 +4,10 @@ import { Component, OnInit } from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {User} from "../../core/model/User";
 import {Topic} from "../../core/model/Topic";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TopicService} from "../Services/topic.service";
+import {Formation} from "../../core/model/Formation";
+import {Appointment} from "../../core/model/Appointment";
 
 
 @Component({
@@ -18,13 +20,15 @@ export class ListTopicComponent implements OnInit {
   ///////Affichage////////////
 
   topics: Topic[];
+  newTopic = new Topic();
+  message :string;
 
-  constructor(private services: TopicService, private router: Router,private snackbar:MatSnackBar) {
+  constructor(private topicService: TopicService, private router: Router,private snackbar:MatSnackBar, private activateRoute: ActivatedRoute) {
 
   }
 
   ngOnInit(): void {
-    this.services.retrievetopic().subscribe(data => {
+    this.topicService.retrievetopic().subscribe(data => {
       console.log(data);
       this.topics = data;
     });
@@ -33,7 +37,7 @@ export class ListTopicComponent implements OnInit {
   deleteTopic(i :number)
   {
     console.log(i);
-    this.services.deleteTopic(i)
+    this.topicService.deleteTopic(i)
       .subscribe(response => {
         this.topics = this.topics.filter(item => item.idTopic !== i);
       });
@@ -41,9 +45,28 @@ export class ListTopicComponent implements OnInit {
       duration: 2000
     });
   }
-  ///////////////////////////////
+  ////////////////////////////
 
+  AddTopic(){
+    this.topicService.AddTopic(this.newTopic).subscribe(t => {
+      console.log(t);
 
+    });
 
-///////////////////////////////////
+    this.router.navigate(['topic']).then(() => {
+      window.location.reload();
+    });
+
+  }
+
+  ////////////update////////////////////
+
+  updateTopic() {
+    this.topicService.updateTopic(this.newTopic).subscribe(() => {
+        this.router.navigate(['topic']);
+      },(error) => { alert("Error of update !"); }
+    );
+  }
+
+////////////////////////////
 }

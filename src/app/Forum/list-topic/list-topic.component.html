@@ -1,6 +1,9 @@
+
 <!--
 <a (click)="exportExcel()">  <img src="assets/images/icons/excel.png" width="50px" height="100px" ></a>
 -->
+<!--
+
 <div class="container">
   <div class="card shadow mb-4">
     <div class="card-body">
@@ -32,12 +35,147 @@
 
 
           <td><button class="btn btn-danger" title="Delete" (click)="deleteTopic(t.idTopic)" ><i class="fas fa-trash"></i></button></td>
-          <!--
+
           <td><button class="btn btn-primary" title="Edit" [routerLink]="['/updateAppointment',appoin.idApp] "><i class="fa fa-edit"></i></button></td>
-        -->
+
+
         </tr>
         </tbody>
       </table>
     </div>
   </div>
+</div>
+
+-->
+
+<div class="content-body">
+  <!-- Data list view starts -->
+  <section id="data-list-view" class="data-list-view-header">
+    <div class="action-btns d-none">
+      <div class="btn-dropdown mr-1 mb-1">
+        <div class="btn-group dropdown actions-dropodown">
+          <button type="button" class="btn btn-white px-1 py-1 dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#"><i class="feather icon-trash"></i>Delete</a>
+            <a class="dropdown-item" href="#"><i class="feather icon-archive"></i>Archive</a>
+            <a class="dropdown-item" href="#"><i class="feather icon-file"></i>Print</a>
+            <a class="dropdown-item" href="#"><i class="feather icon-save"></i>Another Action</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DataTable starts -->
+    <div class="table-responsive">
+      <table class="table data-list-view">
+        <thead>
+        <tr>
+          <th></th>
+          <th>TITLE</th>
+          <th>Date</th>
+          <th>RATING</th>
+          <th>TYPE</th>
+          <th>CONTENT</th>
+          <th>ACTION</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let t of topics">
+          <td></td>
+          <td class="product-name">{{t.title}}</td>
+          <td class="product-date">{{t.createDate}}</td>
+          <td>
+            <div class="progress progress-bar-success">
+              <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:50% {{t.rating}}"></div>
+            </div>
+          </td>
+          <td>
+            <div class="chip chip-warning">
+              <div class="chip-body">
+                <div class="chip-text">{{t.type}}</div>
+              </div>
+            </div>
+          </td>
+          <td class="product-price">{{t.content}}</td>
+          <td class="product-action">
+
+            <span class="action-edit" ><i class="feather icon-edit" ></i></span>
+            <span class="action-delete" (click)="deleteTopic(t.idTopic)"><i class="feather icon-trash"></i></span>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <!-- DataTable ends -->
+
+    <!-- add new sidebar starts -->
+    <div class="add-new-data-sidebar">
+      <div class="overlay-bg"></div>
+      <div class="add-new-data">
+        <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
+          <div>
+            <h4 class="text-uppercase">Add new Topic</h4>
+          </div>
+          <div class="hide-data-sidebar">
+            <i class="feather icon-x"></i>
+          </div>
+        </div>
+        <div class="data-items pb-3">
+          <div class="data-fields px-2 mt-3">
+            <div class="row">
+              <div class="col-sm-12 data-field-col">
+                <label for="data-name">TITLE</label>
+                <input type="text" class="form-control" id="data-name" [(ngModel)]= "newTopic.title">
+              </div>
+
+
+
+
+
+
+              <div class="col-sm-12 data-field-col">
+                <label >TYPE</label>
+                <select  #type="ngModel" [(ngModel)]="newTopic.type" name="type" class="form-control"  required >
+                  <option>SKILLS</option>
+                  <option>STUDIES</option>
+                  <option>WORK</option>
+                  <option>RIGHTS</option>
+                  <option>MARKETING</option>
+                  <option>CHAMPION</option>
+                  <option>HEALTH</option>
+                  <option>DISCRIMINATION</option>
+                  <option>CULTURAL EMPOWERMENT</option>
+
+                </select>
+              </div>
+              <div class="col-sm-12 data-field-col">
+                <label for="data-price">CONTENT</label>
+                <input type="text" class="form-control" id="data-price" [(ngModel)]= "newTopic.content">
+              </div>
+              <div class="col-sm-12 data-field-col data-list-upload">
+                <form action="#" class="dropzone dropzone-area" id="dataListUpload" [(ngModel)]= "newTopic.media" >
+                  <div class="dz-message">Upload Image</div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
+          <div class="add-data-btn">
+            <button class="btn btn-primary" (click)="AddTopic()">Add Topic</button>
+          </div>
+          <div class="cancel-data-btn">
+            <button class="btn btn-outline-danger">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- add new sidebar ends -->
+  </section>
+  <!-- Data list view end -->
+
 </div>
