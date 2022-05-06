@@ -3,7 +3,7 @@ import {User} from "../../core/model/User";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Topic} from "../../core/model/Topic";
-import {Appointment} from "../../core/model/Appointment";
+
 
 export interface IPagedResponse {
   total: number;

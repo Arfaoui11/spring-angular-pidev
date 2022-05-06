@@ -32,7 +32,7 @@ export class ListTopicComponent implements OnInit {
 ///////////////Suppression//////////////////////////
   deleteTopic(i :number)
   {
-    console.log(i)
+    console.log(i);
     this.services.deleteTopic(i)
       .subscribe(response => {
         this.topics = this.topics.filter(item => item.idTopic !== i);
