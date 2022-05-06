@@ -22,6 +22,7 @@ export class AddFomateurComponent implements OnInit {
   imgURL: any;
   public imagePath :FileList;
   show : boolean = false;
+  public formation: Formation;
 
   constructor(private services : FormationService,private snackbar:MatSnackBar) {
 
@@ -81,6 +82,7 @@ export class AddFomateurComponent implements OnInit {
 
     this.services.addFormation(this.fr,i).subscribe(
       data=>{
+        this.formation = data ;
         this.getformation();
       });
 
@@ -99,7 +101,7 @@ export class AddFomateurComponent implements OnInit {
 
 
 
-    this.services.uploadFile(formData,1).subscribe(res => {
+    this.services.uploadFile(formData,this.formation.idFormation).subscribe(res => {
       console.log(res)
     });
 

@@ -89,13 +89,13 @@ export class FormationService {
 
 
 
-  SerachMultiple(key:string) :Observable<Formation[]>
+  SearchMultiple(key:string) :Observable<Formation[]>
   {
     return this.http.get<Formation[]>('http://localhost:8099/Courses/SearchMultiple/'+key);
   }
 
 
-  SerachRepi(key : string):Observable<any>
+  SearchRepi(key : string):Observable<any>
   {
     return this.http.post<string>("http://localhost:8099/Courses/SearchHistorique/"+key,1)
   }
@@ -114,9 +114,9 @@ export class FormationService {
 
   addFormation(f : Formation,i:number): Observable<Formation>
   {
-    const headers = { 'content-type': 'application/json'}
+    const headers = { 'content-type': 'application/json'};
     const body=JSON.stringify(f);
-    console.log(body)
+    console.log(body);
     return this.http.post<Formation>("http://localhost:8099/Courses/ajouterEtAffecterFormationAFormateur/"+i,f)
   }
 

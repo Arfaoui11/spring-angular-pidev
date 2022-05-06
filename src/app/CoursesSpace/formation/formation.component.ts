@@ -83,6 +83,7 @@ export class FormationComponent implements OnInit {
   {
     this.serviceForm.addFormation(this.fr,i).subscribe(
       data=>{
+        this.formation = data;
         this.getformation();
       });
 
@@ -98,7 +99,7 @@ export class FormationComponent implements OnInit {
 
 
 
-    this.serviceForm.uploadFile(formData,2).subscribe(res => {
+    this.serviceForm.uploadFile(formData,this.formation.idFormation).subscribe(res => {
       console.log(res)
     });
 
