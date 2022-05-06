@@ -67,6 +67,7 @@ import {NgxWebstorageModule} from "ngx-webstorage";
 import {Angulartics2Module} from "angulartics2";
 import { ListTopicComponent } from './Forum/list-topic/list-topic.component';
 import { CommentComponent } from './Forum/comment/comment.component';
+import { ListCommentComponent } from './Forum/list-comment/list-comment.component';
 
 
 
@@ -110,6 +111,7 @@ FullCalendarModule.registerPlugins([
     BlogFormationComponent,
     ListTopicComponent,
     CommentComponent,
+    ListCommentComponent,
   ],
   imports: [
     BrowserModule,

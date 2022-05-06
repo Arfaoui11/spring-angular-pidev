@@ -25,6 +25,8 @@ import {BlogFormationComponent} from "./CoursesSpace/blog-formation/blog-formati
 import {ListTopicComponent} from "./Forum/list-topic/list-topic.component";
 import {UpdateComplaintComponent} from "./update-complaint/update-complaint.component";
 import {UpdateAppointmentComponent} from "./update-appointment/update-appointment.component";
+import {CommentComponent} from "./Forum/comment/comment.component";
+import {ListCommentComponent} from "./Forum/list-comment/list-comment.component";
 
 
 const routes: Routes =
@@ -44,6 +46,8 @@ const routes: Routes =
 
              { path: 'blogF', component: BlogFormationComponent },
              { path: 'homeF', component: HomeFComponent },
+             { path: 'publication', component: CommentComponent },
+             { path: 'publication-details', component: ListCommentComponent },
            ]
          },
        ]
