@@ -10,12 +10,15 @@ import {Router} from "@angular/router";
 })
 export class ComplaintListComponent implements OnInit {
   comlpaints: Complaint[];
+  totalLength: any;
+  page: number= 1;
   constructor(private complaintservices:ComplaintService , private router :Router) { }
 
   ngOnInit(): void {
     this.complaintservices.RetrieveComplaint().subscribe(data => {
       console.log(data);
       this.comlpaints = data;
+      this.totalLength = data.length;
     });
   }
   deleteComplaintById(c: Complaint)
@@ -57,6 +60,16 @@ export class ComplaintListComponent implements OnInit {
       });
 
   }
+  SearchMultiple(key:string): void {
+    if (key == '') {
+      this.complaintservices.RetrieveComplaint()
+    } else if (key != null) {
+      this.complaintservices.SearchMultiple(key).subscribe(
+        (data: Complaint[]) => {
+          this.comlpaints = data
+        }
+      );
+    }
 
-
+  }
 }

@@ -14,6 +14,8 @@ export class UpdateComplaintComponent implements OnInit {
               private router :Router, private complaintService :ComplaintService) { }
 
   ngOnInit(): void {
+    this.complaintService.consulterComplaint(this.activatedRoute.snapshot.params.id).
+    subscribe( compl =>{ this.currentComplaint = compl; });
   }
   updateComplaint() {
     this.complaintService.updateComplaint(this.currentComplaint).subscribe(() => {

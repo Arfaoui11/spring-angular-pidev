@@ -12,6 +12,8 @@ import {Observable} from "rxjs";
 export class AppointmentListComponent implements OnInit {
 
   appointments: Appointment[];
+  totalLength: any;
+  page: number = 1;
 
   constructor(private services: AppointmentService, private router: Router) {
 
@@ -21,6 +23,7 @@ export class AppointmentListComponent implements OnInit {
     this.services.retrieveappointment().subscribe(data => {
       console.log(data);
       this.appointments = data;
+      this.totalLength = data.length;
     });
   }
 

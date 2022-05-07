@@ -10,11 +10,13 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ComplaintService {
- private apiURL = "http://localhost:8090/heplpspace/retrieve-All-Complaints";
+  private apiURL = "http://localhost:8090/heplpspace/retrieve-All-Complaints";
   supUrl = "http://localhost:8090/heplpspace/deleteComplaintById";
-  addUrl = "http://localhost:8090/heplpspace/AddComplaintAndAssignToUser";
-  updateUrl = "http://localhost:8090/heplpspace/updateComplaintById";
-  private getUrl4 = 'http://localhost:8090/heplpspace/exportpdfComplaint';
+  addUrl = "http://localhost:8090/heplpspace/AddComplaint";
+  updateUrl = "http://localhost:8090/heplpspace/updatereclamation";
+  getSingleCom="http://localhost:8090/heplpspace/retrieve-Complaint-by-ID"
+  getUrl4 = 'http://localhost:8090/heplpspace/exportpdfComplaint';
+  searchMul='http://localhost:8090/heplpspace/SearchMultiple'
 
   constructor(private http:HttpClient) { }
   RetrieveComplaint(): Observable<Complaint[]>{
@@ -32,5 +34,13 @@ export class ComplaintService {
   }
   exportPdfComplaint(): Observable<Blob>{
     return this.http.get(`${this.getUrl4}`, {responseType: 'blob'});
+  }
+
+  consulterComplaint(id: number) : Observable<Complaint> {
+    return this.http.get<Complaint>(this.getSingleCom+"/"+id);
+  }
+  SearchMultiple(key:string) :Observable<Complaint[]>
+  {
+    return this.http.get<Complaint[]>(this.searchMul+"/"+key);
   }
 }
